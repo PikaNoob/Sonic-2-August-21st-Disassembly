@@ -55676,154 +55676,80 @@ Sfx_A0_To_E9:
 		z80_ptr	Sfx_E7
 		z80_ptr	Sfx_E8
 		z80_ptr	Sfx_E9
-Sfx_A0:
-		include	'sound/sfx/A0 - Jump.asm'
-Sfx_A1:
-		include	'sound/sfx/A1 - Checkpoint.asm'
-Sfx_A2:
-		include 'sound/sfx/A2 - Spike Switch.asm'
-Sfx_A3:
-		include 'sound/sfx/A3 - Hurt.asm'
-Sfx_A4:
-		include 'sound/sfx/A4 - Skidding.asm'
-Sfx_A5:
-		include 'sound/sfx/A5 - Block Push.asm'
-Sfx_A6:
-		include 'sound/sfx/A6 - Hurt by Spikes.asm'
-Sfx_A7:
-		include 'sound/sfx/A7 - Push Block.asm'                
-Sfx_A8:
-		include 'sound/sfx/A8 - SS Goal.asm'
-Sfx_A9:
-		include 'sound/sfx/A9 - Special Stage Item (Unused).asm'
-Sfx_AA:
-		include 'sound/sfx/AA - Splash.asm'
-Sfx_AB:
-		include 'sound/sfx/AB - Swish.asm'
-Sfx_AC:
-		include 'sound/sfx/AC - Boss Hit.asm'
-Sfx_AD:
-		include 'sound/sfx/AD - Inhaling Bubble.asm'
-Sfx_AE:
-		include 'sound/sfx/AE - Lava Ball.asm'
-Sfx_AF:
-		include 'sound/sfx/AF - Shield.asm'
-Sfx_B0:
-		include 'sound/sfx/B0 - Laser Beam.asm'
-Sfx_B1:
-		include 'sound/sfx/B1 - Electricity (Unused).asm'
-Sfx_B2:
-		include 'sound/sfx/B2 - Drown.asm'
-Sfx_B3:
-		include 'sound/sfx/B3 - Fire Burn.asm'
-Sfx_B4:
-		include 'sound/sfx/B4 - Bumper.asm'
-Sfx_B5:
-		include 'sound/sfx/B5 - Ring.asm'
-Sfx_B6:
-		include 'sound/sfx/B6 - Spikes Move.asm'
-Sfx_B7:
-		include 'sound/sfx/B7 - Rumbling.asm'
-Sfx_B8:
-		include 'sound/sfx/B8 - Unknown (Unused).asm'
-Sfx_B9:
-		include 'sound/sfx/B9 - Smash.asm'
-Sfx_BA:
-		include 'sound/sfx/BA - Special Stage Glass (Unused).asm'
-Sfx_BB:
-		include 'sound/sfx/BB - Door Slam.asm'
-Sfx_BC:
-		include 'sound/sfx/BC - Spin Dash Release.asm'
-Sfx_BD:
-		include 'sound/sfx/BD - Hammer.asm'
-Sfx_BE:
-		include 'sound/sfx/BE - Roll.asm'
-Sfx_BF:
-		include 'sound/sfx/BF - Continue Jingle.asm'
-Sfx_C0:
-		include 'sound/sfx/C0 - Basaran Flap.asm'
-Sfx_C1:
-		include 'sound/sfx/C1 - Explosion.asm'               
-Sfx_C2:
-		include 'sound/sfx/C2 - Water Warning.asm'
-Sfx_C3:
-		include 'sound/sfx/C3 - Enter Giant Ring (Unused).asm'
-Sfx_C4:
-		include 'sound/sfx/C4 - Boss Explosion.asm'
-Sfx_C5:
-		include 'sound/sfx/C5 - Tally End.asm'
-Sfx_C6:
-		include 'sound/sfx/C6 - Ring Spill.asm'
-Sfx_C7:
-		include 'sound/sfx/C7 - Chain Rise (Unused).asm'
-Sfx_C8:
-		include 'sound/sfx/C8 - Flamethrower.asm'
-Sfx_C9:
-		include 'sound/sfx/C9 - Hidden Bonus (Unused).asm'
-Sfx_CA:
-		include 'sound/sfx/CA - Special Stage Entry.asm'
-Sfx_CB:
-		include 'sound/sfx/CB - Slow Smash.asm'
-Sfx_CC:
-		include 'sound/sfx/CC - Spring.asm'
-Sfx_CD:
-		include 'sound/sfx/CD - Switch.asm'
-Sfx_CE:
-		include 'sound/sfx/CE - Ring Left Speaker.asm'
-Sfx_CF:
-		include 'sound/sfx/CF - Signpost.asm'
-Sfx_D0:
-		include 'sound/sfx/D0 - CNZ Boss Zap.asm'
-Sfx_D1:
-		include 'sound/sfx/D1 - Unknown (Unused).asm'
-Sfx_D2:
-		include 'sound/sfx/D2 - Unknown (Unused).asm'
-Sfx_D3:
-		include 'sound/sfx/D3 - Signpost 2P.asm'
-Sfx_D4:
-		include 'sound/sfx/D4 - OOZ Lid Pop.asm'               
-Sfx_D5:
-		include 'sound/sfx/D5 - Sliding Spike.asm'                            
-Sfx_D6:
-		include 'sound/sfx/D6 - CNZ Elevator.asm'
-Sfx_D7:
-		include 'sound/sfx/D7 - Platform Knock.asm'
-Sfx_D8:
-		include 'sound/sfx/D8 - Bonus Bumper.asm'
-Sfx_D9:		
-                include 'sound/sfx/D9 - Large Bumper.asm'
-Sfx_DA:
-		include 'sound/sfx/DA - Gloop.asm'
-Sfx_DB:
-		include 'sound/sfx/DB - Pre-Arrow Firing.asm'
-Sfx_DC:
-		include 'sound/sfx/DC - Fire.asm'
-Sfx_DD:
-		include 'sound/sfx/DD - Arrow Stick.asm'
-Sfx_DE:
-		include 'sound/sfx/DE - Helicopter.asm'
-Sfx_DF:
-		include 'sound/sfx/DF - Super Transform.asm'
-Sfx_E0:
-		include 'sound/sfx/E0 - Spin Dash Rev.asm'
-Sfx_E1:		                
-                include 'sound/sfx/E1 - Rumbling 2.asm'
-Sfx_E2:
-		include 'sound/sfx/E2 - CNZ Launch.asm'                
-Sfx_E3:
-		include 'sound/sfx/E3 - Flipper.asm'
-Sfx_E4:
-		include 'sound/sfx/E4 - HTZ Lift Click.asm'
-Sfx_E5:
-		include 'sound/sfx/E5 - Leaves.asm'
-Sfx_E6:
-		include 'sound/sfx/E6 - Mega Mack Drop.asm'
-Sfx_E7:
-		include 'sound/sfx/E7 - Drawbridge Move.asm'
-Sfx_E8:
-		include 'sound/sfx/E8 - Quick Door Slam.asm'
-Sfx_E9:
-		include 'sound/sfx/E9 - Drawbridge Down.asm'
+Sfx_A0:		include	'sound/sfx/A0 - Jump.asm'
+Sfx_A1:		include	'sound/sfx/A1 - Checkpoint.asm'
+Sfx_A2:		include 'sound/sfx/A2 - Spike Switch.asm'
+Sfx_A3:		include 'sound/sfx/A3 - Hurt.asm'
+Sfx_A4:		include 'sound/sfx/A4 - Skidding.asm'
+Sfx_A5:		include 'sound/sfx/A5 - Block Push.asm'
+Sfx_A6:		include 'sound/sfx/A6 - Hurt by Spikes.asm'
+Sfx_A7:		include 'sound/sfx/A7 - Push Block.asm'                
+Sfx_A8:		include 'sound/sfx/A8 - SS Goal.asm'
+Sfx_A9:		include 'sound/sfx/A9 - Special Stage Item (Unused).asm'
+Sfx_AA:		include 'sound/sfx/AA - Splash.asm'
+Sfx_AB:		include 'sound/sfx/AB - Swish.asm'
+Sfx_AC:		include 'sound/sfx/AC - Boss Hit.asm'
+Sfx_AD:		include 'sound/sfx/AD - Inhaling Bubble.asm'
+Sfx_AE:		include 'sound/sfx/AE - Lava Ball.asm'
+Sfx_AF:		include 'sound/sfx/AF - Shield.asm'
+Sfx_B0:		include 'sound/sfx/B0 - Laser Beam.asm'
+Sfx_B1:		include 'sound/sfx/B1 - Electricity (Unused).asm'
+Sfx_B2:		include 'sound/sfx/B2 - Drown.asm'
+Sfx_B3:		include 'sound/sfx/B3 - Fire Burn.asm'
+Sfx_B4:		include 'sound/sfx/B4 - Bumper.asm'
+Sfx_B5:		include 'sound/sfx/B5 - Ring.asm'
+Sfx_B6:		include 'sound/sfx/B6 - Spikes Move.asm'
+Sfx_B7:		include 'sound/sfx/B7 - Rumbling.asm'
+Sfx_B8:		include 'sound/sfx/B8 - Unknown (Unused).asm'
+Sfx_B9:		include 'sound/sfx/B9 - Smash.asm'
+Sfx_BA:		include 'sound/sfx/BA - Special Stage Glass (Unused).asm'
+Sfx_BB:		include 'sound/sfx/BB - Door Slam.asm'
+Sfx_BC:		include 'sound/sfx/BC - Spin Dash Release.asm'
+Sfx_BD:		include 'sound/sfx/BD - Hammer.asm'
+Sfx_BE:		include 'sound/sfx/BE - Roll.asm'
+Sfx_BF:		include 'sound/sfx/BF - Continue Jingle.asm'
+Sfx_C0:		include 'sound/sfx/C0 - Basaran Flap.asm'
+Sfx_C1:		include 'sound/sfx/C1 - Explosion.asm'               
+Sfx_C2:		include 'sound/sfx/C2 - Water Warning.asm'
+Sfx_C3:		include 'sound/sfx/C3 - Enter Giant Ring (Unused).asm'
+Sfx_C4:		include 'sound/sfx/C4 - Boss Explosion.asm'
+Sfx_C5:		include 'sound/sfx/C5 - Tally End.asm'
+Sfx_C6:		include 'sound/sfx/C6 - Ring Spill.asm'
+Sfx_C7:		include 'sound/sfx/C7 - Chain Rise (Unused).asm'
+Sfx_C8:		include 'sound/sfx/C8 - Flamethrower.asm'
+Sfx_C9:		include 'sound/sfx/C9 - Hidden Bonus (Unused).asm'
+Sfx_CA:		include 'sound/sfx/CA - Special Stage Entry.asm'
+Sfx_CB:		include 'sound/sfx/CB - Slow Smash.asm'
+Sfx_CC:		include 'sound/sfx/CC - Spring.asm'
+Sfx_CD:		include 'sound/sfx/CD - Switch.asm'
+Sfx_CE:		include 'sound/sfx/CE - Ring Left Speaker.asm'
+Sfx_CF:		include 'sound/sfx/CF - Signpost.asm'
+Sfx_D0:		include 'sound/sfx/D0 - CNZ Boss Zap.asm'
+Sfx_D1:		include 'sound/sfx/D1 - Unknown (Unused).asm'
+Sfx_D2:		include 'sound/sfx/D2 - Unknown (Unused).asm'
+Sfx_D3:		include 'sound/sfx/D3 - Signpost 2P.asm'
+Sfx_D4:		include 'sound/sfx/D4 - OOZ Lid Pop.asm'               
+Sfx_D5:		include 'sound/sfx/D5 - Sliding Spike.asm'                            
+Sfx_D6:		include 'sound/sfx/D6 - CNZ Elevator.asm'
+Sfx_D7:		include 'sound/sfx/D7 - Platform Knock.asm'
+Sfx_D8:		include 'sound/sfx/D8 - Bonus Bumper.asm'
+Sfx_D9:		include 'sound/sfx/D9 - Large Bumper.asm'
+Sfx_DA:		include 'sound/sfx/DA - Gloop.asm'
+Sfx_DB:		include 'sound/sfx/DB - Pre-Arrow Firing.asm'
+Sfx_DC:		include 'sound/sfx/DC - Fire.asm'
+Sfx_DD:		include 'sound/sfx/DD - Arrow Stick.asm'
+Sfx_DE:		include 'sound/sfx/DE - Helicopter.asm'
+Sfx_DF:		include 'sound/sfx/DF - Super Transform.asm'
+Sfx_E0:		include 'sound/sfx/E0 - Spin Dash Rev.asm'
+Sfx_E1:		include 'sound/sfx/E1 - Rumbling 2.asm'
+Sfx_E2:		include 'sound/sfx/E2 - CNZ Launch.asm'                
+Sfx_E3:		include 'sound/sfx/E3 - Flipper.asm'
+Sfx_E4:		include 'sound/sfx/E4 - HTZ Lift Click.asm'
+Sfx_E5:		include 'sound/sfx/E5 - Leaves.asm'
+Sfx_E6:		include 'sound/sfx/E6 - Mega Mack Drop.asm'
+Sfx_E7:		include 'sound/sfx/E7 - Drawbridge Move.asm'
+Sfx_E8:		include 'sound/sfx/E8 - Quick Door Slam.asm'
+Sfx_E9:		include 'sound/sfx/E9 - Drawbridge Down.asm'
 		even
 ;===============================================================================
 ; Sound driver stuff
