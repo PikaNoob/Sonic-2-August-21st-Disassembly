@@ -7,12 +7,12 @@ align0		macro pos
 	endm
 
 stopZ80	macro
-		move.w  #$100,(Z80_Bus_Request).l
+		move.w  #$100,Z80BUS
 @loop\@:
-		btst    #$00,(Z80_Bus_Request).l
+		btst    #$00,Z80BUS
 		bne.s   @loop\@
 	endm
 	
 startZ80 macro
-		move.w  #$0000, (Z80_Bus_Request)
+		move.w  #$0000,Z80BUS
 	endm

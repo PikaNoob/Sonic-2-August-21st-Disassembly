@@ -35,7 +35,7 @@ loc_1620:
                 rts
  
 Process_DMA:                                                   ; loc_1622
-                lea     (VDP_Control_Port), A5                       ; $00C00004
+                lea     VDPCTRL, A5                       ; $00C00004
                 lea     (DMA_Buffer_List).w, A1                      ; $FFFFDC00
 Process_DMA_Loop:                                              ; loc_162C
                 move.w  (A1)+, D0

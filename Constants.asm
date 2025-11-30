@@ -152,7 +152,7 @@ __ = $FF
 
 ; Z80
 
-Z80_RAM_Start                  equ $00A00000 
+Z80RAM				equ $00A00000 
 
 ; I/O
 
