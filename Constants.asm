@@ -162,13 +162,13 @@ IO_Port_0_Control              equ $00A10008
 IO_Port_1_Control              equ $00A1000A
 IO_Expansion_Control           equ $00A1000C
 
-Z80_Bus_Request                equ $00A11100 
-Z80_Reset                      equ $00A11200 
+Z80BUS				equ $00A11100 
+Z80RESET			equ $00A11200 
 
 ; VDP
 
-VDP_Data_Port                  equ $00C00000
-VDP_Control_Port               equ $00C00004
+VDPDATA				equ $00C00000
+VDPCTRL				equ $00C00004
 
 ; RAM
 
