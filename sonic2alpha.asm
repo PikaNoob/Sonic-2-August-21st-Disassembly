@@ -121,15 +121,40 @@ PortC_OK:
 		bra.s   Game_Program
 ;-------------------------------------------------------------------------------
 InitValues:
-		dc.w    $8000, $3FFF, $0100
-		dc.l    Z80_RAM_Start
-		dc.l    Z80_Bus_Request
-		dc.l    Z80_Reset
-		dc.l    VDP_Data_Port
-		dc.l    VDP_Control_Port
-		dc.b    $04, $14, $30, $3C, $07, $6C, $00, $00
-		dc.b    $00, $00, $FF, $00, $81, $37, $00, $01
-		dc.b    $01, $00, $00, $FF, $FF, $00, $00, $80
+		dc.w	$8000
+		dc.l	$3FFF0100
+		dc.l    Z80RAM
+		dc.l    Z80BUS
+		dc.l    Z80RESET
+		dc.l    VDPDATA
+		dc.l    VDPCTRL
+
+VDPRegs:
+		dc.b %0000100   			; Normal colour mode           
+        	dc.b %0010100   			; V-INT, DMA, mode 5
+        	dc.b $C000>>10				; Plane A location 
+        	dc.b $F000>>10				; Window location
+        	dc.b $E000>>13				; Plane B location
+        	dc.b $D800>>9				; Sprite table location
+        	dc.b 0          			; Unused
+        	dc.b 0   				; Background colour
+        	dc.b 0          			; Unused
+        	dc.b 0          			; Unused
+        	dc.b $FF				; H-INT counter $FF
+        	dc.b 0          			; Scroll by screen
+        	dc.b %10000001  			; H40 mode
+        	dc.b $DC00>>10  			; Horizontal scroll table location
+        	dc.b 0          			; Unused
+        	dc.b 1          			; Autoincrement by 1
+        	dc.b 1          			; 64x32 tile plane size
+        	dc.b 0          			; Window horizontal position 0
+        	dc.b 0          			; Window vertical position 0
+        	dc.b $FF        			; DMA Length $FFFF
+        	dc.b $FF        			; See above
+        	dc.b 0          			; DMA Source $0
+        	dc.b 0          			; See above
+        	dc.b $80        			; See above + VRAM fill mode
+
 		dc.b    $40, $00, $00, $80, $AF, $01, $D9, $1F
 		dc.b    $11, $27, $00, $21, $26, $00, $F9, $77
 		dc.b    $ED, $B0, $DD, $E1, $FD, $E1, $ED, $47
@@ -141,7 +166,7 @@ InitValues:
 		dc.b    $9F, $BF, $DF, $FF          ; PSG Data
 ;-------------------------------------------------------------------------------
 Game_Program:
-		tst.w   (VDP_Control_Port)
+		tst.w   (VDPCTRL)
 		btst    #$06, (IO_Expansion_Control+$0001)
 		beq.s   ChecksumCheck
 		cmpi.l  #'init', (Init_Flag).w
@@ -187,7 +212,7 @@ ClearRemainingRAMLoop:
           endif
 MainGameLoop:
 		move.b  (Game_Mode).w, D0
-		andi.w  #$001C, D0
+		andi.w  #$1C, D0
 		jsr     GameModeArray(PC, D0)
 		bra.s   MainGameLoop
 GameModeArray:
@@ -203,10 +228,10 @@ GameModeArray:
 ;===============================================================================
 ChecksumError:
 		bsr     VDPRegSetup
-		move.l  #Color_RAM_Address, (VDP_Control_Port)
+		move.l  #Color_RAM_Address, (VDPCTRL)
 		moveq   #$3F, D7
 ChksumErr_RedFill:
-		move.w  #$000E, (VDP_Data_Port)
+		move.w  #$000E, (VDPDATA)
 		dbra    D7, ChksumErr_RedFill
 		bra.s   *
 ;===============================================================================
@@ -312,8 +337,8 @@ ErrorMsg_Wait:
 		move    #$2300, SR
 		rte
 ShowErrorMsg:
-		lea     (VDP_Data_Port), A6
-		move.l  #$78000003, (VDP_Control_Port)
+		lea     (VDPDATA), A6
+		move.l  #$78000003, (VDPCTRL)
 		lea     (Art_Menu_Text), A0
 		move.w  #$027F, D1
 Error_LoadGfx:
@@ -323,7 +348,7 @@ Error_LoadGfx:
 		move.b  (Exception_Index).w, D0
 		move.w  Error_Text(PC, D0), D0
 		lea     Error_Text(PC, D0), A0
-		move.l  #$46040003, (VDP_Control_Port)
+		move.l  #$46040003, (VDPCTRL)
 		moveq   #$12, D1
 Loop_Show_Error_Text:
 		moveq   #$00, D0
@@ -395,11 +420,11 @@ VBlank:
 		tst.b   (VBlank_Index).w
 		beq     Default_VBlank
 loc_B14:
-		move.w  (VDP_Control_Port), D0
+		move.w  (VDPCTRL), D0
 		andi.w  #$0008, D0
 		beq.s   loc_B14
-		move.l  #$40000010, (VDP_Control_Port)
-		move.l  ($FFFFF616).w, (VDP_Data_Port)
+		move.l  #$40000010, (VDPCTRL)
+		move.l  ($FFFFF616).w, (VDPDATA)
 		btst    #$06, (Hardware_Id).w
 		beq.s   loc_B42
 		move.w  #$0700, D0
@@ -447,7 +472,7 @@ VBlank_00:
 loc_BBC:
 		tst.b   (Water_Level_Flag).w
 		beq     loc_C60
-		move.w  (VDP_Control_Port), D0
+		move.w  (VDPCTRL), D0
 		btst    #$06, (Hardware_Id).w
 		beq.s   loc_BDA
 		move.w  #$0700, D0
@@ -458,7 +483,7 @@ loc_BDA:
 		stopZ80
 		tst.b   ($FFFFF64E).w
 		bne.s   loc_C1E
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
@@ -467,7 +492,7 @@ loc_BDA:
 		move.w  ($FFFFF640).w, (A5)
 		bra.s   loc_C42
 loc_C1E:
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
@@ -476,14 +501,14 @@ loc_C1E:
 		move.w  ($FFFFF640).w, (A5)
 loc_C42:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
-		move.w  #$8230, (VDP_Control_Port)
+		move.w  #$8230, (VDPCTRL)
 		jsr     (Sound_Driver_Input)
 		startZ80
 		bra     loc_B5E
 loc_C60:
-		move.w  (VDP_Control_Port), D0
-		move.l  #$40000010, (VDP_Control_Port)
-		move.l  ($FFFFF616).w, (VDP_Data_Port)
+		move.w  (VDPCTRL), D0
+		move.l  #$40000010, (VDPCTRL)
+		move.l  ($FFFFF616).w, (VDPDATA)
 		btst    #$06, (Hardware_Id).w
 		beq.s   loc_C88
 		move.w  #$0700, D0
@@ -491,11 +516,11 @@ loc_C84:
 		dbra    D0, loc_C84
 loc_C88:
 		move.w  #$0001, ($FFFFF644).w
-		move.w  (Horizontal_Interrupt_Count).w, (VDP_Control_Port)
-		move.w  #$8230, (VDP_Control_Port)
+		move.w  (Horizontal_Interrupt_Count).w, (VDPCTRL)
+		move.w  #$8230, (VDPCTRL)
 		move.l  ($FFFFF61E).w, ($FFFFEEEC).w
 		stopZ80
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
@@ -546,7 +571,7 @@ VBlank_08:
 		bsr     Control_Ports_Read
 		tst.b   ($FFFFF64E).w
 		bne.s   loc_D92
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
@@ -555,7 +580,7 @@ VBlank_08:
 		move.w  ($FFFFF640).w, (A5)
 		bra.s   loc_DB6
 loc_D92:
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
@@ -564,15 +589,15 @@ loc_D92:
 		move.w  ($FFFFF640).w, (A5)
 loc_DB6:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
-		move.w  #$8230, (VDP_Control_Port)
-		lea     (VDP_Control_Port), A5
+		move.w  #$8230, (VDPCTRL)
+		lea     (VDPCTRL), A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
 		move.w  #$0083, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
@@ -606,21 +631,21 @@ Exit_DemoTime:
 VBlank_0A:
 		stopZ80
 		bsr     Control_Ports_Read
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
 		move.w  #$0080, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
 		move.w  #$0083, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
@@ -643,7 +668,7 @@ VBlank_18:
 		bsr     Control_Ports_Read
 		tst.b   ($FFFFF64E).w
 		bne.s   loc_F5A
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
@@ -652,7 +677,7 @@ VBlank_18:
 		move.w  ($FFFFF640).w, (A5)
 		bra.s   loc_F7E
 loc_F5A:
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
@@ -661,14 +686,14 @@ loc_F5A:
 		move.w  ($FFFFF640).w, (A5)
 loc_F7E:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
 		move.w  #$0083, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
@@ -701,21 +726,21 @@ VBlank_12:
 VBlank_16:
 		stopZ80
 		bsr     Control_Ports_Read
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
 		move.w  #$0080, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
 		move.w  #$0083, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
@@ -734,7 +759,7 @@ loc_10BE:
 		bsr     Control_Ports_Read
 		tst.b   ($FFFFF64E).w
 		bne.s   loc_1100
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
@@ -743,7 +768,7 @@ loc_10BE:
 		move.w  ($FFFFF640).w, (A5)
 		bra.s   loc_1124
 loc_1100:
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94009340, (A5)
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
@@ -751,14 +776,14 @@ loc_1100:
 		move.w  #$0080, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
 loc_1124:
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
 		move.w  #$0083, ($FFFFF640).w
 		move.w  ($FFFFF640).w, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
@@ -786,17 +811,17 @@ HBlank:
 		move.l  A5, -(A7)
 		move.l  D0, -(A7)
 loc_1196:
-		move.w  (VDP_Control_Port), D0
+		move.w  (VDPCTRL), D0
 		andi.w  #$0004, D0
 		beq.s   loc_1196
 		move.w  ($FFFFF60C).w, D0
 		andi.b  #$BF, D0
-		move.w  D0, (VDP_Control_Port)
-		move.w  #$8228, (VDP_Control_Port)
-		move.l  #$40000010, (VDP_Control_Port)
-		move.l  ($FFFFEEEC).w, (VDP_Data_Port)
+		move.w  D0, (VDPCTRL)
+		move.w  #$8228, (VDPCTRL)
+		move.l  #$40000010, (VDPCTRL)
+		move.l  ($FFFFEEEC).w, (VDPDATA)
 		stopZ80
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.l  #$94019340, (A5)
 		move.l  #$96EE9580, (A5)
 		move.w  #$977F, (A5)
@@ -805,12 +830,12 @@ loc_1196:
 		move.w  ($FFFFF640).w, (A5)
 		startZ80
 loc_1208:
-		move.w  (VDP_Control_Port), D0
+		move.w  (VDPCTRL), D0
 		andi.w  #$0004, D0
 		beq.s   loc_1208
 		move.w  ($FFFFF60C).w, D0
 		ori.b   #$40, D0
-		move.w  D0, (VDP_Control_Port)
+		move.w  D0, (VDPCTRL)
 		move.l  (A7)+, D0
 		move.l  (A7)+, A5
 loc_1226:
@@ -823,7 +848,7 @@ Pal_To_ColorRAM:
 		move    #$2700, SR
 		move.w  #$0000, ($FFFFF644).w
 		movem.l A0/A1, -(A7)
-		lea     (VDP_Data_Port), A1
+		lea     (VDPDATA), A1
 		lea     ($FFFFFA80).w, A0
 		move.l  #Color_RAM_Address, $0004(A1)
 		move.l  (A0)+, (A1)
@@ -885,7 +910,7 @@ loc_129A:
 ;===============================================================================
 Sound_Driver_Input:
 		lea     (Sound_Buffer_Id&$00FFFFFF), A0
-		lea     (Z80_RAM_Start+$1B80), A1
+		lea     (Z80RAM+$1B80), A1
 		cmpi.b  #$80, $0008(A1)
 		bne.s   loc_12E0
 		move.b  $0000(A0), D0
@@ -972,8 +997,8 @@ Control_Ports_Read_Data:
 ; [ Begin ]
 ;===============================================================================
 VDPRegSetup:
-		lea     (VDP_Control_Port), A0
-		lea     (VDP_Data_Port), A1
+		lea     (VDPCTRL), A0
+		lea     (VDPDATA), A1
 		lea     (VDPRegSetup_Array), A2
 		moveq   #$12, D7
 loc_137C:
@@ -983,10 +1008,10 @@ loc_137C:
 		move.w  D0, ($FFFFF60C).w
 		move.w  #$8ADF, (Horizontal_Interrupt_Count).w ; 224 lines
 		moveq   #$00, D0
-		move.l  #$40000010, (VDP_Control_Port)
+		move.l  #$40000010, (VDPCTRL)
 		move.w  D0, (A1)
 		move.w  D0, (A1)
-		move.l  #$C0000000, (VDP_Control_Port)
+		move.l  #$C0000000, (VDPCTRL)
 		move.w  #$003F, D7
 loc_13B0:
 		move.w  D0, (A1)
@@ -994,12 +1019,12 @@ loc_13B0:
 		clr.l   ($FFFFF616).w
 		clr.l   ($FFFFF61A).w
 		move.l  D1, -(A7)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.w  #$8F01, (A5)
 		move.l  #$94FF93FF, (A5)
 		move.w  #$9780, (A5)
 		move.l  #$40000080, (A5)
-		move.w  #$0000, (VDP_Data_Port)
+		move.w  #$0000, (VDPDATA)
 loc_13E2:
 		move.w  (A5), D1
 		btst    #$01, D1
@@ -1023,23 +1048,23 @@ VDPRegSetup_Array:
 ;===============================================================================
 ClearScreen:
 		stopZ80
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.w  #$8F01, (A5)
 		move.l  #$940F93FF, (A5)
 		move.w  #$9780, (A5)
 		move.l  #$40000083, (A5)
-		move.w  #$0000, (VDP_Data_Port)
+		move.w  #$0000, (VDPDATA)
 ClearScreen_DMAWait
 		move.w  (A5), D1
 		btst    #$01, D1
 		bne.s   ClearScreen_DMAWait
 		move.w  #$8F02, (A5)
-		lea     (VDP_Control_Port), A5
+		lea     (VDPCTRL), A5
 		move.w  #$8F01, (A5)
 		move.l  #$940F93FF, (A5)
 		move.w  #$9780, (A5)
 		move.l  #$60000083, (A5)
-		move.w  #$0000, (VDP_Data_Port)
+		move.w  #$0000, (VDPDATA)
 ClearScreen_DMAWait_2:
 		move.w  (A5), D1
 		btst    #$01, D1
@@ -1071,20 +1096,20 @@ Jmp_00_To_SoundDriverLoad
 		jmp     (SoundDriverLoad)
 ;-------------------------------------------------------------------------------
 ; Z80_Init:   ; Initialization of the Z80 (not used)
-		move.w  #$0100, (Z80_Bus_Request)
-		move.w  #$0100, (Z80_Reset)
-		lea     (Z80_RAM_Start), A1
+		move.w  #$0100, (Z80BUS)
+		move.w  #$0100, (Z80RESET)
+		lea     (Z80RAM), A1
 		move.b  #$F3, (A1)+
 		move.b  #$F3, (A1)+
 		move.b  #$C3, (A1)+
 		move.b  #$00, (A1)+
 		move.b  #$00, (A1)+
-		move.w  #$0000, (Z80_Reset)
+		move.w  #$0000, (Z80RESET)
 		nop
 		nop
 		nop
 		nop
-		move.w  #$0100, (Z80_Reset)
+		move.w  #$0100, (Z80RESET)
 		startZ80
 		rts
 ;-------------------------------------------------------------------------------
@@ -1159,7 +1184,7 @@ Pause_SlowMotion:
 ; [ Begin ]
 ;===============================================================================
 ShowVDPGraphics:
-		lea     (VDP_Data_Port), A6
+		lea     (VDPDATA), A6
 		move.l  #$00800000, D4
 ShowVDPGraphics_LineLoop:
 		move.l  D0, $0004(A6)
@@ -1182,7 +1207,7 @@ DMA_68KtoVRAM:
 NemDec:                                                    
 		movem.l D0-D7/A0/A1/A3-A5, -(A7)
 		lea     (NemDec_Output), A3
-		lea     (VDP_Data_Port), A4
+		lea     (VDPDATA), A4
 		bra.s   NemDec_Main
 ;-------------------------------------------------------------------------------
 NemDecToRAM:
@@ -1468,7 +1493,7 @@ loc_1872:
 		move.w  ($FFFFF684).w, D0
 		addi.w  #$0060, ($FFFFF684).w
 loc_188A:
-		lea     (VDP_Control_Port), A4
+		lea     (VDPCTRL), A4
 		lsl.l   #$02, D0
 		lsr.w   #$02, D0
 		ori.w   #$4000, D0
@@ -1524,7 +1549,7 @@ RunPLC_ROM_Loop:
 		lsr.w   #$02, D0
 		ori.w   #$4000, D0
 		swap.w  D0
-		move.l  D0, (VDP_Control_Port)
+		move.l  D0, (VDPCTRL)
 		bsr     NemDec
 		dbra    D1, RunPLC_ROM_Loop
 		rts
@@ -3504,7 +3529,7 @@ Sega_Screen:
 		bsr     Play_Music	; stop music
 		bsr     ClearPLC
 		bsr     Pal_FadeFrom
-		lea     (VDP_Control_Port), A6
+		lea     (VDPCTRL), A6
 		move.w  #$8004, (A6)
 		move.w  #$8230, (A6)
 		move.w  #$8407, (A6)
@@ -3515,9 +3540,9 @@ Sega_Screen:
 		move    #$2700, SR
 		move.w  ($FFFFF60C).w, D0
 		andi.b  #$BF, D0
-		move.w  D0, (VDP_Control_Port)
+		move.w  D0, (VDPCTRL)
 		bsr     ClearScreen
-		move.l  #$40000000, (VDP_Control_Port)
+		move.l  #$40000000, (VDPCTRL)
 		lea     (Art_SEGA), A0
 		bsr     NemDec
 		lea     (M68K_RAM_Start), A1
@@ -3551,7 +3576,7 @@ loc_3736:
 		move.w  #$00B4, (Timer_Count_Down).w
 		move.w  ($FFFFF60C).w, D0
 		ori.b   #$40, D0
-		move.w  D0, (VDP_Control_Port)
+		move.w  D0, (VDPCTRL)
 ;loc_3768:
 Sega_WaitPalette:
 		move.b  #$02, (VBlank_Index).w
@@ -3590,7 +3615,7 @@ Title_Screen:
 		bsr     ClearPLC
 		bsr     Pal_FadeFrom
 		move    #$2700, SR
-		lea     (VDP_Control_Port), A6
+		lea     (VDPCTRL), A6
 		move.w  #$8004, (A6)
 		move.w  #$8230, (A6)
 		move.w  #$8407, (A6)
@@ -3640,13 +3665,13 @@ Title_ClrPalette:
 
 		bsr     Pal_FadeTo
 		move    #$2700, SR
-		move.l  #$40000000, (VDP_Control_Port)
+		move.l  #$40000000, (VDPCTRL)
 		lea     (Art_Title_Screen_Bg_Wings), A0
 		bsr     NemDec
-		move.l  #$40000001, (VDP_Control_Port)
+		move.l  #$40000001, (VDPCTRL)
 		lea     (Art_Title_Screen_Sonic_Tails), A0
 		bsr     NemDec
-		lea     (VDP_Data_Port), A6
+		lea     (VDPDATA), A6
 		move.l  #$50000003, $0004(A6)
 		lea     (Art_Menu_Text), A5
 		move.w  #$028F, D1
@@ -3716,7 +3741,7 @@ loc_3966:
 		move.w  #$0000, ($FFFFE500).w
 		move.w  ($FFFFF60C).w, D0
 		ori.b   #$40, D0
-		move.w  D0, (VDP_Control_Port)
+		move.w  D0, (VDPCTRL)
 		bsr     Pal_FadeTo
 TitleScreen_Loop:
 		move.b  #$04, (VBlank_Index).w
@@ -3788,8 +3813,8 @@ LevelSelect_ClearScroll:
 		dbra    D1, LevelSelect_ClearScroll
 		move.l  D0, ($FFFFF616).w
 		move    #$2700, SR
-		lea     (VDP_Data_Port), A6
-		move.l  #$60000003, (VDP_Control_Port)
+		lea     (VDPDATA), A6
+		move.l  #$60000003, (VDPCTRL)
 		move.w  #$03FF, D1
 LevelSelect_ClearVRAM:
 		move.l  D0, (A6)
@@ -3989,7 +4014,7 @@ loc_3D3A:
 		rts
 loc_3D3C:
 		lea     (Level_Select_Text), A1
-		lea     (VDP_Data_Port), A6
+		lea     (VDPDATA), A6
 		move.l  #$608C0003, D4
 		move.w  #$8680, D3
 		moveq   #$1A, D1
@@ -4016,7 +4041,7 @@ loc_3D54:
 		bne.s   loc_3DA2
 		move.w  #$C680, D3
 loc_3DA2:
-		move.l  #$6DB00003, (VDP_Control_Port)
+		move.l  #$6DB00003, (VDPCTRL)
 		move.w  ($FFFFFF84).w, D0
 		addi.w  #$0080, D0
 		move.b  D0, D2
@@ -4266,7 +4291,7 @@ Init_Water:
 		move.b  #$01, (Water_Level_Flag).w
 		move.w  #$0000, (Two_Player_Flag).w
 Init_No_Water:
-		lea     (VDP_Control_Port), A6
+		lea     (VDPCTRL), A6
 		move.w  #$8B03, (A6)
 		move.w  #$8230, (A6)
 		move.w  #$8407, (A6)
@@ -5166,22 +5191,22 @@ Special_Stage:                                                 ; loc_52BC
 		bsr     Play_Sfx                               ; loc_1512
 		bsr     Pal_MakeFlash                          ; loc_2794
 		move    #$2700, SR
-		lea     (VDP_Control_Port), A6                       ; $00C00004
+		lea     (VDPCTRL), A6                       ; $00C00004
 		move.w  #$8B03, (A6)
 		move.w  #$8004, (A6)
 		move.w  #$8AAF, (Horizontal_Interrupt_Count).w       ; $FFFFF624
 		move.w  #$9011, (A6)
 		move.w  ($FFFFF60C).w, D0
 		andi.b  #$BF, D0
-		move.w  D0, (VDP_Control_Port)                       ; $00C00004
+		move.w  D0, (VDPCTRL)                       ; $00C00004
 		bsr     ClearScreen                            ; loc_1418
 		move    #$2300, SR
-		lea     (VDP_Control_Port), A5                       ; $00C00004
+		lea     (VDPCTRL), A5                       ; $00C00004
 		move.w  #$8F01, (A5)
 		move.l  #$946F93FF, (A5)
 		move.w  #$9780, (A5)
 		move.l  #$50000081, (A5)
-		move.w  #$0000, (VDP_Data_Port)                      ; $00C00000
+		move.w  #$0000, (VDPDATA)                      ; $00C00000
 loc_531C:
 		move.w  (A5), D1
 		btst    #$01, D1
@@ -5246,7 +5271,7 @@ loc_536C:
 loc_53F8:
 		move.w  ($FFFFF60C).w, D0
 		ori.b   #$40, D0
-		move.w  D0, (VDP_Control_Port)                       ; $00C00004
+		move.w  D0, (VDPCTRL)                       ; $00C00004
 		bsr     Pal_MakeWhite                          ; loc_26EA
 Special_Stage_Loop:                                            ; loc_540A
 		bsr     Pause                                  ; loc_152A
@@ -5292,7 +5317,7 @@ loc_54B4:
 		tst.w   (Timer_Count_Down).w                         ; $FFFFF614
 		bne.s   Special_Stage_Loop_2                   ; loc_547A
 		move    #$2700, SR
-		lea     (VDP_Control_Port), A6                       ; $00C00004
+		lea     (VDPCTRL), A6                       ; $00C00004
 		move.w  #$8230, (A6)
 		move.w  #$8407, (A6)
 		move.w  #$9001, (A6)
@@ -5407,7 +5432,7 @@ Special_Stage_Pal_Cycle:                                       ; loc_5626
 		bne.s   loc_56AA
 		subq.w  #$01, ($FFFFF79C).w
 		bpl.s   loc_56AA
-		lea     (VDP_Control_Port), A6                       ; $00C00004
+		lea     (VDPCTRL), A6                       ; $00C00004
 		move.w  ($FFFFF79A).w, D0
 		addq.w  #$01, ($FFFFF79A).w
 		andi.w  #$001F, D0
@@ -5431,8 +5456,8 @@ loc_5656:
 		move.w  #$8400, D0
 		move.b  (A0)+, D0
 		move.w  D0, (A6)
-		move.l  #$40000010, (VDP_Control_Port)               ; $00C00004
-		move.l  ($FFFFF616).w, (VDP_Data_Port)               ; $00C00000
+		move.l  #$40000010, (VDPCTRL)               ; $00C00004
+		move.l  ($FFFFF616).w, (VDPDATA)               ; $00C00000
 		moveq   #$00, D0
 		move.b  (A0)+, D0
 		bmi.s   loc_56AC
@@ -7649,8 +7674,8 @@ loc_6F00:
 		rts
 ;-------------------------------------------------------------------------------
 ; loc_6F02: ; Leftover from Sonic 1, Not used
-		lea     (VDP_Control_Port), A5                       ; $00C00004
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		lea     (VDPCTRL), A5                       ; $00C00004
+		lea     (VDPDATA), A6                          ; $00C00000
 		lea     (Scroll_Flag_Array+$0002).w, A2              ; $FFFFEE52
 		lea     (Camera_X_x2).w, A3                          ; $FFFFEE08
 		lea     (Level_Map_Bg_Buffer).w, A4                  ; $FFFF8080
@@ -7669,8 +7694,8 @@ loc_6F00:
 ; [ Begin ]
 ;===============================================================================
 LoadTilesAsYouMove:                                            ; loc_6F2E
-		lea     (VDP_Control_Port), A5                       ; $00C00004
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		lea     (VDPCTRL), A5                       ; $00C00004
+		lea     (VDPDATA), A6                          ; $00C00000
 		lea     (Scroll_Flag_Array_2+$0002).w, A2            ; $FFFFEEA2
 		lea     ($FFFFEE68).w, A3
 		lea     (Level_Map_Bg_Buffer).w, A4                  ; $FFFF8080
@@ -8580,8 +8605,8 @@ Calc_VRAM_Pos_2_2P:                                            ; loc_77B6
 ; [ Begin ]          durante a carga da fase.
 ;===============================================================================
 Load_Tiles_From_Start:                                         ; loc_77D2
-		lea     (VDP_Control_Port), A5                       ; $00C00004
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		lea     (VDPCTRL), A5                       ; $00C00004
+		lea     (VDPDATA), A6                          ; $00C00000
 		tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
 		beq.s   loc_77F2
 		lea     (Camera_X_2).w, A3                           ; $FFFFEE20
@@ -9588,8 +9613,8 @@ loc_82CE:
 		bne.s   loc_82F8
 		move.b  #$57, (A1)        ; Carrega o Object 0x57 - Chefe da DHz
 loc_82F8:
-		move.l  #$6C000002, (VDP_Control_Port)               ; $00C00004
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		move.l  #$6C000002, (VDPCTRL)               ; $00C00004
+		lea     (VDPDATA), A6                          ; $00C00000
 		lea     (Art_DHz_Boss_Rocks), A2               ; loc_88F8C
 		moveq   #$03, D0
 loc_8310:
@@ -53437,7 +53462,7 @@ loc_2D314:
 ;===============================================================================
 HudUpdate:                                                     ; loc_2D316
 		nop
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		lea     (VDPDATA), A6                          ; $00C00000
 		tst.w   (Debug_Mode_Active_Flag).w                   ; $FFFFFFFA
 		bne     loc_2D408
 		tst.b   (HUD_Score_Refresh_Flag).w                   ; $FFFFFE1F
@@ -53495,7 +53520,7 @@ loc_2D3C8:
 		tst.b   ($FFFFF7D6).w
 		beq.s   loc_2D3F0
 		clr.b   ($FFFFF7D6).w
-		move.l  #$6E000002, (VDP_Control_Port)               ; $00C00004
+		move.l  #$6E000002, (VDPCTRL)               ; $00C00004
 		moveq   #$00, D1
 		move.w  ($FFFFF7D2).w, D1
 		bsr     loc_2D670
@@ -53538,7 +53563,7 @@ loc_2D44A:
 		tst.b   ($FFFFF7D6).w
 		beq.s   loc_2D472
 		clr.b   ($FFFFF7D6).w
-		move.l  #$6E000002, (VDP_Control_Port)               ; $00C00004
+		move.l  #$6E000002, (VDPCTRL)               ; $00C00004
 		moveq   #$00, D1
 		move.w  ($FFFFF7D2).w, D1
 		bsr     loc_2D670
@@ -53548,15 +53573,15 @@ loc_2D44A:
 loc_2D472:
 		rts
 loc_2D474:
-		move.l  #$5F400003, (VDP_Control_Port)               ; $00C00004
+		move.l  #$5F400003, (VDPCTRL)               ; $00C00004
 		lea     HUD_Rings_Mask(PC), A2                 ; loc_2D4DC
 		move.w  #$0002, D2
 		bra.s   loc_2D4A4
 ;-------------------------------------------------------------------------------
 Head_Up_Display_Base:                                          ; loc_2D488
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		lea     (VDPDATA), A6                          ; $00C00000
 		bsr     loc_2D6D0
-		move.l  #$5C400003, (VDP_Control_Port)               ; $00C00004
+		move.l  #$5C400003, (VDPCTRL)               ; $00C00004
 		lea     HUD_ScoreTime_Mask(PC), A2             ; loc_2D4D0
 		move.w  #$000E, D2
 loc_2D4A4:
@@ -53585,7 +53610,7 @@ HUD_Rings_Mask:                                                ; loc_2D4DC
 		dc.l    $FFFF0000
 ;-------------------------------------------------------------------------------
 loc_2D4E0:
-		move.l  #$5C400003, (VDP_Control_Port)               ; $00C00004
+		move.l  #$5C400003, (VDPCTRL)               ; $00C00004
 		move.w  (Camera_X).w, D1                             ; $FFFFEE00
 		swap.w  D1
 		move.w  (Player_One_Position_X).w, D1                ; $FFFFB008
@@ -53669,8 +53694,8 @@ loc_2D594:
 		rts
 ;-------------------------------------------------------------------------------
 Time_Count_Down:                                               ; loc_2D5A0
-		move.l  #$5F800003, (VDP_Control_Port)               ; $00C00004
-		lea     (VDP_Data_Port), A6                          ; $00C00000
+		move.l  #$5F800003, (VDPCTRL)               ; $00C00004
+		lea     (VDPDATA), A6                          ; $00C00000
 		lea     (HUD_Val_000010), A2                   ; loc_2D608
 		moveq   #$01, D6
 		moveq   #$00, D4
@@ -55369,8 +55394,8 @@ SoundDriverLoad:
 		move    SR, -(A7)
 		movem.l D0-D7/A0-A6, -(A7)
 		move    #$2700, SR
-		lea     (Z80_Bus_Request), A3
-		lea     (Z80_Reset), A2
+		lea     (Z80BUS), A3
+		lea     (Z80RESET), A2
 		moveq   #$00, D2
 		move.w  #$0100, D1
 		move.w  D1, (A3)
@@ -55393,9 +55418,9 @@ loc_EC03C:
 		lea     Z80_Sound_Driver(PC), A6
 		move.w  #$0E7E, D7
 		moveq   #$00, D6
-		lea     (Z80_RAM_Start), A5
+		lea     (Z80RAM), A5
 		moveq   #$00, D5
-		lea     (Z80_RAM_Start), A4
+		lea     (Z80RAM), A4
 loc_EC054:
 		lsr.w   #$01, D6
 		btst    #$08, D6
