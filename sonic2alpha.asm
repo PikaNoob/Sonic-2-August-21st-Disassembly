@@ -5672,24 +5672,42 @@ Level_Size_Load:                                               ; loc_59A4
 		move.w  #$0060, ($FFFFEED8).w
 		bra     Level_Load_Player_Position             ; loc_5B3E
 ;-------------------------------------------------------------------------------
-Level_Size_Array:                                              ; loc_5A2E
-		dc.l    $000029A0, $00000320, $00002940, $00000420	; GHZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; Zone 01
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; WZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; Zone 03
-		dc.l    $00002280, $FF000800, $00001E80, $FF000800	; MTZ
-		dc.l    $00002A80, $FF000800, $00003FFF, $FF000800	; MTZ Act 3
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; Zone 06
-		dc.l    $00002800, $00000720, $00003280, $00000720	; HTZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; HPZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; Zone 09
-		dc.l    $00002F80, $00000680, $00002580, $00000680	; OOZ
-		dc.l    $00002380, $03C00720, $00003FFF, $00600720	; DHZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; CNZ
-		dc.l    $00002780, $00000720, $00002880, $00000720	; CPZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; GCZ
-		dc.l    $000028C0, $020003A0, $000026C0, $018005A0	; NGHZ
-		dc.l    $00003FFF, $00000720, $00003FFF, $00000720	; DEZ
+;			xstart, xend, ystart, yend	; Zone
+Level_Size_Array:
+		dc.w    $0, $29A0, $0, $320	; GHZ Act 1
+		dc.w	$0, $2940, $0, $420	; GHZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; Zone 01 Act 1
+		dc.w	$0, $3FFF, $0, $720	; Zone 01 Act 2
+		dc.w    $0, $3FFF, $0, $720	; WZ Act 1
+		dc.w	$0, $3FFF, $0, $720	; WZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; Zone 03 Act 1
+		dc.w	$0, $3FFF, $0, $720	; Zone 03 Act 2
+		dc.w	$0, $2280, -$100, $800	; MTZ Act 1
+		dc.w	$0, $1E80, -$100, $800	; MTZ Act 2
+		dc.w	$0, $2A80, -$100, $800	; Act 3
+		dc.w	$0, $3FFF, -$100, $800	; Act 4
+		dc.w    $0, $3FFF, $0, $720	; Zone 06 Act 1
+		dc.w	$0, $3FFF, $0, $720	; Zone 06 Act 2
+		dc.w    $0, $2800, $0, $720	; HTZ Act 1
+		dc.w	$0, $3280, $0, $720	; HTZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; HPZ Act 1
+		dc.w	$0, $3FFF, $0, $720	; HPZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; Zone 09 Act 1
+		dc.w	$0, $3FFF, $0, $720	; Zone 09 Act 2
+		dc.w	$0, $2F80, $0, $680	; OOZ Act 1
+		dc.w	$0, $2580, $0, $680	; OOZ Act 2	
+		dc.w	$0, $2380, $3C0, $720	; DHZ Act 1
+		dc.w	$0, $3FFF, $60, $720	; DHZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; CNZ Act 1
+		dc.w	$0, $3FFF, $0, $720	; CNZ Act 2
+		dc.w    $0, $2780, $0, $720	; CPZ Act 1
+		dc.w	$0, $2880, $0, $720	; CPZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; GCZ Act 1
+		dc.w	$0, $3FFF, $0, $720	; GCZ Act 2
+		dc.w    $0, $28C0, $200, $3A0	; NGHZ Act 1
+		dc.w	$0, $26C0, $180, $5A0	; NGHZ Act 2
+		dc.w    $0, $3FFF, $0, $720	; DEZ Act 1
+		dc.w	$0, $3FFF, $0, $720	; DEZ Act 2
 ;===============================================================================
 ; Routine for loading level boundaries
 ; [ End ]
