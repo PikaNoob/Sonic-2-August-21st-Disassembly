@@ -10581,7 +10581,7 @@ loc_8E70:
                 bne.s   loc_8E7E
                 move.b  D1, Obj_Control_Var_11(A1)                       ; $003D
 loc_8E7E:
-                move.b  #$03, obj.MapFrame(A0)                             ; $001A
+                move.b  #$03, obj.MapFrame(A0)
                 addq.b  #$02, obj.Routine(A0)
                 andi.b  #$E7, obj.Status(A0)
 loc_8E8E:
@@ -11330,10 +11330,10 @@ loc_9872:
                 bpl     DeleteObject
                 bra     DisplaySprite
 loc_9882:
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
                 bra.s   loc_988C
 loc_9888:
-                addq.b  #$02, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$02, obj.MapFrame(A0)
 loc_988C:
                 move.l  Obj_Control_Var_08(A0), A4                       ; $0034
                 moveq   #$00, D0
@@ -11510,7 +11510,7 @@ loc_9F6A:
                 lsl.w   #$03, D0
                 lea     Misc_Object_Definitions_List(PC), A1   ; loc_9EFA
                 lea     $00(A1, D0), A1
-                move.b  (A1), obj.MapFrame(A0)                             ; $001A
+                move.b  (A1), obj.MapFrame(A0)
                 move.l  (A1)+, obj.Map(A0)                               ; $0004
                 move.w  (A1)+, obj.VRAM(A0)
                 bsr     ModifySpriteAttr_2P                    ; loc_DBBE
@@ -11557,7 +11557,7 @@ loc_9FCA:
                 lsl.w   #$03, D0
                 lea     Misc_Object_Definitions_List_2(PC), A1 ; loc_9FB2
                 lea     $00(A1, D0), A1
-                move.b  (A1), obj.MapFrame(A0)                             ; $001A
+                move.b  (A1), obj.MapFrame(A0)
                 move.l  (A1)+, obj.Map(A0)                               ; $0004
                 move.w  (A1)+, obj.VRAM(A0)
                 bsr     ModifySpriteAttr_2P
@@ -11990,7 +11990,7 @@ loc_A5A2:
                 move.b  #$06, obj.Priority(A0)
                 move.b  #$08, obj.Width(A0)
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 move.w  #$FC00, obj.YSpeed(A0)                          ; $0012
                 tst.b   (Boss_Defeated_Flag).w
                 bne.s   loc_A62C
@@ -12021,7 +12021,7 @@ loc_A63A:
                 add.w   D1, obj.Y(A0)                                    ; $000C
                 move.w  Obj_Control_Var_06(A0), obj.XSpeed(A0)     ; $0010, $0032
                 move.w  Obj_Control_Var_08(A0), obj.YSpeed(A0)   ; $0012, $0034
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 move.b  Obj_Control_Var_04(A0), D0                       ; $0030
                 add.b   D0, D0
                 addq.b  #$04, D0
@@ -12037,10 +12037,10 @@ loc_A690:
 ;-------------------------------------------------------------------------------
 loc_A694:
                 bsr     ObjectFall                             ; loc_D1AE
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 tst.w   obj.YSpeed(A0)                                  ; $0012
                 bmi.s   loc_A6BE
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A6BE
@@ -12073,8 +12073,8 @@ loc_A70C:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_A722
                 move.b  #$01, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$01, obj.MapFrame(A0)
 loc_A722:
                 tst.b   obj.Subtype(A0)                                  ; $0028
                 bne.s   loc_A734
@@ -12124,8 +12124,8 @@ loc_A790:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_A7C6
                 move.b  #$01, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$01, obj.MapFrame(A0)
 loc_A7C6:
                 bra     loc_A734     
 ;-------------------------------------------------------------------------------
@@ -12139,10 +12139,10 @@ loc_A7CA:
 ;-------------------------------------------------------------------------------
 loc_A7E6:
                 bsr     ObjectFall                             ; loc_D1AE
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 tst.w   obj.YSpeed(A0)                                  ; $0012
                 bmi.s   loc_A820
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A820
@@ -12171,10 +12171,10 @@ loc_A842:
                 bsr     loc_A914
                 bpl.s   loc_A87C
                 bsr     ObjectFall                             ; loc_D1AE
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 tst.w   obj.YSpeed(A0)                                  ; $0012
                 bmi.s   loc_A87C
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A87C
@@ -12206,15 +12206,15 @@ loc_A8BA:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_A8D0
                 move.b  #$01, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$01, obj.MapFrame(A0)
 loc_A8D0:
                 bra     loc_A734
 loc_A8D4:
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 tst.w   obj.YSpeed(A0)                                  ; $0012
                 bmi.s   loc_A8FA
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A8FA
@@ -12703,7 +12703,7 @@ loc_ADFE:
                 ori.b   #$04, obj.Render(A0)
                 move.b  #$00, obj.Priority(A0)
                 move.b  #$20, obj.Width(A0)
-                move.b  #$FF, obj.MapFrame(A0)                             ; $001A 
+                move.b  #$FF, obj.MapFrame(A0) 
 ;-------------------------------------------------------------------------------
 loc_AE2C:
                 bsr.s   loc_AE46
@@ -12717,10 +12717,10 @@ loc_AE46:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_AE84
                 move.b  #$01, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$08, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$08, obj.MapFrame(A0)
                 bcc.s   loc_AE86
-                cmpi.b  #$03, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$03, obj.MapFrame(A0)
                 bne.s   loc_AE84
                 move.l  Obj_Control_Var_10(A0), A1                       ; $003C
                 move.b  #$06, obj.Routine(A1)                            ; $0024
@@ -12883,7 +12883,7 @@ loc_B11C:
                 btst    #$00, $02(A2, D0)
                 beq.s   loc_B176
                 move.b  #$08, obj.Routine(A0)
-                move.b  #$0B, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0B, obj.MapFrame(A0)
                 rts
 loc_B176:
                 move.b  #$46, obj.ColType(A0)                          ; $0020
@@ -13326,8 +13326,8 @@ loc_B720:
                 move.b  (Control_Ports_Buffer_Data+$0001).w, D0      ; $FFFFF605
                 btst    #$05, D0
                 beq.s   loc_B734
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$0F, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$0F, obj.MapFrame(A0)
 loc_B734:
                 btst    #$04, D0
                 beq.s   loc_B740
@@ -13640,7 +13640,7 @@ loc_BC58:
 loc_BC60:
                 addq.b  #$02, obj.Routine(A0)
                 move.w  #$0050, obj.X(A0)
-                btst    #$00, obj.MapFrame(A0)                             ; $001A
+                btst    #$00, obj.MapFrame(A0)
                 beq.s   loc_BC78
                 move.w  #$01F0, obj.X(A0)
 loc_BC78:
@@ -13669,7 +13669,7 @@ loc_BCBE:
                 move.b  (Control_Ports_Buffer_Data+$0001).w, D0      ; $FFFFF605
                 andi.b  #$70, D0
                 bne.s   loc_BCDE
-                btst    #$00, obj.MapFrame(A0)                             ; $001A
+                btst    #$00, obj.MapFrame(A0)
                 bne.s   loc_BD02
                 tst.w   obj.AnimTime(A0)                                 ; $001E
                 beq.s   loc_BCDE
@@ -13766,7 +13766,7 @@ loc_BDA0:
 loc_BDAA:
                 cmpi.b  #$0E, ($FFFFB724).w
                 beq.s   loc_BDA0
-                cmpi.b  #$04, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$04, obj.MapFrame(A0)
                 bne.s   loc_BD8C
                 addq.b  #$02, obj.Routine(A0)
                 move.w  #$00B4, obj.AnimTime(A0)                         ; $001E
@@ -13868,7 +13868,7 @@ loc_BEC4:
 loc_BED8:
                 rts
 loc_BEDA:
-                cmpi.b  #$04, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$04, obj.MapFrame(A0)
                 bne     DeleteObject
                 addq.b  #$02, obj.Routine(A0)
                 clr.b   ($FFFFF7CC).w
@@ -13971,7 +13971,7 @@ loc_BFEE:
 loc_BFFE:
                 rts
 loc_C000:
-                cmpi.b  #$02, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$02, obj.MapFrame(A0)
                 bne.s   loc_BFEE
                 addq.b  #$02, obj.Routine(A0)
                 move.w  #$00B4, obj.AnimTime(A0)                         ; $001E  
@@ -14083,7 +14083,7 @@ loc_C116:
                 dbra    D1, loc_C116
 loc_C15C:
                 move.b  obj.MapFrame(A0), D0                               ; $001A
-                move.b  #$06, obj.MapFrame(A0)                             ; $001A
+                move.b  #$06, obj.MapFrame(A0)
                 cmpi.b  #$06, D0
                 bne.s   loc_C172
                 move.b  obj.Anim(A0), obj.MapFrame(A0)        ; $001A, $001C
@@ -16480,7 +16480,7 @@ loc_DF12:
 		move.b  obj.YRadius(A0), D5                             ; $0016
 		subq.b  #$03, D5
 		sub.w   D5, D3
-		cmpi.b  #$4D, obj.MapFrame(A0)                             ; $001A
+		cmpi.b  #$4D, obj.MapFrame(A0)
 		bne.s   Touch_Rings_NoDuck                     ; loc_DF46
 		addi.w  #$000C, D3
 		moveq   #$0A, D5
@@ -17416,28 +17416,28 @@ loc_E7B6:
 loc_E7C0:
                 move.b  #$04, obj.Routine(A0)
                 move.b  #$02, obj.Anim(A0)
-                move.b  #$03, obj.MapFrame(A0)                             ; $001A
+                move.b  #$03, obj.MapFrame(A0)
                 move.w  #$0470, obj.VRAM(A0)
                 move.b  #$08, obj.Width(A0)
                 bra.s   loc_E82C   
 ;-------------------------------------------------------------------------------
 loc_E7E0:
                 move.b  #$06, obj.Routine(A0)
-                move.b  #$06, obj.MapFrame(A0)                             ; $001A
+                move.b  #$06, obj.MapFrame(A0)
                 bset    #$01, obj.Status(A0)
                 bra.s   loc_E82C      
 ;-------------------------------------------------------------------------------
 loc_E7F4:
                 move.b  #$08, obj.Routine(A0)
                 move.b  #$04, obj.Anim(A0)
-                move.b  #$07, obj.MapFrame(A0)                             ; $001A
+                move.b  #$07, obj.MapFrame(A0)
                 move.w  #$043C, obj.VRAM(A0)
                 bra.s   loc_E82C  
 ;-------------------------------------------------------------------------------
 loc_E80E:
                 move.b  #$0A, obj.Routine(A0)
                 move.b  #$04, obj.Anim(A0)
-                move.b  #$0A, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0A, obj.MapFrame(A0)
                 move.w  #$043C, obj.VRAM(A0)
                 bset    #$01, obj.Status(A0)
 ;-------------------------------------------------------------------------------
@@ -18625,7 +18625,7 @@ loc_F730:
 		bcs     loc_F678
 		move.l  A0, -(A7)
 		move.l  A1, A0
-		jsr     (KillCharacter)                        ; loc_2B57C
+		jsr     (KillCharacter)
 		move.l  (A7)+, A0
 		move.w  D6, D4
 		addi.b  #$0F, D4
@@ -20519,9 +20519,9 @@ loc_10D7C:
                 move.b  ($FFFFFE05).w, D1
                 andi.b  #$03, D1
                 bne.s   loc_10D9C
-                cmpi.b  #$B5, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$B5, obj.MapFrame(A0)
                 bcc.s   loc_10D9C
-                addi.b  #$20, obj.MapFrame(A0)                             ; $001A
+                addi.b  #$20, obj.MapFrame(A0)
 loc_10D9C:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_10DB6
@@ -20819,7 +20819,7 @@ Loop_Load_Sonic_Sprites:                                       ; loc_110FA
                 move.w  D4, D2
                 add.w   D3, D4
                 add.w   D3, D4
-                jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+                jsr     (DMA_68KtoVRAM)
                 dbra    D5, Loop_Load_Sonic_Sprites            ; loc_110FA
 loc_11126:
                 rts
@@ -20829,7 +20829,7 @@ loc_11126:
 ;===============================================================================
 ;-------------------------------------------------------------------------------
 Kill_Sonic:                                                    ; loc_11128
-		jmp     (KillCharacter)                        ; loc_2B57C
+		jmp     (KillCharacter)
 ;-------------------------------------------------------------------------------
 		dc.w    $0000
 ;-------------------------------------------------------------------------------
@@ -22477,7 +22477,7 @@ Load_Tails_Dynamic_PLC_Loop:                                   ; loc_12414
                 move.w  D4, D2
                 add.w   D3, D4
                 add.w   D3, D4
-                jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+                jsr     (DMA_68KtoVRAM)
                 dbra    D5, Load_Tails_Dynamic_PLC_Loop        ; loc_12414
 Exit_Load_Tails_Dynamic_PLC:                                   ; loc_12440
                 rts
@@ -22599,7 +22599,7 @@ Obj05Ani_Hanging:
 ;===============================================================================
 ;-------------------------------------------------------------------------------
 Kill_Tails:                                                    ; loc_12544
-		jmp     (KillCharacter)                        ; loc_2B57C
+		jmp     (KillCharacter)
 ;-------------------------------------------------------------------------------
 		dc.w    $0000
 ;-------------------------------------------------------------------------------
@@ -22793,7 +22793,7 @@ Load_Oxygen_Numbers_Dynamic_PLC:                               ; loc_127EC
                 move.w  #$9180, D2
 loc_12826:
                 move.w  #$0060, D3
-                jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+                jsr     (DMA_68KtoVRAM)
 loc_12830:
                 rts
 ;-------------------------------------------------------------------------------
@@ -23488,7 +23488,7 @@ Loop_Load_Water_Splash_Dust:                                   ; loc_1336C
                 move.w  D4, D2
                 add.w   D3, D4
                 add.w   D3, D4
-                jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+                jsr     (DMA_68KtoVRAM)
                 dbra    D5, Loop_Load_Water_Splash_Dust        ; loc_1336C
 loc_13398:
                 rts
@@ -23634,10 +23634,10 @@ loc_1359A:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_135D2
                 move.b  #$01, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$06, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$06, obj.MapFrame(A0)
                 bcs.s   loc_135D2
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.b  #$00, Obj_Control_Var_04(A0)                     ; $0030
                 move.b  #$01, Obj_Control_Var_05(A0)                     ; $0031
                 rts
@@ -23658,7 +23658,7 @@ loc_135EA:
 loc_135F8:
                 cmpi.w  #$0800, D0
                 bcs.s   loc_1360C
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.b  #$01, Obj_Control_Var_04(A0)                     ; $0030
                 bra.s   loc_135D8
 loc_1360C:
@@ -25392,7 +25392,7 @@ loc_14A2E:
 loc_14A48:
                 lea     (Oxygen_Bubbles_Animate_Data), A1      ; loc_14CD2
                 jsr     (AnimateSprite)                        ; loc_D372
-                cmpi.b  #$06, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$06, obj.MapFrame(A0)
                 bne.s   loc_14A62
                 move.b  #$01, Obj_Control_Var_02(A0)                     ; $002E
 ;-------------------------------------------------------------------------------
@@ -26199,7 +26199,7 @@ loc_154BC:
                 move.b  #$04, obj.Render(A0)
                 move.b  #$10, obj.Width(A0)
                 move.b  #$01, obj.Priority(A0)
-                move.b  #$12, obj.MapFrame(A0)                             ; $001A
+                move.b  #$12, obj.MapFrame(A0)
                 bsr.s   loc_15524
                 move.b  #$A0, obj.YRadius(A1)                           ; $0016
                 bset    #$04, obj.Render(A1)
@@ -26240,7 +26240,7 @@ loc_15568:
 ;-------------------------------------------------------------------------------
 loc_15582:
                 move.l  Obj_Control_Var_0C(A0), A1                       ; $0038
-                move.b  #$12, obj.MapFrame(A0)                             ; $001A
+                move.b  #$12, obj.MapFrame(A0)
                 move.w  Obj_Control_Var_08(A0), D0                       ; $0034
                 move.w  (waterLevel).w, D1                          
                 cmp.w   D0, D1
@@ -26342,14 +26342,14 @@ loc_15A20:
                 bne.s   loc_15A42
                 btst    #$07, (Control_Ports_Buffer_Data+$0001).w    ; $FFFFF605
                 beq.s   loc_15A52
-                addq.b  #$03, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$03, obj.MapFrame(A0)
                 move.b  #$01, Obj_Control_Var_06(A0)                     ; $0032
                 bra.s   loc_15A52
 loc_15A42:
                 tst.w   (Pause_Status).w                             ; $FFFFF63A
                 bne.s   loc_15A52
                 move.b  #$00, Obj_Control_Var_06(A0)                     ; $0032
-                subq.b  #$03, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$03, obj.MapFrame(A0)
 loc_15A52:
                 lea     (Water_Surface_Data), A1               ; loc_15A72
                 moveq   #$00, D1
@@ -26376,20 +26376,20 @@ loc_15AB2:
                 bne.s   loc_15AD4
                 btst    #$07, (Control_Ports_Buffer_Data+$0001).w    ; $FFFFF605
                 beq.s   loc_15AE4
-                addq.b  #$02, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$02, obj.MapFrame(A0)
                 move.b  #$01, Obj_Control_Var_06(A0)                     ; $0032
                 bra.s   loc_15AFA
 loc_15AD4:
                 tst.w   (Pause_Status).w                             ; $FFFFF63A
                 bne.s   loc_15AFA
                 move.b  #$00, Obj_Control_Var_06(A0)                     ; $0032
-                subq.b  #$02, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$02, obj.MapFrame(A0)
 loc_15AE4:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_15AFA
                 move.b  #$05, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$01, obj.MapFrame(A0)
 loc_15AFA:
                 bra     Jmp_02_To_DisplaySprite                ; loc_16390
 ;-------------------------------------------------------------------------------
@@ -26443,13 +26443,13 @@ loc_15CF4:
                 subi.w  #$0040, D1
                 addi.w  #$0040, D2
                 move.b  obj.Subtype(A0), D3                              ; $0028
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   D1, D0
                 bcs.s   loc_15D26
                 cmp.w   D2, D0
                 bcc.s   loc_15D26
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 add.b   D3, obj.MapFrame(A0)                               ; $001A
                 bra     Jmp_02_To_DisplaySprite                ; loc_16390
 loc_15D26:
@@ -26458,7 +26458,7 @@ loc_15D26:
                 bcs.s   loc_15D38
                 cmp.w   D2, D0
                 bcc.s   loc_15D38
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
 loc_15D38:
                 add.b   D3, obj.MapFrame(A0)                               ; $001A
                 bra     Jmp_02_To_DisplaySprite                ; loc_16390
@@ -26670,7 +26670,7 @@ loc_161AA:
                 move.b  #$00, obj.ColType(A0)                          ; $0020
                 move.b  #$0C, obj.Width(A0)
                 move.b  #$03, obj.AnimTime(A0)                           ; $001E
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$00C1, D0
                 jsr     (Play_Sfx)                             ; loc_1512  
 ;-------------------------------------------------------------------------------
@@ -26678,8 +26678,8 @@ loc_161EE:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_16208
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$05, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$05, obj.MapFrame(A0)
                 beq     Jmp_02_To_DeleteObject                 ; loc_16396
 loc_16208:
                 bra     Jmp_02_To_DisplaySprite                ; loc_16390    
@@ -27123,7 +27123,7 @@ loc_1682A:
 loc_16884:
                 btst    #$00, obj.Status(A0)
                 beq.s   loc_16892
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
 loc_16892:
                 move.b  obj.MapFrame(A0), Obj_Control_Var_0E(A0)    ; $001A, $003A  
 ;------------------------------------------------------------------------------- 
@@ -27190,7 +27190,7 @@ loc_16926:
 loc_1692A:
                 bsr     loc_16956
                 lea     (loc_16B6E), A2
-                btst    #$00, obj.MapFrame(A0)                             ; $001A
+                btst    #$00, obj.MapFrame(A0)
                 beq.s   loc_16942
                 lea     (loc_16B9F), A2
 loc_16942:
@@ -27214,7 +27214,7 @@ loc_16962:
                 move.b  D0, obj.MapFrame(A0)                               ; $001A
                 move.b  D1, Obj_Control_Var_0E(A0)                       ; $003A
                 bclr    #$00, obj.Render(A0)
-                btst    #$01, obj.MapFrame(A0)                             ; $001A
+                btst    #$01, obj.MapFrame(A0)
                 beq.s   loc_16980
                 bset    #$00, obj.Render(A0)
 loc_16980:
@@ -27429,7 +27429,7 @@ loc_16C9E:
                 bsr     Jmp_02_To_ModifySpriteAttr_2P          ; loc_16EAA
                 ori.b   #$04, obj.Render(A0)
                 move.b  #$20, obj.Width(A0)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.b  #$01, obj.Priority(A0)
                 move.w  obj.X(A0), Obj_Control_Var_04(A0)         ; $0008, $0030
                 move.w  obj.Y(A0), Obj_Control_Var_06(A0)         ; $000C, $0032
@@ -27483,7 +27483,7 @@ loc_16D50:
                 subq.w  #$01, Obj_Control_Var_08(A0)                     ; $0034
                 bne.s   loc_16D94
                 addq.b  #$02, obj.Routine2(A0)                          ; $0025
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 move.w  #$0000, obj.XSpeed(A0)                            ; $0010
                 move.w  #$0000, obj.YSpeed(A0)                          ; $0012
                 bsr     Jmp_01_To_SingleObjectLoad_2           ; loc_16EA4
@@ -28606,8 +28606,8 @@ loc_17F80:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_17F96
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                andi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                andi.b  #$01, obj.MapFrame(A0)
 loc_17F96:
                 bsr     Jmp_03_To_SpeedToPos                   ; loc_18136
                 addi.w  #$0018, obj.YSpeed(A0)                          ; $0012
@@ -28627,12 +28627,12 @@ loc_17FB2:
                 add.w   D1, obj.Y(A0)                                    ; $000C
                 addq.b  #$02, obj.Routine(A0)
                 move.b  #$02, obj.Anim(A0)
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 move.w  #$0000, obj.YSpeed(A0)                          ; $0012
                 move.l  #Fireball_Mappings, obj.Map(A0) ; loc_180D0, $0004
                 move.w  #$839E, obj.VRAM(A0)
                 bsr     Jmp_05_To_ModifySpriteAttr_2P          ; loc_18130
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$0009, Obj_Control_Var_06(A0)                   ; $0032
                 move.b  #$03, Obj_Control_Var_0A(A0)                     ; $0036
 loc_1800A:
@@ -28888,7 +28888,7 @@ loc_182D4:
                 lea     (loc_18322), A4
                 moveq   #$00, D0
                 move.b  obj.MapFrame(A0), D0                               ; $001A
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
                 move.l  D0, D1
                 add.w   D0, D0
                 add.w   D0, D0
@@ -29751,30 +29751,29 @@ loc_18EFE:
 ;-------------------------------------------------------------------------------
 		nop
 Oil_KillCharacter:                                             ; loc_18F14
-		jmp     (KillCharacter)                        ; loc_2B57C
+		jmp     (KillCharacter)
 Jmp_00_To_Platform_Object_A1:                                  ; loc_18F1A
 		jmp     (Platform_Object_A1)                   ; loc_F842
 ;-------------------------------------------------------------------------------
-Obj45_Spring_Push_Boost:                                    ; loc_18F20
 ;===============================================================================
-; Object 0x45 - Mola empurre para obter impulso na Oil Ocean
-; [ Begin ] 
+; Object 0x45 - Pressure spring from Oil Ocean
+; [ Begin ]
 ;===============================================================================   
-; loc_18F20:
+Obj45_Spring_Push_Boost:
                 moveq   #$00, D0
                 move.b  obj.Routine(A0), D0
-                move.w  loc_18F32(PC, D0), D1
-                jsr     loc_18F32(PC, D1)
-                bra     Jmp_08_To_MarkObjGone                  ; loc_19AF8
+                move.w  .Index(PC, D0), D1
+                jsr     .Index(PC, D1)
+                bra     Jmp_08_To_MarkObjGone
 ;-------------------------------------------------------------------------------
-loc_18F32:
-                dc.w    loc_18F38-loc_18F32
-                dc.w    loc_18FAE-loc_18F32
-                dc.w    loc_190A2-loc_18F32        
+.Index:
+                dc.w    loc_18F38-.Index
+                dc.w    loc_18FAE-.Index
+                dc.w    loc_190A2-.Index        
 ;-------------------------------------------------------------------------------
 loc_18F38:
                 addq.b  #$02, obj.Routine(A0)
-                move.l  #Spring_Push_Boost_Mappings, obj.Map(A0) ; loc_19342, $0004
+                move.l  #Spring_Push_Boost_Mappings, obj.Map(A0)
                 move.w  #$43C5, obj.VRAM(A0)
                 ori.b   #$04, obj.Render(A0)
                 move.b  #$10, obj.Width(A0)
@@ -29792,16 +29791,16 @@ loc_18F6E:
 loc_18F72:
                 move.b  #$04, obj.Routine(A0)
                 move.b  #$01, obj.Anim(A0)
-                move.b  #$0A, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0A, obj.MapFrame(A0)
                 move.w  #$43C5, obj.VRAM(A0)
                 move.b  #$14, obj.Width(A0)
-                move.w  obj.X(A0), Obj_Control_Var_08(A0)         ; $0008, $0034  
+                move.w  obj.X(A0), Obj_Control_Var_08(A0)  
 ;-------------------------------------------------------------------------------
 loc_18F96:
                 move.b  obj.Subtype(A0), D0
                 andi.w  #$0002, D0
-                move.w  loc_18FAA(PC, D0), Obj_Control_Var_04(A0)  ; $0030
-                bsr     Jmp_08_To_ModifySpriteAttr_2P          ; loc_19AFE
+                move.w  loc_18FAA(PC, D0), Obj_Control_Var_04(A0)
+                bsr     Jmp_08_To_ModifySpriteAttr_2P
                 rts               
 ;-------------------------------------------------------------------------------
 loc_18FAA:
@@ -29923,19 +29922,19 @@ loc_19116:
                 cmp.w   obj.X(A0), D0                                    ; $0008
                 beq.s   loc_19162
                 bcc.s   loc_19144
-                subq.b  #$04, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$04, obj.MapFrame(A0)
                 subq.w  #$04, obj.X(A0)                                  ; $0008
                 cmp.w   obj.X(A0), D0                                    ; $0008
                 bcs.s   loc_1915E
-                move.b  #$0A, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0A, obj.MapFrame(A0)
                 move.w  Obj_Control_Var_08(A0), obj.X(A0)         ; $0008, $0034
                 bra.s   loc_1915E
 loc_19144:
-                subq.b  #$04, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$04, obj.MapFrame(A0)
                 addq.w  #$04, obj.X(A0)                                  ; $0008
                 cmp.w   obj.X(A0), D0                                    ; $0008
                 bcc.s   loc_1915E
-                move.b  #$0A, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0A, obj.MapFrame(A0)
                 move.w  Obj_Control_Var_08(A0), obj.X(A0)         ; $0008, $0034
 loc_1915E:
                 bsr     loc_191F8
@@ -30081,249 +30080,16 @@ loc_19320:
                 dc.b    $0C, $0B, $0A, $0A, $0A, $0A, $0A, $0A
                 dc.b    $0A, $FF
 ;------------------------------------------------------------------------------- 
-Spring_Push_Boost_Mappings:                                    ; loc_19342:
-                dc.w    loc_1937C-Spring_Push_Boost_Mappings
-                dc.w    loc_193A6-Spring_Push_Boost_Mappings
-                dc.w    loc_193D0-Spring_Push_Boost_Mappings
-                dc.w    loc_193FA-Spring_Push_Boost_Mappings
-                dc.w    loc_19424-Spring_Push_Boost_Mappings
-                dc.w    loc_1944E-Spring_Push_Boost_Mappings
-                dc.w    loc_19478-Spring_Push_Boost_Mappings
-                dc.w    loc_194A2-Spring_Push_Boost_Mappings
-                dc.w    loc_194CC-Spring_Push_Boost_Mappings
-                dc.w    loc_194F6-Spring_Push_Boost_Mappings
-                dc.w    loc_19520-Spring_Push_Boost_Mappings
-                dc.w    loc_1954A-Spring_Push_Boost_Mappings
-                dc.w    loc_19574-Spring_Push_Boost_Mappings
-                dc.w    loc_1959E-Spring_Push_Boost_Mappings
-                dc.w    loc_195C8-Spring_Push_Boost_Mappings
-                dc.w    loc_195F2-Spring_Push_Boost_Mappings
-                dc.w    loc_1961C-Spring_Push_Boost_Mappings
-                dc.w    loc_19646-Spring_Push_Boost_Mappings
-                dc.w    loc_19670-Spring_Push_Boost_Mappings
-                dc.w    loc_1969A-Spring_Push_Boost_Mappings
-                dc.w    loc_196C4-Spring_Push_Boost_Mappings
-                dc.w    loc_196EE-Spring_Push_Boost_Mappings
-                dc.w    loc_19718-Spring_Push_Boost_Mappings
-                dc.w    loc_19742-Spring_Push_Boost_Mappings
-                dc.w    loc_1976C-Spring_Push_Boost_Mappings
-                dc.w    loc_19796-Spring_Push_Boost_Mappings
-                dc.w    loc_197C0-Spring_Push_Boost_Mappings
-                dc.w    loc_197EA-Spring_Push_Boost_Mappings
-                dc.w    loc_19814-Spring_Push_Boost_Mappings
-loc_1937C:
-                dc.w    $0005
-                dc.l    $EC0C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $04081007, $1003FFF4
-                dc.l    $FC08300A, $3005FFF4
-                dc.l    $F404100D, $1006FFF8
-loc_193A6:
-                dc.w    $0005
-                dc.l    $EE0C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $04081007, $1003FFF4
-                dc.l    $FC08300A, $3005FFF4
-                dc.l    $F604100D, $1006FFF8
-loc_193D0:
-                dc.w    $0005
-                dc.l    $F00C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $04081007, $1003FFF4
-                dc.l    $FE08300A, $3005FFF4
-                dc.l    $F804100D, $1006FFF8
-loc_193FA:
-                dc.w    $0005
-                dc.l    $F20C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $06081007, $1003FFF4
-                dc.l    $0008300A, $3005FFF4
-                dc.l    $FA04100D, $1006FFF8
-loc_19424:
-                dc.w    $0005
-                dc.l    $F40C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $06081007, $1003FFF4
-                dc.l    $0008300A, $3005FFF4
-                dc.l    $FC04100D, $1006FFF8
-loc_1944E:
-                dc.w    $0005
-                dc.l    $F60C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $06081007, $1003FFF4
-                dc.l    $0208300A, $3005FFF4
-                dc.l    $FE04100D, $1006FFF8
-loc_19478:
-                dc.w    $0005
-                dc.l    $F80C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $08081007, $1003FFF4
-                dc.l    $0408300A, $3005FFF4
-                dc.l    $0004100D, $1006FFF8
-loc_194A2:
-                dc.w    $0005
-                dc.l    $FA0C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $08081007, $1003FFF4
-                dc.l    $0408300A, $3005FFF4
-                dc.l    $0204100D, $1006FFF8
-loc_194CC:
-                dc.w    $0005
-                dc.l    $FC0C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $08081007, $1003FFF4
-                dc.l    $0608300A, $3005FFF4
-                dc.l    $0404100D, $1006FFF8
-loc_194F6:
-                dc.w    $0005
-                dc.l    $FE0C3000, $3000FFF0
-                dc.l    $0C083004, $3002FFF4
-                dc.l    $0A081007, $1003FFF4
-                dc.l    $0808300A, $3005FFF4
-                dc.l    $0604100D, $1006FFF8
-loc_19520:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFEC
-                dc.l    $F4020016, $000BFFF4
-                dc.l    $F4022019, $200CFFFC
-                dc.l    $F801001C, $000E0004
-loc_1954A:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFED
-                dc.l    $F4020016, $000BFFF5
-                dc.l    $F4022019, $200CFFFD
-                dc.l    $F801001C, $000E0004
-loc_19574:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFEE
-                dc.l    $F4020016, $000BFFF6
-                dc.l    $F4022019, $200CFFFE
-                dc.l    $F801001C, $000E0004
-loc_1959E:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFEF
-                dc.l    $F4020016, $000BFFF7
-                dc.l    $F4022019, $200CFFFF
-                dc.l    $F801001C, $000E0004
-loc_195C8:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF0
-                dc.l    $F4020016, $000BFFF8
-                dc.l    $F4022019, $200CFFFE
-                dc.l    $F801001C, $000E0004
-loc_195F2:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF1
-                dc.l    $F4020016, $000BFFF9
-                dc.l    $F4022019, $200CFFFF
-                dc.l    $F801001C, $000E0004
-loc_1961C:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF2
-                dc.l    $F4020016, $000BFFF8
-                dc.l    $F4022019, $200CFFFE
-                dc.l    $F801001C, $000E0004
-loc_19646:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF3
-                dc.l    $F4020016, $000BFFF9
-                dc.l    $F4022019, $200CFFFF
-                dc.l    $F801001C, $000E0004
-loc_19670:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF4
-                dc.l    $F4020016, $000BFFFA
-                dc.l    $F4022019, $200C0000
-                dc.l    $F801001C, $000E0004
-loc_1969A:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF5
-                dc.l    $F4020016, $000BFFFB
-                dc.l    $F4022019, $200C0001
-                dc.l    $F801001C, $000E0004
-loc_196C4:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF6
-                dc.l    $F4020016, $000BFFFC
-                dc.l    $F4022019, $200C0000
-                dc.l    $F801001C, $000E0004
-loc_196EE:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF7
-                dc.l    $F4020016, $000BFFFD
-                dc.l    $F4022019, $200C0001
-                dc.l    $F801001C, $000E0004
-loc_19718:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF8
-                dc.l    $F4020016, $000BFFFC
-                dc.l    $F4022019, $200C0000
-                dc.l    $F801001C, $000E0004
-loc_19742:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFF9
-                dc.l    $F4020016, $000BFFFD
-                dc.l    $F4022019, $200C0001
-                dc.l    $F801001C, $000E0004
-loc_1976C:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFFA
-                dc.l    $F4020016, $000BFFFE
-                dc.l    $F4022019, $200C0002
-                dc.l    $F801001C, $000E0004
-loc_19796:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFFB
-                dc.l    $F4020016, $000BFFFF
-                dc.l    $F4022019, $200C0003
-                dc.l    $F801001C, $000E0004
-loc_197C0:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFFC
-                dc.l    $F4020016, $000B0000
-                dc.l    $F4022019, $200C0002
-                dc.l    $F801001C, $000E0004
-loc_197EA:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFFD
-                dc.l    $F4020016, $000B0001
-                dc.l    $F4022019, $200C0003
-                dc.l    $F801001C, $000E0004
-loc_19814:
-                dc.w    $0005
-                dc.l    $F003200F, $2007000C
-                dc.l    $F4022013, $2009FFFE
-                dc.l    $F4020016, $000B0000
-                dc.l    $F4022019, $200C0002
-                dc.l    $F801001C, $000E0004 
+		include 'mappings/sprite/obj45.asm'
 ;===============================================================================
-; Object 0x45 - Mola empurre para obter impulso na Oil Ocean
-; [ End ] 
+; Object 0x45 - Pressure spring from Oil Ocean
+; [ End ]
 ;===============================================================================
-Obj46_Spring_Ball:                                          ; loc_1983E
 ;===============================================================================
 ; Object 0x46 - Bola emcima da mola, após pressionar o botão a bola ejeta
 ; [ Begin ]          podendo ser usada como veículo na Oil Ocean - Object não usado
-;===============================================================================   
-; loc_1983E:
+;===============================================================================
+Obj46_Spring_Ball:
                 moveq   #$00, D0
                 move.b  obj.Routine(A0), D0
                 move.w  loc_1984C(PC, D0), D1
@@ -30355,7 +30121,7 @@ loc_19870:
                 move.w  obj.X(A0), Obj_Control_Var_08(A0)         ; $0008, $0034
                 move.w  obj.Y(A0), Obj_Control_Var_0A(A0)         ; $000C, $0036
                 move.b  #$10, obj.Width(A0)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$0000, obj.GroundSpeed(A0)                          ; $0014
                 move.b  #$01, obj.AnimTime2(A0)                         ; $001F
                 bsr     Jmp_01_To_SingleObjectLoad             ; loc_19AF2
@@ -30452,7 +30218,7 @@ loc_19A00:
 loc_19A04:
                 tst.b   Obj_Control_Var_04(A0)                           ; $0030
                 beq.s   loc_19A14
-                subq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$01, obj.MapFrame(A0)
                 bne.s   loc_19A14
                 clr.b   Obj_Control_Var_04(A0)                           ; $0030
 loc_19A14:
@@ -30460,7 +30226,7 @@ loc_19A14:
 loc_19A18:
                 tst.b   obj.MapFrame(A0)                                   ; $001A
                 beq.s   loc_19A26
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 rts
 loc_19A26:
                 move.b  obj.GroundSpeed(A0), D0                              ; $0014
@@ -30581,7 +30347,7 @@ loc_19B5A:
                 move.w  #$0005, D3
                 move.w  obj.X(A0), D4                                    ; $0008
                 bsr     Jmp_03_To_SolidObject                  ; loc_19BF0
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.b  obj.Subtype(A0), D0
                 andi.w  #$000F, D0
                 lea     ($FFFFF7E0).w, A3
@@ -30603,7 +30369,7 @@ loc_19BA4:
                 jsr     (Play_Sfx)                             ; loc_1512
 loc_19BB2:
                 bset    D3, (A3)
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
 loc_19BBA:
                 bra     Jmp_09_To_MarkObjGone        
 ;-------------------------------------------------------------------------------
@@ -30647,7 +30413,7 @@ loc_19C0E:
                 tst.b   obj.Subtype(A0)                                  ; $0028
                 beq.s   loc_19C32
                 move.w  #$63FF, obj.VRAM(A0)
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
 loc_19C32:
                 bsr     Jmp_0A_To_ModifySpriteAttr_2P          ; loc_1A022
                 move.b  #$04, obj.Render(A0)
@@ -30732,7 +30498,7 @@ loc_19D3E:
                 move.b  #$06, obj.Routine(A1)                            ; $0024
 loc_19D50:
                 lea     (Break_Boost_Data), A4                 ; loc_19E74
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
                 moveq   #$0F, D1
                 move.w  #$0018, D2
                 bsr     Jmp_01_To_Smash_Object                 ; loc_1A028      
@@ -30968,13 +30734,13 @@ loc_1A19A:
 loc_1A19C:
                 tst.b   Obj_Control_Var_12(A0)                           ; $003E
                 bne.s   loc_1A1C4
-                cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$07, obj.MapFrame(A0)
                 beq.s   loc_1A1DE
                 subq.w  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_1A1C2
                 move.w  #$0007, obj.AnimTime(A0)                         ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$07, obj.MapFrame(A0)
                 beq.s   loc_1A1DE
 loc_1A1C2:
                 rts
@@ -30984,7 +30750,7 @@ loc_1A1C4:
                 subq.w  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_1A1C2
                 move.w  #$0007, obj.AnimTime(A0)                         ; $001E
-                subq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$01, obj.MapFrame(A0)
                 beq.s   loc_1A1DE
                 rts
 loc_1A1DE:
@@ -31026,14 +30792,14 @@ loc_1A24A:
                 move.w  #$0001, obj.AnimTime(A0)                         ; $001E
                 tst.b   player.TopSolid(A0)                         ; $003E
                 beq.s   loc_1A27A
-                cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$07, obj.MapFrame(A0)
                 beq.s   loc_1A284
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
                 bra.s   loc_1A284
 loc_1A27A:
                 tst.b   obj.MapFrame(A0)                                   ; $001A
                 beq.s   loc_1A284
-                subq.b  #$01, obj.MapFrame(A0)                             ; $001A
+                subq.b  #$01, obj.MapFrame(A0)
 loc_1A284:
                 move.l  obj.X(A1), D2                                    ; $0008
                 move.l  obj.Y(A1), D3                                    ; $000C
@@ -31098,7 +30864,7 @@ loc_1A464:
                 ori.b   #$04, obj.Render(A0)
                 move.b  #$03, obj.Priority(A0)
                 move.b  #$10, obj.Width(A0)
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 andi.b  #$0F, obj.Subtype(A0)                            ; $0028
 ;------------------------------------------------------------------------------- 
 loc_1A498:
@@ -31158,7 +30924,7 @@ loc_1A532:
                 move.b  #$04, obj.Priority(A0)
                 move.b  #$9B, obj.ColType(A0)                          ; $0020
                 move.b  #$08, obj.Width(A0)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$0400, obj.XSpeed(A0)                            ; $0010
                 btst    #$00, obj.Status(A0)
                 beq.s   loc_1A56C
@@ -31353,7 +31119,7 @@ loc_1A770:
                 add.w   D1, obj.Y(A0)                                    ; $000C
                 clr.w   obj.YSpeed(A0)                                  ; $0012
                 move.w  obj.Y(A0), Obj_Control_Var_06(A0)         ; $000C, $0032
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 clr.b   obj.Routine2(A0)                                ; $0025
 loc_1A79C:
                 rts  
@@ -31430,7 +31196,7 @@ loc_1A854:
 loc_1A886:
                 lea     (loc_1A974), A4
                 lea     (loc_1A966), A2
-                addq.b  #$07, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$07, obj.MapFrame(A0)
                 bsr     loc_1A9AC
                 lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
@@ -31486,8 +31252,8 @@ loc_1A91C:
                 move.w  #$0003, Obj_Control_Var_08(A0)                   ; $0034
                 subq.w  #$04, obj.Y(A0)                                  ; $000C
                 addq.b  #$04, obj.YRadius(A0)
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$06, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$06, obj.MapFrame(A0)
                 bne.s   loc_1A942
                 move.b  #$04, obj.Routine2(A0)                          ; $0025
 loc_1A942:
@@ -32192,7 +31958,7 @@ loc_1B400:
                 move.b  #$10, obj.Width(A0)
                 move.b  #$04, obj.Priority(A0)
                 bsr     Jmp_0F_To_ModifySpriteAttr_2P          ; loc_1B6C8
-                move.b  #$07, obj.MapFrame(A0)                             ; $001A
+                move.b  #$07, obj.MapFrame(A0)
                 move.w  obj.Y(A0), Obj_Control_Var_08(A0)         ; $000C, $0034
                 move.w  #$0010, Obj_Control_Var_0A(A0)                   ; $0036
                 addi.w  #$0010, obj.Y(A0)   
@@ -32324,12 +32090,12 @@ loc_1B5EC:
                 bpl.s   loc_1B61A
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
                 move.b  #$00, obj.ColType(A0)                          ; $0020
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$03, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$03, obj.MapFrame(A0)
                 bne.s   loc_1B610
                 move.b  #$A6, obj.ColType(A0)                          ; $0020
 loc_1B610:
-                cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$07, obj.MapFrame(A0)
                 beq     Jmp_0D_To_DeleteObject                 ; loc_1B6B6
 loc_1B61A:
                 bra     Jmp_09_To_DisplaySprite                ; loc_1B6B0              
@@ -33472,7 +33238,7 @@ loc_1C348:
                 lea     (loc_1C4EC), A2
                 move.b  $00(A2, D1), obj.ColType(A1)                   ; $0020
 loc_1C3E4:
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A  
+                move.b  #$04, obj.MapFrame(A0)  
 ;-------------------------------------------------------------------------------
 loc_1C3EA:
                 move.w  #$001B, D1
@@ -33792,7 +33558,7 @@ loc_1C70E:
                 lsl.w   #$03, D0
                 neg.w   D0
                 move.w  D0, Obj_Control_Var_08(A0)                       ; $0034
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 tst.b   obj.Subtype(A0)                                  ; $0028
                 bmi.s   loc_1C76C
                 clr.b   (A4)
@@ -33895,7 +33661,7 @@ loc_1C864:
                 move.b  #$20, obj.Width(A0)
                 move.b  #$0C, obj.YRadius(A0)
                 move.l  #loc_1CA7C, Obj_Control_Var_00(A0)         ; $002C
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 cmpi.b  #$0B, (Level_Id).w                           ; $FFFFFE10
                 bne     loc_1C964
                 addq.b  #$02, obj.Routine(A0)
@@ -33908,7 +33674,7 @@ loc_1C864:
                 beq.s   loc_1C8DC
                 move.l  #loc_1CAB2, Obj_Control_Var_00(A0)         ; $002C
 loc_1C8DC:
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 cmpi.b  #$18, obj.Subtype(A0)                            ; $0028
                 bne     loc_1C970
                 bsr     Jmp_0A_To_SingleObjectLoad_2           ; loc_1CAF4
@@ -34380,7 +34146,7 @@ loc_1CDF4:
                 move.b  #$10, obj.Width(A0)
                 move.b  #$04, obj.Priority(A0)
                 bsr     Jmp_17_To_ModifySpriteAttr_2P          ; loc_1D12E
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 moveq   #$00, D0
                 move.b  obj.Subtype(A0), D0
                 move.w  D0, D1
@@ -35545,7 +35311,7 @@ loc_1DCCA:
                 bne.s   loc_1DD3A
                 addq.b  #$02, obj.Routine(A0)
                 move.b  #$04, obj.Priority(A0)
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 rts
 loc_1DD3A:
                 move.b  #$9A, obj.ColType(A0)                          ; $0020
@@ -36313,7 +36079,7 @@ loc_1E6A4:
                 bsr     Jmp_1F_To_ModifySpriteAttr_2P          ; loc_1E896
 ;-------------------------------------------------------------------------------
 loc_1E6DA:
-                cmpi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$01, obj.MapFrame(A0)
                 beq.s   loc_1E722
                 move.w  #$001B, D1
                 move.w  #$0008, D2
@@ -36499,10 +36265,10 @@ loc_1E920:
                 lea     ($FFFFF7E0).w, A3
                 lea     $00(A3, D0), A3
                 bclr    #$00, (A3)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 tst.w   Obj_Control_Var_04(A0)                           ; $0030
                 beq.s   loc_1E94C
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
 loc_1E94C:
                 bra     loc_1E9EA
 loc_1E950:
@@ -36538,10 +36304,10 @@ loc_1E95E:
                 bset    #$00, $00(A3, D0)
                 move.w  #$00CD, D0
                 jsr     (Play_Sfx)                             ; loc_1512
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 tst.w   Obj_Control_Var_04(A0)                           ; $0030
                 beq.s   loc_1E9EA
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
 loc_1E9EA:
                 rts
 ;-------------------------------------------------------------------------------
@@ -36592,7 +36358,7 @@ loc_1EA88:
                 move.w  #$00B0, Obj_Control_Var_0C(A0)                   ; $0038
                 move.b  #$01, Obj_Control_Var_0A(A0)                     ; $0036
                 addi.w  #$00B0, obj.Y(A0)
-                move.b  #$06, obj.MapFrame(A0)                             ; $001A
+                move.b  #$06, obj.MapFrame(A0)
 ;-------------------------------------------------------------------------------
 loc_1EAAC:
                 tst.b   Obj_Control_Var_0A(A0)                           ; $0036
@@ -38326,7 +38092,7 @@ loc_202C8:
                 move.b  loc_20286(PC, D0), obj.MapFrame(A0)          ; $001A
                 move.b  D0, obj.Control(A0)                                ; $002A
 loc_202D2:
-                cmpi.b  #$FF, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$FF, obj.MapFrame(A0)
                 bne     Jmp_13_To_DisplaySprite                ; loc_204FC
                 rts
 loc_202DE:
@@ -38339,7 +38105,7 @@ loc_202EC:
                 move.l  #GHz_Boss_Mappings_01, obj.Map(A0) ; loc_20400, $0004
                 move.w  #$04D8, obj.VRAM(A0)
                 bsr     Jmp_27_To_ModifySpriteAttr_2P          ; loc_2050E
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.b  #$05, obj.AnimTime(A0)                           ; $001E
                 move.l  Obj_Control_Var_08(A0), A1                       ; $0034
                 move.w  obj.X(A1), obj.X(A0)                      ; $0008, $0008
@@ -38351,10 +38117,10 @@ loc_2032C:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_2036E
                 move.b  #$05, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$04, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$04, obj.MapFrame(A0)
                 bne     loc_2036E
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.l  Obj_Control_Var_08(A0), A1                       ; $0034
                 move.b  (A1), D0
                 beq     Jmp_14_To_DeleteObject                 ; loc_20502
@@ -38393,7 +38159,7 @@ loc_20384:
                 move.b  #$00, obj.ColType(A0)                          ; $0020
                 move.b  #$0C, obj.Width(A0)
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$00C4, D0
                 jmp     (Play_Sfx)                             ; loc_1512  
 ;-------------------------------------------------------------------------------   
@@ -38404,8 +38170,8 @@ loc_203CA:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_203E4
                 move.b  #$07, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$07, obj.MapFrame(A0)
                 beq     Jmp_14_To_DeleteObject                 ; loc_20502
 loc_203E4:
                 bra     Jmp_13_To_DisplaySprite                ; loc_204FC    
@@ -38796,7 +38562,7 @@ loc_20848:
                 move.b  obj.Render(A1), obj.Render(A0)              ; $0001, $0001
                 bra     Jmp_14_To_DisplaySprite                ; loc_20E58
 loc_2088A:
-                move.b  #$08, obj.MapFrame(A0)                             ; $001A
+                move.b  #$08, obj.MapFrame(A0)
                 move.b  #$00, obj.Priority(A0)
                 bra     Jmp_14_To_DisplaySprite                ; loc_20E58  
 ;-------------------------------------------------------------------------------
@@ -39248,7 +39014,7 @@ loc_20F20:
 loc_20F2E:
                 addq.b  #$02, obj.Routine(A0)
                 move.b  #$00, obj.Routine2(A0)                          ; $0025
-                move.b  #$08, obj.MapFrame(A0)                             ; $001A
+                move.b  #$08, obj.MapFrame(A0)
                 move.w  #$0004, obj.Control(A0)                            ; $002A
                 bra     Jmp_1C_To_MarkObjGone                  ; loc_21148  
 ;------------------------------------------------------------------------------- 
@@ -41645,7 +41411,7 @@ loc_23270:
                 neg.w   D0
 loc_2329C:
                 add.w   D0, obj.X(A0)                                    ; $0008
-                move.b  #$20, obj.MapFrame(A0)                             ; $001A
+                move.b  #$20, obj.MapFrame(A0)
                 move.b  #$10, obj.Routine(A0)
                 jsr     (PseudoRandomNumber)                   ; loc_325C
                 asr.w   #$08, D0
@@ -41935,7 +41701,7 @@ loc_236BA:
                 subi.w  #$0001, obj.Control(A0)                            ; $002A
                 bpl.s   loc_236EE
                 move.b  #$02, obj.Priority(A0)
-                move.b  #$25, obj.MapFrame(A0)                             ; $001A
+                move.b  #$25, obj.MapFrame(A0)
                 move.l  Obj_Control_Var_08(A0), A1                       ; $0034
                 move.l  Obj_Control_Var_08(A1), A1                       ; $0034
                 move.w  obj.X(A1), obj.X(A0)                      ; $0008, $0008
@@ -41952,9 +41718,9 @@ loc_236EE:
 loc_23704:
                 subi.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_2372A
-                addi.b  #$01, obj.MapFrame(A0)                             ; $001A
+                addi.b  #$01, obj.MapFrame(A0)
                 move.b  #$08, obj.AnimTime(A0)                           ; $001E
-                cmpi.b  #$27, obj.MapFrame(A0)                             ; $001A
+                cmpi.b  #$27, obj.MapFrame(A0)
                 bgt     loc_2369C
                 blt.s   loc_2372A
                 addi.b  #$0C, obj.AnimTime(A0)                           ; $001E     
@@ -41978,7 +41744,7 @@ loc_23768:
                 move.b  #$04, obj.YRadius(A0)
                 move.b  #$04, obj.XRadius(A0)                            ; $0017
                 addq.b  #$01, obj.Subtype(A0)                            ; $0028
-                move.b  #$09, obj.MapFrame(A0)                             ; $001A
+                move.b  #$09, obj.MapFrame(A0)
                 move.b  obj.YSpeed(A0), D0                              ; $0012
                 lsr.b   #$01, D0
                 move.b  D0, obj.YSpeed(A0)
@@ -42955,7 +42721,7 @@ loc_243B0:
                 move.b  #$02, obj.Routine(A0)
                 move.w  obj.X(A0), (Boss_Move_Buffer).w              ; $FFFFF750; $0008
                 move.w  obj.Y(A0), (Boss_Move_Buffer+$04).w          ; $FFFFF754; $000C
-                move.b  #$10, obj.MapFrame(A0)                             ; $001A
+                move.b  #$10, obj.MapFrame(A0)
                 move.b  #$01, obj.Anim(A0)
                 bsr     Jmp_2D_To_ModifySpriteAttr_2P          ; loc_2584C
                 jsr     (SingleObjectLoad_2)                   ; loc_E714
@@ -43070,7 +42836,7 @@ loc_24580:
                 add.w   (Boss_Move_Buffer+$04).w, D0                 ; $FFFFF754
                 move.w  D0, obj.Y(A0)                                    ; $000C
                 move.w  (Boss_Move_Buffer).w, obj.X(A0)              ; $FFFFF750; $0008
-                addq.b  #$02, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$02, obj.MapFrame(A0)
 ;-------------------------------------------------------------------------------                
 Boss_Hit:	; Referenced by Hill Top boss               
                 cmpi.b  #$08, Obj_Ani_Boss_Routine(A0)                   ; $0026
@@ -43178,7 +42944,7 @@ loc_246E6:
                 bsr     loc_24964
 loc_246EA:
                 move.b  #$00, obj.Routine2(A0)                          ; $0025
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 bra     Jmp_19_To_DisplaySprite                ; loc_25834                                
 ;-------------------------------------------------------------------------------
 loc_246FA:
@@ -44247,7 +44013,7 @@ loc_259CC:
                 asr.w   #$07, D0
                 add.w   (Boss_Move_Buffer+$04).w, D0                 ; $FFFFF754
                 move.w  D0, obj.Y(A0)                                    ; $000C
-                addq.b  #$04, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$04, obj.MapFrame(A0)
                 bra.s   loc_259B6    
 ;-------------------------------------------------------------------------------
 loc_259E6:
@@ -44425,12 +44191,12 @@ loc_25C0A:
                 move.b  #$20, (A0)
                 move.b  #$0A, obj.Routine(A0)
                 move.b  #$02, obj.Anim(A0)
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 move.w  #$0000, obj.YSpeed(A0)                          ; $0012
                 move.l  #Fireball_Mappings, obj.Map(A0) ; loc_180D0, $0004
                 move.w  #$839E, obj.VRAM(A0)
                 bsr     Jmp_2E_To_ModifySpriteAttr_2P          ; loc_25FDA
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$0009, Obj_Boss_Hit_2(A0)                       ; $0032
                 move.b  #$03, Obj_Control_Var_0A(A0)                     ; $0036
                 bra     Jmp_00_To_Obj20_HTz_Boss_FireBall   ; loc_25FD4
@@ -44521,8 +44287,8 @@ loc_25D90:
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_25DAA
                 move.b  #$11, obj.AnimTime(A0)                           ; $001E
-                addq.b  #$01, obj.MapFrame(A0)                             ; $001A
-                cmpi.b  #$04, obj.MapFrame(A0)                             ; $001A
+                addq.b  #$01, obj.MapFrame(A0)
+                cmpi.b  #$04, obj.MapFrame(A0)
                 beq     Jmp_1F_To_DeleteObject                 ; loc_25FB6
 loc_25DAA:
                 move.l  obj.Control(A0), D2                                ; $002A
@@ -45214,7 +44980,7 @@ loc_26636:
                 move.w  obj.X(A1), obj.X(A0)                      ; $0008, $0008
                 move.w  obj.Y(A1), obj.Y(A0)                      ; $000C, $000C
                 move.w  #$0004, NGHz_Robotnik_Pos_Y(A0)                  ; $0012
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 addi.w  #$0005, obj.Y(A0)
                 tst.b   obj.Subtype(A0)                                  ; $0028
                 beq.s   loc_26696
@@ -46465,7 +46231,7 @@ loc_27754:
                 addi.w  #$0030, obj.Y(A0)
                 move.b  #$08, CNz_Boss_Ship_Pos_X(A0)                    ; $0016
                 move.b  #$08, obj.XRadius(A0)                            ; $0017
-                move.b  #$12, obj.MapFrame(A0)                             ; $001A
+                move.b  #$12, obj.MapFrame(A0)
                 rts       
 ;-------------------------------------------------------------------------------
 loc_277A2:
@@ -46892,21 +46658,21 @@ loc_27CD4:
                 bmi.s   loc_27CFC
                 cmpi.w  #$000C, D0
                 blt.s   loc_27CEE
-                move.b  #$03, obj.MapFrame(A0)                             ; $001A
+                move.b  #$03, obj.MapFrame(A0)
                 move.b  #$01, obj.Priority(A0)
                 rts
 loc_27CEE:
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 move.b  #$02, obj.Priority(A0)
                 rts
 loc_27CFC:
                 cmpi.w  #$FFF4, D0
                 blt.s   loc_27D10
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 move.b  #$04, obj.Priority(A0)
                 rts
 loc_27D10:
-                move.b  #$05, obj.MapFrame(A0)                             ; $001A
+                move.b  #$05, obj.MapFrame(A0)
                 move.b  #$05, obj.Priority(A0)
                 rts 
 ;-------------------------------------------------------------------------------
@@ -47771,7 +47537,7 @@ loc_285B0:
                 move.w  obj.Y(A0), obj.Y(A1)                      ; $000C, $000C
                 ori.b   #$80, obj.ColType(A1)                          ; $0020
                 move.b  #$04, obj.MapFrame(A1)                             ; $001A
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 move.b  #$01, obj.Anim(A0)
 loc_285EE:
                 move.b  Obj_Control_Var_01(A0), obj.Routine(A0)   ; $0024, $002D
@@ -47947,14 +47713,14 @@ loc_28808:
                 bsr     Jmp_19_To_SpeedToPos                   ; loc_2A7C4
                 lea     (Sol_Animate_Data), A1                 ; loc_288CE
                 bsr     Jmp_17_To_AnimateSprite                ; loc_2A7AC
-                andi.b  #$03, obj.MapFrame(A0)                             ; $001A
+                andi.b  #$03, obj.MapFrame(A0)
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0 
 ;-------------------------------------------------------------------------------
 loc_28820:
                 bsr     Jmp_19_To_SpeedToPos                   ; loc_2A7C4
                 lea     (Sol_Animate_Data_01), A1              ; loc_288DC
                 bsr     Jmp_17_To_AnimateSprite                ; loc_2A7AC
-                andi.b  #$03, obj.MapFrame(A0)                             ; $001A
+                andi.b  #$03, obj.MapFrame(A0)
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 ;-------------------------------------------------------------------------------
 loc_28838:
@@ -48040,7 +47806,7 @@ loc_2892C:
 ;-------------------------------------------------------------------------------
 loc_28934:
                 bsr     Object_Settings                        ; loc_27EA4
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 move.w  #$FFE0, obj.XSpeed(A0)                            ; $0010
                 move.b  #$80, obj.Control(A0)
                 rts   
@@ -48130,7 +47896,7 @@ loc_289FA:
                 move.w  Obj_Control_Var_02(A0), D0                       ; $002E
                 cmpi.w  #$0008, D0
                 beq.s   loc_28A36
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 move.b  #$8B, obj.ColType(A0)                          ; $0020
                 move.w  $00(A1, D0), Obj_Control_Var_04(A0)              ; $0030
 loc_28A36:
@@ -48595,7 +48361,7 @@ loc_28F7E:
                 addq.b  #$02, obj.Routine2(A0)                          ; $0025
                 move.w  #$0000, obj.XSpeed(A0)                            ; $0010
                 move.b  #$04, obj.Control(A0)
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 rts               
 ;-------------------------------------------------------------------------------
 loc_28FA8:
@@ -48824,7 +48590,7 @@ loc_29238:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_29244:
                 move.b  #$06, obj.Routine(A0)
-                move.b  #$01, obj.MapFrame(A0)                             ; $001A
+                move.b  #$01, obj.MapFrame(A0)
                 move.b  #$08, obj.Control(A0)
                 move.b  #$20, Obj_Control_Var_02(A0)                     ; $002E
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
@@ -48875,7 +48641,7 @@ loc_292C8:
 loc_292D0:
                 addq.b  #$02, obj.Routine2(A0)                          ; $0025
                 move.b  #$08, obj.Control(A0)
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 bra     loc_29300        
 ;-------------------------------------------------------------------------------
 loc_292E4:
@@ -49140,12 +48906,12 @@ loc_29626:
                 neg.w   obj.XSpeed(A0)                                    ; $0010
 loc_2962A:
                 addq.b  #$02, obj.Routine(A0)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$003B, obj.Control(A0)                            ; $002A
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2963E:
                 move.b  #$06, obj.Routine(A0)
-                move.b  #$00, obj.MapFrame(A0)                             ; $001A
+                move.b  #$00, obj.MapFrame(A0)
                 move.w  #$0008, obj.Control(A0)                            ; $002A
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0   
 ;-------------------------------------------------------------------------------
@@ -49183,7 +48949,7 @@ loc_29696:
                 rts
 loc_2969E:
                 addq.b  #$02, obj.Routine2(A0)                          ; $0025
-                move.b  #$03, obj.MapFrame(A0)                             ; $001A
+                move.b  #$03, obj.MapFrame(A0)
                 bra     Load_Sheelcracker_Craw_Obj             ; loc_297F8         
 ;-------------------------------------------------------------------------------
 loc_296AC:
@@ -49230,7 +48996,7 @@ loc_296F2:
                 bsr     Object_Settings                        ; loc_27EA4
                 move.w  Obj_Control_Var_00(A0), D0                       ; $002C
                 beq.s   loc_2970A
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 addq.w  #$06, obj.X(A0)                                  ; $0008
                 addq.w  #$06, obj.Y(A0)                                  ; $000C
 loc_2970A:
@@ -49421,7 +49187,7 @@ loc_29970:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2997E:
                 addq.b  #$04, obj.Routine(A0)
-                move.b  #$03, obj.MapFrame(A0)                             ; $001A
+                move.b  #$03, obj.MapFrame(A0)
                 move.b  #$08, obj.Control(A0)
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0   
 ;------------------------------------------------------------------------------- 
@@ -49441,7 +49207,7 @@ loc_299AE:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_299B8:
                 addq.b  #$02, obj.Routine(A0)
-                move.b  #$04, obj.MapFrame(A0)                             ; $001A
+                move.b  #$04, obj.MapFrame(A0)
                 bsr     Load_Slicer_Pincers_Obj                ; loc_29A78
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0 
 ;------------------------------------------------------------------------------- 
@@ -49869,7 +49635,7 @@ loc_2A056:
 loc_2A068:
                 addq.b  #$02, obj.Routine(A0)
                 move.b  #$28, player.Status(A0)                      ; $002B
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0    
 ;-------------------------------------------------------------------------------
 loc_2A07C:
@@ -49933,7 +49699,7 @@ loc_2A0F2:
 loc_2A104:
                 addq.b  #$02, obj.Routine(A0)
                 move.b  #$28, player.Status(A0)                      ; $002B
-                move.b  #$05, obj.MapFrame(A0)                             ; $001A
+                move.b  #$05, obj.MapFrame(A0)
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0    
 ;-------------------------------------------------------------------------------
 loc_2A118:
@@ -50212,7 +49978,7 @@ loc_2A48C:
 ;-------------------------------------------------------------------------------
 loc_2A492:
                 bsr     Object_Settings                        ; loc_27EA4
-                move.b  #$0C, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0C, obj.MapFrame(A0)
                 rts      
 ;-------------------------------------------------------------------------------
 loc_2A49E:
@@ -50424,7 +50190,7 @@ loc_2A7DE:
                 bne.s   loc_2A84C
                 move.w  #$0300, obj.VRAM(A0)
                 bsr     Jmp_30_To_ModifySpriteAttr_2P          ; loc_2AEE0
-                move.b  #$0A, obj.MapFrame(A0)                             ; $001A
+                move.b  #$0A, obj.MapFrame(A0)
                 tst.b   ($FFFFFFD3).w
                 beq.s   loc_2A84C
                 cmpi.b  #$72, (Control_Ports_Buffer_Data).w
@@ -50755,7 +50521,7 @@ loc_2AFA0:
                 bclr    #$03, ($FFFFB022).w
                 bset    #$01, ($FFFFB022).w
 loc_2AFB6:
-                move.b  #$02, obj.MapFrame(A0)                             ; $001A
+                move.b  #$02, obj.MapFrame(A0)
                 rts   
 ;-------------------------------------------------------------------------------
 loc_2AFBE:
@@ -50808,7 +50574,7 @@ loc_2B064:
 loc_2B06C:
                 move.b  #$02, (Boss_Defeated_Flag).w                 ; $FFFFF7A7
                 move.b  #$0C, obj.Routine(A0)
-                move.b  #$06, obj.MapFrame(A0)                             ; $001A
+                move.b  #$06, obj.MapFrame(A0)
                 move.w  #$0096, obj.AnimTime(A0)                         ; $001E
                 addi.w  #$0020, obj.Y(A0)
                 moveq   #$07, D6
@@ -50901,7 +50667,7 @@ TouchResponse:                                                 ; loc_2B1EC
 		move.b  obj.YRadius(A0), D5                             ; $0016
 		subq.b  #$03, D5
 		sub.w   D5, D3
-		cmpi.b  #$4D, obj.MapFrame(A0)                             ; $001A
+		cmpi.b  #$4D, obj.MapFrame(A0)
 		bne.s   Touch_NoDuck                           ; loc_2B21E
 		addi.w  #$000C, D3
 		moveq   #$0A, D5
@@ -50973,7 +50739,7 @@ Touch_Boss:                                                    ; loc_2B2DC
 		move.b  obj.YRadius(A0), D5                             ; $0016
 		subq.b  #$03, D5
 		sub.w   D5, D3
-		cmpi.b  #$4D, obj.MapFrame(A0)                             ; $001A
+		cmpi.b  #$4D, obj.MapFrame(A0)
 		bne.s   Touch_NoDuck_Boss                      ; loc_2B304
 		addi.w  #$000C, D3
 		moveq   #$0A, D5
@@ -52778,7 +52544,7 @@ loc_2C6D4:
 		andi.l  #$00FFFFFF, D1
 		move.w  D4, D2
 		moveq   #$40, D3
-		jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+		jsr     (DMA_68KtoVRAM)
 		addi.w  #$0080, D4
 		dbra    D5, loc_2C6D4
 loc_2C6F0:
@@ -52865,19 +52631,19 @@ loc_2C844:
 		move.l  #$00FF7C00, D1
 		move.w  #$A300, D2
 		move.w  #$0080, D3
-		jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+		jsr     (DMA_68KtoVRAM)
 		move.l  (A7)+, A2
 		addq.w  #$02, A3
 		bra     loc_2C864
 ;-------------------------------------------------------------------------------
-GHz_Animate_Routine:                                           ; loc_2C860
-Mz_Animate_Routine:                                            ; loc_2C860
-HTz_Animate_Routine_2P:                                        ; loc_2C860
-HPz_Animate_Routine:                                           ; loc_2C860
-OOz_Animate_Routine:                                           ; loc_2C860
-CHz_Animate_Routine:                                           ; loc_2C860
-CPz_Animate_Routine:                                           ; loc_2C860
-NGHz_Animate_Routine:                                          ; loc_2C860
+GHz_Animate_Routine:
+Mz_Animate_Routine:
+HTz_Animate_Routine_2P:
+HPz_Animate_Routine:
+OOz_Animate_Routine:
+CHz_Animate_Routine:
+CPz_Animate_Routine:
+NGHz_Animate_Routine:
 		lea     ($FFFFF7F0).w, A3
 loc_2C864:
 		move.w  (A2)+, D6
@@ -52906,7 +52672,7 @@ loc_2C88A:
 		moveq   #$00, D3
 		move.b  $0007(A2), D3
 		lsl.w   #$04, D3
-		jsr     (DMA_68KtoVRAM)                        ; loc_15C4
+		jsr     (DMA_68KtoVRAM)
 loc_2C8AC:
 		move.b  $0006(A2), D0
 		tst.b   (A2)
@@ -52920,28 +52686,28 @@ loc_2C8B6:
 		dbra    D6, loc_2C866
 		rts
 ;-------------------------------------------------------------------------------
-GHz_Animate_Script:                                            ; loc_2C8C8
+GHz_Animate_Script:
 		dc.w    $0004                      ; Total Animations
-		dc.l    ($FF<<$18)|Art_GHz_Flower_1            ; loc_30000
+		dc.l    ($FF<<$18)|Art_GHz_Flower_1
 		dc.w    $7280                      ; VRAM
 		dc.w    $0602                      ; Frames / Tiles
 		dc.w    $007F, $0213, $0007, $0207 ; Load Frame / Frame Time
 		dc.w    $0007, $0207               ; Load Frame / Frame Time
-		dc.l    ($FF<<$18)|Art_GHz_Flower_2            ; loc_30080
+		dc.l    ($FF<<$18)|Art_GHz_Flower_2
 		dc.w    $72C0                      ; VRAM
 		dc.w    $0802                      ; Frames / Tiles
 		dc.w    $027F, $000B, $020B, $000B ; Load Frame / Frame Time
 		dc.w    $0205, $0005, $0205, $0005 ; Load Frame / Frame Time
-		dc.l    ($07<<$18)|Art_GHz_Flower_3            ; loc_30100
+		dc.l    ($07<<$18)|Art_GHz_Flower_3
 		dc.w    $7300                      ; VRAM
 		dc.w    $0202                      ; Frames / Tiles
 		dc.w    $0002                      ; Load Frame / Frame Time
-		dc.l    ($FF<<$18)|Art_GHz_Flower_4            ; loc_30180
+		dc.l    ($FF<<$18)|Art_GHz_Flower_4
 		dc.w    $7340                      ; VRAM
 		dc.w    $0802                      ; Frames / Tiles
 		dc.w    $007F, $0207, $0007, $0207 ; Load Frame / Frame Time
 		dc.w    $0007, $020B, $000B, $020B ; Load Frame / Frame Time
-		dc.l    ($FF<<$18)|Art_GHz_Dyn_Wall            ; loc_30200
+		dc.l    ($FF<<$18)|Art_GHz_Dyn_Wall
 		dc.w    $7380                      ; VRAM
 		dc.w    $0602                      ; Frames / Tiles
 		dc.w    $0017, $0209, $040B, $0617 ; Load Frame / Frame Time
@@ -53935,7 +53701,7 @@ loc_2DE76:
 		andi.w  #$07FF, (player1YPos).w            ; $FFFFB00C
 		andi.w  #$07FF, (Camera_Y).w                         ; $FFFFEE04
 		andi.w  #$07FF, (Camera_Y_x4).w                      ; $FFFFEE0C
-		move.b  #$00, obj.MapFrame(A0)                             ; $001A
+		move.b  #$00, obj.MapFrame(A0)
 		move.b  #$00, obj.Anim(A0)
 		cmpi.b  #gm_SpecialStage, (Game_Mode).w        ; $10,  $FFFFF600
 		bne.s   loc_2DEB0
