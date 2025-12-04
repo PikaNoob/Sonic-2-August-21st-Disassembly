@@ -14,8 +14,9 @@
 ;-------------------------------------------------------------------------------
 loc_040 equ $0040 ; Incorrect reference in Crawl ( Obj9E.asm )
 ;-------------------------------------------------------------------------------
-	include 'macros.asm'
-	include 'constants.asm'
+	include 'Macros.asm'
+	include 'RAM.asm'
+	include 'Variables.asm'
 	include 'Sound/_smps2asm_inc.asm'
 
 ; ASSEMBLY OPTIONS:
@@ -4692,28 +4693,28 @@ Dynamic_CPz_Water:
 loc_47BA:
 		rts
 ;-------------------------------------------------------------------------------
-S1_Lz_Wind_Tunnels:  ; Leftover from Sonic 1                    ; loc_47BC
-		tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
+S1_Lz_Wind_Tunnels:  ; Leftover from Sonic 1
+		tst.w   (Debug_Mode_Flag_Index).w
 		bne     loc_4898
-		lea     (S1_LZ_Wind_Data+$0008), A2            ; loc_48A2
+		lea     (S1_LZ_Wind_Data+$0008), A2
 		moveq   #$00, D0
-		move.b  (Act_Id).w, D0                               ; $FFFFFE11
+		move.b  (Act_Id).w, D0
 		lsl.w   #$03, D0
 		adda.w  D0, A2
 		moveq   #$00, D1
-		tst.b   (Act_Id).w                                   ; $FFFFFE11
+		tst.b   (Act_Id).w
 		bne.s   loc_47E0
 		moveq   #$01, D1
 		subq.w  #$08, A2
 loc_47E0:
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (Player_One).w, A1
 loc_47E4:
-		move.w  obj.X(A1), D0                                    ; $0008
+		move.w  obj.X(A1), D0
 		cmp.w   (A2), D0
 		bcs     loc_4882
 		cmp.w   $0004(A2), D0
 		bcc     loc_4882
-		move.w  obj.Y(A1), D2                                    ; $000C
+		move.w  obj.Y(A1), D2
 		cmp.w   $0002(A2), D2
 		bcs     loc_4882
 		cmp.w   $0006(A2), D2
@@ -4722,35 +4723,35 @@ loc_47E4:
 		andi.b  #$3F, D0
 		bne.s   loc_481C
 		move.w  #$00D0, D0
-		jsr     (Play_Sfx)                             ; loc_1512
+		jsr     (Play_Sfx)
 loc_481C:
 		tst.b   ($FFFFF7C9).w
 		bne     loc_4898
-		cmpi.b  #$04, obj.Routine(A1)                            ; $0024
+		cmpi.b  #$04, obj.Routine(A1)
 		bcc.s   loc_4894
 		move.b  #$01, ($FFFFF7C7).w
 		subi.w  #$0080, D0
 		cmp.w   (A2), D0
 		bcc.s   loc_484A
 		moveq   #$02, D0
-		cmpi.b  #$01, (Act_Id).w                             ; $FFFFFE11
+		cmpi.b  #$01, (Act_Id).w
 		bne.s   loc_4846
 		neg.w   D0
 loc_4846:
-		add.w   D0, obj.Y(A1)                                    ; $000C
+		add.w   D0, obj.Y(A1)
 loc_484A:
-		addi.w  #$0004, obj.X(A1)                                ; $0008
-		move.w  #$0400, obj.XSpeed(A1)                            ; $0010
-		move.w  #$0000, obj.YSpeed(A1)                          ; $0012
-		move.b  #$0F, obj.Anim(A1)                         ; $001C
-		bset    #$01, obj.Status(A1)                             ; $0022
-		btst    #$00, (Control_Ports_Buffer_Data).w          ; $FFFFF604
+		addi.w  #$0004, obj.X(A1)
+		move.w  #$0400, obj.XSpeed(A1)
+		move.w  #$0000, obj.YSpeed(A1)
+		move.b  #$0F, obj.Anim(A1)
+		bset    #$01, obj.Status(A1)
+		btst    #$00, (Control_Ports_Buffer_Data).w
 		beq.s   loc_4874
-		subq.w  #$01, obj.Y(A1)                                  ; $000C
+		subq.w  #$01, obj.Y(A1)
 loc_4874:
-		btst    #$01, (Control_Ports_Buffer_Data).w          ; $FFFFF604
+		btst    #$01, (Control_Ports_Buffer_Data).w
 		beq.s   loc_4880
-		addq.w  #$01, obj.Y(A1)                                  ; $000C
+		addq.w  #$01, obj.Y(A1)
 loc_4880:
 		rts
 loc_4882:
@@ -4758,29 +4759,29 @@ loc_4882:
 		dbra    D1, loc_47E4
 		tst.b   ($FFFFF7C7).w
 		beq.s   loc_4898
-		move.b  #$00, obj.Anim(A1)                         ; $001C
+		move.b  #$00, obj.Anim(A1)
 loc_4894:
 		clr.b   ($FFFFF7C7).w
 loc_4898:
 		rts
 ;-------------------------------------------------------------------------------
-S1_LZ_Wind_Data:                                               ; loc_489A
+S1_LZ_Wind_Data:
 		dc.w    $0A80, $0300, $0C10, $0380
 		dc.w    $0F80, $0100, $1410, $0180
 		dc.w    $0460, $0400, $0710, $0480
 		dc.w    $0A20, $0600, $1610, $06E0
 		dc.w    $0C80, $0600, $13D0, $0680
 ;-------------------------------------------------------------------------------
-S1_LZ_Water_Slides:                                            ; loc_48C2
-		lea     (Player_One).w, A1                           ; $FFFFB000
-		btst    #$01, obj.Status(A1)                             ; $0022
+S1_LZ_Water_Slides:
+		lea     (Player_One).w, A1
+		btst    #$01, obj.Status(A1)
 		bne.s   loc_48F6
-		move.w  obj.Y(A1), D0                                    ; $000C
+		move.w  obj.Y(A1), D0
 		andi.w  #$0700, D0
-		move.b  obj.X(A1), D1                                    ; $0008
+		move.b  obj.X(A1), D1
 		andi.w  #$007F, D1
 		add.w   D1, D0
-		lea     (Level_Map_Buffer).w, A2                     ; $FFFF8000
+		lea     (Level_Map_Buffer).w, A2
 		move.b  $00(A2, D0), D0
 		lea     loc_495B(PC), A2
 		moveq   #$06, D1
@@ -4789,10 +4790,10 @@ loc_48EE:
 		dbeq    D1, loc_48EE
 		beq.s   loc_4908
 loc_48F6:
-		tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
+		tst.b   (Player_Status_Flag).w
 		beq.s   loc_4906
-		move.w  #$0005, Obj_Player_Control(A1)                   ; $002E
-		clr.b   (Player_Status_Flag).w                       ; $FFFFF7CA
+		move.w  #$0005, player.HorizLock(A1)
+		clr.b   (Player_Status_Flag).w
 loc_4906:
 		rts
 loc_4908:
@@ -4800,20 +4801,20 @@ loc_4908:
 		bcc.s   loc_4910
 		nop
 loc_4910:
-		bclr    #$00, obj.Status(A1)                             ; $0022
+		bclr    #$00, obj.Status(A1)
 		move.b  loc_494C(PC, D1), D0
-		move.b  D0, obj.GroundSpeed(A1)                              ; $0014
+		move.b  D0, obj.GroundSpeed(A1)
 		bpl.s   loc_4926
-		bset    #$00, obj.Status(A1)                             ; $0022
+		bset    #$00, obj.Status(A1)
 loc_4926:
 		clr.b   $0015(A1)
-		move.b  #$1B, obj.Anim(A1)                         ; $001C
-		move.b  #$01, (Player_Status_Flag).w                 ; $FFFFF7CA
+		move.b  #$1B, obj.Anim(A1)
+		move.b  #$01, (Player_Status_Flag).w
 		move.b  ($FFFFFE0F).w, D0
 		andi.b  #$1F, D0
 		bne.s   loc_494A
 		move.w  #$00D0, D0
-		jsr     (Play_Sfx)                             ; loc_1512
+		jsr     (Play_Sfx)
 loc_494A:
 		rts
 ;-------------------------------------------------------------------------------
@@ -4824,16 +4825,16 @@ loc_494C:
 loc_495B:
 		dc.b    $00
 ;-------------------------------------------------------------------------------
-Init_Demo_Control:                                             ; loc_495C
-		tst.w   (Auto_Control_Player_Flag).w                 ; $FFFFFFF0
-		bne.s   Demo_Mode_Control                      ; loc_49DA
+Init_Demo_Control:
+		tst.w   (Auto_Control_Player_Flag).w
+		bne.s   Demo_Mode_Control
 		rts
 ;-------------------------------------------------------------------------------
-; Demo_Record: ; Not used                                    ;  loc_4964
+; Demo_Record: ; Not used
 		lea     ($00FE8000), A1
 		move.w  ($FFFFF790).w, D0
 		adda.w  D0, A1
-		move.b  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
+		move.b  (Control_Ports_Buffer_Data).w, D0
 		cmp.b   (A1), D0
 		bne.s   loc_4986
 		addq.b  #$01, $0001(A1)
@@ -4846,7 +4847,7 @@ loc_4986:
 		addq.w  #$02, ($FFFFF790).w
 		andi.w  #$03FF, ($FFFFF790).w
 loc_499A:
-		cmpi.b  #$00, (Level_Id).w                           ; $FFFFFE10
+		cmpi.b  #$00, (Level_Id).w
 		bne.s   loc_49D8
 		lea     ($00FEC000), A1
 		move.w  ($FFFFF732).w, D0
@@ -4866,17 +4867,17 @@ loc_49C4:
 loc_49D8:
 		rts
 ;-------------------------------------------------------------------------------
-Demo_Mode_Control:                                             ; loc_49DA
-		tst.b   (Control_Ports_Buffer_Data).w                ; $FFFFF604
+Demo_Mode_Control:
+		tst.b   (Control_Ports_Buffer_Data).w
 		bpl.s   loc_49EC
-		tst.w   (Auto_Control_Player_Flag).w                 ; $FFFFFFF0
+		tst.w   (Auto_Control_Player_Flag).w
 		bmi.s   loc_49EC
-		move.b  #gm_TitleScreen, (Game_Mode).w          ; $04, $FFFFF600
+		move.b  #gm_TitleScreen, (Game_Mode).w
 loc_49EC:
-		lea     (Demo_Index), A1                       ; loc_4A70
+		lea     (Demo_Index), A1
 		moveq   #$00, D0
-		move.b  (Level_Id).w, D0                             ; $FFFFFE10
-		cmpi.b  #gm_SpecialStage, (Game_Mode).w         ; $10, $FFFFF600
+		move.b  (Level_Id).w, D0
+		cmpi.b  #gm_SpecialStage, (Game_Mode).w
 		bne.s   loc_4A02
 		moveq   #$06, D0
 loc_4A02:
@@ -4897,9 +4898,9 @@ loc_4A02:
 		move.b  $0003(A1), ($FFFFF792).w
 		addq.w  #$02, ($FFFFF790).w
 loc_4A30:
-		cmpi.b  #$00, (Level_Id).w                           ; $FFFFFE10
+		cmpi.b  #$00, (Level_Id).w
 		bne.s   loc_4A68
-		lea     (Demo_Green_Hill_Tails), A1            ; loc_4EB2
+		lea     (Demo_Green_Hill_Tails), A1
 		move.w  ($FFFFF732).w, D0
 		adda.w  D0, A1
 		move.b  (A1), D0
@@ -4920,24 +4921,24 @@ loc_4A68:
 		move.w  #$0000, ($FFFFF606).w
 		rts
 ;-------------------------------------------------------------------------------
-Demo_Index:                                                    ; loc_4A70
-		dc.l    Demo_Green_Hill                        ; loc_4DB2
-		dc.l    Demo_Lvl1                              ; loc_4DB2
-		dc.l    Demo_Wood                              ; loc_4DB2
-		dc.l    Demo_Lvl3                              ; loc_4DB2
-		dc.l    Demo_Metropolis                        ; loc_4DB2
-		dc.l    Demo_Metropolis                        ; loc_4DB2
-		dc.l    Demo_Lvl6                              ; loc_4DB2
-		dc.l    Demo_Hill_Top                          ; loc_4FB2
-		dc.l    Demo_Hidden_Palace                     ; loc_50B2
-		dc.l    Demo_Lvl9                              ; loc_4DB2
-		dc.l    Demo_Oil_Ocean                         ; loc_4DB2
-		dc.l    Demo_Dust_Hill                         ; loc_4DB2
-		dc.l    Demo_Casino_Night                      ; loc_4DB2
-		dc.l    Demo_Chemical_Plant                    ; loc_51B2
-		dc.l    Demo_Genocide_City                     ; loc_4DB2
-		dc.l    Demo_Neo_Green_Hill                    ; loc_4DB2
-		dc.l    Demo_Death_Egg                         ; loc_4DB2
+Demo_Index:
+		dc.l    Demo_Green_Hill
+		dc.l    Demo_Lvl1
+		dc.l    Demo_Wood
+		dc.l    Demo_Lvl3
+		dc.l    Demo_Metropolis
+		dc.l    Demo_Metropolis
+		dc.l    Demo_Lvl6
+		dc.l    Demo_Hill_Top
+		dc.l    Demo_Hidden_Palace
+		dc.l    Demo_Lvl9
+		dc.l    Demo_Oil_Ocean
+		dc.l    Demo_Dust_Hill
+		dc.l    Demo_Casino_Night
+		dc.l    Demo_Chemical_Plant
+		dc.l    Demo_Genocide_City
+		dc.l    Demo_Neo_Green_Hill
+		dc.l    Demo_Death_Egg
 ;-------------------------------------------------------------------------------
 ; loc_4AB4:
 		dc.l    $00FE8000, $00FE8000, $00FE8000, $00FE8000
@@ -4946,7 +4947,7 @@ Demo_Index:                                                    ; loc_4A70
 		dc.l    $00FE8000, $00FE8000, $00FE8000, $00FE8000
 		dc.l    $00FE8000
 ;-------------------------------------------------------------------------------
-Demo_End_Index: ; Leftover from Sonic 1                         ; loc_4AF8
+Demo_End_Index: ; Leftover from Sonic 1
 		dc.w    $008B, $0837, $0042, $085C, $006A, $085F, $002F, $082C
 		dc.w    $0021, $0803, $2830, $0808, $002E, $0815, $000F, $0846
 		dc.w    $001A, $08FF, $08CA, $0000, $0000, $0000, $0000, $0000
@@ -5152,75 +5153,75 @@ loc_4DB0:
 ; Check if it's at the end of the zone
 ; [ End ]
 ;===============================================================================
-Demo_Green_Hill:                                               ; loc_4DB2
-Demo_Lvl1:                                                     ; loc_4DB2
-Demo_Wood:                                                     ; loc_4DB2
-Demo_Lvl3:                                                     ; loc_4DB2
-Demo_Metropolis:                                               ; loc_4DB2
-Demo_Lvl6:                                                     ; loc_4DB2
-Demo_Lvl9:                                                     ; loc_4DB2
-Demo_Oil_Ocean:                                                ; loc_4DB2
-Demo_Dust_Hill:                                                ; loc_4DB2
-Demo_Casino_Night:                                             ; loc_4DB2
-Demo_Genocide_City:                                            ; loc_4DB2
-Demo_Neo_Green_Hill:                                           ; loc_4DB2
-Demo_Death_Egg:                                                ; loc_4DB2
+Demo_Green_Hill:
+Demo_Lvl1:
+Demo_Wood:
+Demo_Lvl3:
+Demo_Metropolis:
+Demo_Lvl6:
+Demo_Lvl9:
+Demo_Oil_Ocean:
+Demo_Dust_Hill:
+Demo_Casino_Night:
+Demo_Genocide_City:
+Demo_Neo_Green_Hill:
+Demo_Death_Egg:
 		incbin  'misc/ehzdemosonic.dat'
-Demo_Green_Hill_Tails:                                         ; loc_4EB2
+Demo_Green_Hill_Tails:
 		incbin  'misc/ehzdemotails.dat'
-Demo_Hill_Top:                                                 ; loc_4FB2
+Demo_Hill_Top:
 		incbin  'misc/htzdemo.dat'
-Demo_Hidden_Palace:                                            ; loc_50B2
+Demo_Hidden_Palace:
 		incbin  'misc/hpzdemo.dat'
-Demo_Chemical_Plant:                                           ; loc_51B2
+Demo_Chemical_Plant:
 		incbin  'misc/cpzdemo.dat'
 ;===============================================================================
-; Modo de jogo ou demonstra  o das fases
+; Level Demos
 ; [ End ]
 ;===============================================================================
 		nop
-Jmp_00_To_Dynamic_Art_Cues:                                    ; loc_52B4
-		jmp     (Dynamic_Art_Cues)                     ; loc_2C61C
+Jmp_00_To_Dynamic_Art_Cues:
+		jmp     (Dynamic_Art_Cues)
 		dc.w    $0000
 ;===============================================================================
 ; Main control routine for the Special Stage
 ; [ Begin ]
 ;===============================================================================
-Special_Stage:                                                 ; loc_52BC
+Special_Stage:
 		move.w  #$00CA, D0
-		bsr     Play_Sfx                               ; loc_1512
-		bsr     Pal_MakeFlash                          ; loc_2794
+		bsr     Play_Sfx
+		bsr     Pal_MakeFlash
 		move    #$2700, SR
-		lea     VDPCTRL, A6                       ; $00C00004
+		lea     VDPCTRL, A6
 		move.w  #$8B03, (A6)
 		move.w  #$8004, (A6)
-		move.w  #$8AAF, (Horizontal_Interrupt_Count).w       ; $FFFFF624
+		move.w  #$8AAF, (Horizontal_Interrupt_Count).w
 		move.w  #$9011, (A6)
 		move.w  ($FFFFF60C).w, D0
 		andi.b  #$BF, D0
-		move.w  D0, VDPCTRL                       ; $00C00004
-		bsr     ClearScreen                            ; loc_1418
+		move.w  D0, VDPCTRL
+		bsr     ClearScreen
 		move    #$2300, SR
-		lea     VDPCTRL, A5                       ; $00C00004
+		lea     VDPCTRL, A5
 		move.w  #$8F01, (A5)
 		move.l  #$946F93FF, (A5)
 		move.w  #$9780, (A5)
 		move.l  #$50000081, (A5)
-		move.w  #$0000, VDPDATA                      ; $00C00000
+		move.w  #$0000, VDPDATA
 loc_531C:
 		move.w  (A5), D1
 		btst    #$01, D1
 		bne.s   loc_531C
 		move.w  #$8F02, (A5)
-		bsr     Special_Stage_Background_Load          ; loc_556C
+		bsr     Special_Stage_Background_Load
 		moveq   #$14, D0
-		bsr     RunPLC_ROM                             ; loc_1900
-		lea     (Special_Stage_Memory_Address).w, A1         ; $FFFFD000
+		bsr     RunPLC_ROM
+		lea     (Special_Stage_Memory_Address).w, A1
 		moveq   #$00, D0
 		move.w  #$07FF, D1
-SS_Loop_Clear_ObjRam:                                          ; loc_533C
+SS_Loop_Clear_ObjRam:
 		move.l  D0, (A1)+
-		dbra    D1, SS_Loop_Clear_ObjRam               ; loc_533C
+		dbra    D1, SS_Loop_Clear_ObjRam
 		lea     ($FFFFF700).w, A1
 		moveq   #$00, D0
 		move.w  #$003F, D1
@@ -5242,139 +5243,139 @@ loc_536C:
 		clr.b   ($FFFFF64E).w
 		clr.w   ($FFFFFE02).w
 		moveq   #$16, D0
-		bsr     PalLoad1                               ; loc_2914
-		jsr     (Special_Stage_Load)                   ; loc_2BC66
-		move.l  #$00000000, (Camera_X).w                     ; $FFFFEE00
-		move.l  #$00000000, (Camera_Y).w                     ; $FFFFEE04
-		move.b  #$09, (Player_One).w                         ; $FFFFB000
-		bsr     Special_Stage_Pal_Cycle                ; loc_5626
+		bsr     PalLoad1
+		jsr     (Special_Stage_Load)
+		move.l  #$00000000, (Camera_X).w
+		move.l  #$00000000, (Camera_Y).w
+		move.b  #$09, (Player_One).w
+		bsr     Special_Stage_Pal_Cycle
 		clr.w   ($FFFFF750).w
 		move.w  #$0040, ($FFFFF752).w
 		move.w  #$0089, D0
-		bsr     Play_Music                             ; loc_150C
+		bsr     Play_Music
 		move.w  #$0000, ($FFFFF790).w
-		lea     (Demo_Index), A1                       ; loc_4A70
+		lea     (Demo_Index), A1
 		moveq   #$06, D0
 		lsl.w   #$02, D0
 		move.l  $00(A1, D0), A1
 		move.b  $0001(A1), ($FFFFF792).w
 		subq.b  #$01, ($FFFFF792).w
-		clr.w   (Ring_Count).w                               ; $FFFFFE20
-		clr.b   (Ring_Life_Flag).w                           ; $FFFFFE1B
-		move.w  #$0000, (Debug_Mode_Flag_Index).w            ; $FFFFFE08
-		move.w  #$0708, (Timer_Count_Down).w                 ; $FFFFF614
+		clr.w   (Ring_Count).w
+		clr.b   (Ring_Life_Flag).w
+		move.w  #$0000, (Debug_Mode_Flag_Index).w
+		move.w  #$0708, (Timer_Count_Down).w
 		tst.b   ($FFFFFFD2).w
 		beq.s   loc_53F8
-		btst    #$06, (Control_Ports_Buffer_Data).w          ; $FFFFF604
+		btst    #$06, (Control_Ports_Buffer_Data).w
 		beq.s   loc_53F8
-		move.b  #$01, (Debug_Mode_Active_Flag).w             ; $FFFFFFFA
+		move.b  #$01, (Debug_Mode_Active_Flag).w
 loc_53F8:
 		move.w  ($FFFFF60C).w, D0
 		ori.b   #$40, D0
-		move.w  D0, VDPCTRL                       ; $00C00004
-		bsr     Pal_MakeWhite                          ; loc_26EA
-Special_Stage_Loop:                                            ; loc_540A
-		bsr     Pause                                  ; loc_152A
-		move.b  #$0A, (VBlank_Index).w                       ; $FFFFF62A
-		bsr     Wait_For_VSync                         ; loc_3250
-		bsr     Init_Demo_Control                      ; loc_495C
-		move.w  (Control_Ports_Buffer_Data).w, ($FFFFF602).w ; $FFFFF604
-		jsr     (Load_Objects)                         ; loc_CEA8
-		jsr     (Build_Sprites)                        ; loc_D442
-		jsr     (Special_Stage_Show_Layout)            ; loc_2B738
-		bsr     Special_Stage_Background_Animate       ; loc_58A8
-		tst.w   (Auto_Control_Player_Flag).w                 ; $FFFFFFF0
+		move.w  D0, VDPCTRL
+		bsr     Pal_MakeWhite
+Special_Stage_Loop:
+		bsr     Pause
+		move.b  #$0A, (VBlank_Index).w
+		bsr     Wait_For_VSync
+		bsr     Init_Demo_Control
+		move.w  (Control_Ports_Buffer_Data).w, ($FFFFF602).w
+		jsr     (Load_Objects)
+		jsr     (Build_Sprites)
+		jsr     (Special_Stage_Show_Layout)
+		bsr     Special_Stage_Background_Animate
+		tst.w   (Auto_Control_Player_Flag).w
 		beq.s   loc_5446
-		tst.w   (Timer_Count_Down).w                         ; $FFFFF614
-		beq     Special_Stage_Game_Reset               ; loc_555A
+		tst.w   (Timer_Count_Down).w
+		beq     Special_Stage_Game_Reset
 loc_5446:
-		cmpi.b  #gm_SpecialStage, (Game_Mode).w         ; $10, $FFFFF600
-		beq     Special_Stage_Loop                     ; loc_540A
-		tst.w   (Auto_Control_Player_Flag).w                 ; $FFFFFFF0
-		bne     Special_Stage_Exit_To_Level            ; loc_5562
-		move.b  #gm_PlayMode, (Game_Mode).w            ; $0C,  $FFFFF600
-		cmpi.w  #$0503, (Level_Id).w                         ; $FFFFFE10
+		cmpi.b  #gm_SpecialStage, (Game_Mode).w
+		beq     Special_Stage_Loop
+		tst.w   (Auto_Control_Player_Flag).w
+		bne     Special_Stage_Exit_To_Level
+		move.b  #gm_PlayMode, (Game_Mode).w
+		cmpi.w  #$0503, (Level_Id).w
 		bcs.s   loc_546A
-		clr.w   (Level_Id).w                                 ; $FFFFFE10
+		clr.w   (Level_Id).w
 loc_546A:
-		move.w  #$003C, (Timer_Count_Down).w                 ; $FFFFF614
+		move.w  #$003C, (Timer_Count_Down).w
 		move.w  #$003F, ($FFFFF626).w
 		clr.w   ($FFFFF794).w
-Special_Stage_Loop_2:                                          ; loc_547A
-		move.b  #$16, (VBlank_Index).w                       ; $FFFFF62A
-		bsr     Wait_For_VSync                         ; loc_3250
-		bsr     Init_Demo_Control                      ; loc_495C
-		move.w  (Control_Ports_Buffer_Data).w, ($FFFFF602).w ; $FFFFF604
-		jsr     (Load_Objects)                         ; loc_CEA8
-		jsr     (Build_Sprites)                        ; loc_D442
-		jsr     (Special_Stage_Show_Layout)            ; loc_2B738
-		bsr     Special_Stage_Background_Animate       ; loc_58A8
+Special_Stage_Loop_2:
+		move.b  #$16, (VBlank_Index).w
+		bsr     Wait_For_VSync
+		bsr     Init_Demo_Control
+		move.w  (Control_Ports_Buffer_Data).w, ($FFFFF602).w
+		jsr     (Load_Objects)
+		jsr     (Build_Sprites)
+		jsr     (Special_Stage_Show_Layout)
+		bsr     Special_Stage_Background_Animate
 		subq.w  #$01, ($FFFFF794).w
 		bpl.s   loc_54B4
 		move.w  #$0002, ($FFFFF794).w
-		bsr     Pal_ToWhite                            ; loc_27B4
+		bsr     Pal_ToWhite
 loc_54B4:
-		tst.w   (Timer_Count_Down).w                         ; $FFFFF614
-		bne.s   Special_Stage_Loop_2                   ; loc_547A
+		tst.w   (Timer_Count_Down).w
+		bne.s   Special_Stage_Loop_2
 		move    #$2700, SR
-		lea     VDPCTRL, A6                       ; $00C00004
+		lea     VDPCTRL, A6
 		move.w  #$8230, (A6)
 		move.w  #$8407, (A6)
 		move.w  #$9001, (A6)
-		bsr     ClearScreen                            ; loc_1418
-		jsr     (Head_Up_Display_Base)                 ; loc_2D488
+		bsr     ClearScreen
+		jsr     (Head_Up_Display_Base)
 		move    #$2300, SR
 		moveq   #$16, D0
-		bsr     PalLoad2                               ; loc_2930
+		bsr     PalLoad2
 		moveq   #$00, D0
-		bsr     LoadPLC2                               ; loc_17C6
+		bsr     LoadPLC2
 		moveq   #$1B, D0
-		bsr     LoadPLC                                ; loc_1794
-		move.b  #$01, (HUD_Score_Refresh_Flag).w             ; $FFFFFE1F
+		bsr     LoadPLC
+		move.b  #$01, (HUD_Score_Refresh_Flag).w
 		move.b  #$01, ($FFFFF7D6).w
-		move.w  (Ring_Count).w, D0                           ; $FFFFFE20
+		move.w  (Ring_Count).w, D0
 		mulu.w  #$000A, D0
 		move.w  D0, ($FFFFF7D4).w
 		move.w  #$008E, D0
-		jsr     (Play_Sfx)                             ; loc_1512
-		lea     (Obj_Memory_Address).w, A1                   ; $FFFFB000
+		jsr     (Play_Sfx)
+		lea     (Obj_Memory_Address).w, A1
 		moveq   #$00, D0
 		move.w  #$07FF, D1
-S1_SS_Results_Clear_Ram_Loop:                                  ; loc_551C
+S1_SS_Results_Clear_Ram_Loop:
 		move.l  D0, (A1)+
-		dbra    D1, S1_SS_Results_Clear_Ram_Loop       ; loc_551C
+		dbra    D1, S1_SS_Results_Clear_Ram_Loop
 ;-------------------------------------------------------------------------------
-SS_Results_Loop:                                               ; loc_5522
-		bsr     Pause                                  ; loc_152A
-		move.b  #$0C, (VBlank_Index).w                       ; $FFFFF62A
-		bsr     Wait_For_VSync                         ; loc_3250
-		jsr     (Load_Objects)                         ; loc_CEA8
-		jsr     (Build_Sprites)                        ; loc_D442
-		bsr     RunPLC                                 ; loc_1800
+SS_Results_Loop:
+		bsr     Pause
+		move.b  #$0C, (VBlank_Index).w
+		bsr     Wait_For_VSync
+		jsr     (Load_Objects)
+		jsr     (Build_Sprites)
+		bsr     RunPLC
 		tst.w   ($FFFFFE02).w
-		beq.s   SS_Results_Loop                        ; loc_5522
-		tst.l   (PLC_Buffer).w                               ; $FFFFF680
-		bne.s   SS_Results_Loop                        ; loc_5522
+		beq.s   SS_Results_Loop
+		tst.l   (PLC_Buffer).w
+		bne.s   SS_Results_Loop
 		move.w  #$00CA, D0
-		bsr     Play_Sfx                               ; loc_1512
-		bsr     Pal_MakeFlash                          ; loc_2794
+		bsr     Play_Sfx
+		bsr     Pal_MakeFlash
 		rts
 ;-------------------------------------------------------------------------------
-Special_Stage_Game_Reset:                                      ; loc_555A
-		move.b  #gm_SEGALogo, (Game_Mode).w             ; $00, $FFFFF600
+Special_Stage_Game_Reset:
+		move.b  #gm_SEGALogo, (Game_Mode).w
 		rts
 ;-------------------------------------------------------------------------------
-Special_Stage_Exit_To_Level:                                   ; loc_5562
-		cmpi.b  #gm_PlayMode, (Game_Mode).w             ; $0C, $FFFFF600
-		beq.s   Special_Stage_Game_Reset               ; loc_555A
+Special_Stage_Exit_To_Level:
+		cmpi.b  #gm_PlayMode, (Game_Mode).w
+		beq.s   Special_Stage_Game_Reset
 		rts
 ;-------------------------------------------------------------------------------
-Special_Stage_Background_Load:                                 ; loc_556C
-		lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+Special_Stage_Background_Load:
+		lea     (M68K_RAM_Start), A1
 		move.w  #$4051, D0
-		bsr     EniDec                              ; loc_1932
+		bsr     EniDec
 		move.l  #$50000001, D3
-		lea     (M68K_RAM_Start+$0080), A2                   ; $FFFF0080
+		lea     (M68K_RAM_Start+$0080), A2
 		moveq   #$06, D7
 loc_5588:
 		move.l  D3, D0
@@ -5391,12 +5392,12 @@ loc_5598:
 		bne.s   loc_55AC
 		cmpi.w  #$0006, D7
 		bne.s   loc_55BC
-		lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+		lea     (M68K_RAM_Start), A1
 loc_55AC:
 		movem.l D0-D4, -(A7)
 		moveq   #$07, D1
 		moveq   #$07, D2
-		bsr     ShowVDPGraphics                        ; loc_15A4
+		bsr     ShowVDPGraphics
 		movem.l (A7)+, D0-D4
 loc_55BC:
 		addi.l  #$00100000, D0
@@ -5412,32 +5413,32 @@ loc_55BC:
 loc_55E6:
 		adda.w  #$0080, A2
 		dbra    D7, loc_5588
-		lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+		lea     (M68K_RAM_Start), A1
 		move.w  #$4000, D0
-		bsr     EniDec                              ; loc_1932
-		lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+		bsr     EniDec
+		lea     (M68K_RAM_Start), A1
 		move.l  #$40000003, D0
 		moveq   #$3F, D1
 		moveq   #$1F, D2
-		bsr     ShowVDPGraphics                        ; loc_15A4
-		lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+		bsr     ShowVDPGraphics
+		lea     (M68K_RAM_Start), A1
 		move.l  #$50000003, D0
 		moveq   #$3F, D1
 		moveq   #$3F, D2
-		bsr     ShowVDPGraphics                        ; loc_15A4
+		bsr     ShowVDPGraphics
 		rts
 ;-------------------------------------------------------------------------------
-Special_Stage_Pal_Cycle:                                       ; loc_5626
-		tst.w   (Pause_Status).w                             ; $FFFFF63A
+Special_Stage_Pal_Cycle:
+		tst.w   (Pause_Status).w
 		bne.s   loc_56AA
 		subq.w  #$01, ($FFFFF79C).w
 		bpl.s   loc_56AA
-		lea     VDPCTRL, A6                       ; $00C00004
+		lea     VDPCTRL, A6
 		move.w  ($FFFFF79A).w, D0
 		addq.w  #$01, ($FFFFF79A).w
 		andi.w  #$001F, D0
 		lsl.w   #$02, D0
-		lea     (SS_Pal_Cycle_Data), A0                ; loc_5700
+		lea     (SS_Pal_Cycle_Data), A0
 		adda.w  D0, A0
 		move.b  (A0)+, D0
 		bpl.s   loc_5656
@@ -5447,7 +5448,7 @@ loc_5656:
 		moveq   #$00, D0
 		move.b  (A0)+, D0
 		move.w  D0, ($FFFFF7A0).w
-		lea     (SS_Pal_Cycle_Data_01), A1             ; loc_5780
+		lea     (SS_Pal_Cycle_Data_01), A1
 		lea     $00(A1, D0), A1
 		move.w  #$8200, D0
 		move.b  (A1)+, D0
@@ -5456,12 +5457,12 @@ loc_5656:
 		move.w  #$8400, D0
 		move.b  (A0)+, D0
 		move.w  D0, (A6)
-		move.l  #$40000010, VDPCTRL               ; $00C00004
-		move.l  ($FFFFF616).w, VDPDATA               ; $00C00000
+		move.l  #$40000010, VDPCTRL
+		move.l  ($FFFFF616).w, VDPDATA
 		moveq   #$00, D0
 		move.b  (A0)+, D0
 		bmi.s   loc_56AC
-		lea     (Pal_SS_Cycle1), A1                    ; loc_578E
+		lea     (Pal_SS_Cycle1), A1
 		adda.w  D0, A1
 		lea     ($FFFFFB4E).w, A2
 		move.l  (A1)+, (A2)+
@@ -5476,7 +5477,7 @@ loc_56AC:
 		addq.w  #$01, D1
 loc_56B8:
 		mulu.w  #$002A, D1
-		lea     (Pal_SS_Cycle2), A1                    ; loc_57D6
+		lea     (Pal_SS_Cycle2), A1
 		adda.w  D1, A1
 		andi.w  #$007F, D0
 		bclr    #$00, D0
@@ -5501,7 +5502,7 @@ loc_56F2:
 		move.w  (A1)+, (A2)+
 		rts
 ;-------------------------------------------------------------------------------
-SS_Pal_Cycle_Data:                                             ; loc_5700
+SS_Pal_Cycle_Data:
 		dc.w    $0300, $0792, $0300, $0790, $0300, $078E, $0300, $078C
 		dc.w    $0300, $078B, $0300, $0780, $0300, $0782, $0300, $0784
 		dc.w    $0300, $0786, $0300, $0788, $0708, $0700, $070A, $070C
@@ -5511,17 +5512,17 @@ SS_Pal_Cycle_Data:                                             ; loc_5700
 		dc.w    $0300, $0690, $0300, $0692, $0702, $0624, $0704, $0630
 		dc.w    $FF06, $063C, $FF06, $063C, $0704, $0630, $0702, $0624
 ;-------------------------------------------------------------------------------
-SS_Pal_Cycle_Data_01:                                          ; loc_5780
+SS_Pal_Cycle_Data_01:
 		dc.w    $1001, $1800, $1801, $2000, $2001, $2800, $2801
 ;-------------------------------------------------------------------------------
-Pal_SS_Cycle1:                                                 ; loc_578E
+Pal_SS_Cycle1:
 		dc.w    $0400, $0600, $0620, $0624, $0664, $0666, $0600, $0820
 		dc.w    $0A64, $0A68, $0AA6, $0AAA, $0800, $0C42, $0E86, $0ECA
 		dc.w    $0EEC, $0EEE, $0400, $0420, $0620, $0620, $0864, $0666
 		dc.w    $0420, $0620, $0842, $0842, $0A86, $0AAA, $0620, $0842
 		dc.w    $0A64, $0C86, $0EA8, $0EEE
 ;-------------------------------------------------------------------------------
-Pal_SS_Cycle2:                                                 ; loc_57D6
+Pal_SS_Cycle2:
 		dc.w    $0EEA, $0EE0, $0AA0, $0880, $0660, $0440, $0EE0, $0AA0
 		dc.w    $0440, $0AA0, $0AA0, $0AA0, $0860, $0860, $0860, $0640
 		dc.w    $0640, $0640, $0400, $0400, $0400, $0AEC, $06EA, $04C6
@@ -5537,30 +5538,30 @@ Pal_SS_Cycle2:                                                 ; loc_57D6
 		dc.w    $0864, $0864, $0864, $0642, $0642, $0642, $0400, $0400
 		dc.w    $0400
 ;-------------------------------------------------------------------------------
-Special_Stage_Background_Animate:                              ; loc_58A8
+Special_Stage_Background_Animate:
 		move.w  ($FFFFF7A0).w, D0
 		bne.s   loc_58BA
-		move.w  #$0000, (Camera_Y_x4).w                      ; $FFFFEE0C
-		move.w  (Camera_Y_x4).w, ($FFFFF618).w               ; $FFFFEE0C
+		move.w  #$0000, (Camera_Y_x4).w
+		move.w  (Camera_Y_x4).w, ($FFFFF618).w
 loc_58BA:
 		cmpi.w  #$0008, D0
 		bcc.s   loc_5912
 		cmpi.w  #$0006, D0
 		bne.s   loc_58D4
-		addq.w  #$01, (Camera_X_x4).w                        ; $FFFFEE18
-		addq.w  #$01, (Camera_Y_x4).w                        ; $FFFFEE0C
-		move.w  (Camera_Y_x4).w, ($FFFFF618).w               ; $FFFFEE0C
+		addq.w  #$01, (Camera_X_x4).w
+		addq.w  #$01, (Camera_Y_x4).w
+		move.w  (Camera_Y_x4).w, ($FFFFF618).w
 loc_58D4:
 		moveq   #$00, D0
-		move.w  (Camera_X_x2).w, D0                          ; $FFFFEE08
+		move.w  (Camera_X_x2).w, D0
 		neg.w   D0
 		swap.w  D0
-		lea     (SS_Bg_Animate_Data_02), A1            ; loc_598F
+		lea     (SS_Bg_Animate_Data_02), A1
 		lea     ($FFFFAA00).w, A3
 		moveq   #$09, D3
 loc_58EA:
 		move.w  $0002(A3), D0
-		bsr     CalcSine                               ; loc_3282
+		bsr     CalcSine
 		moveq   #$00, D2
 		move.b  (A1)+, D2
 		muls.w  D2, D0
@@ -5571,12 +5572,12 @@ loc_58EA:
 		add.w   D2, (A3)+
 		dbra    D3, loc_58EA
 		lea     ($FFFFAA00).w, A3
-		lea     (SS_Bg_Animate_Data_00), A2            ; loc_597C
+		lea     (SS_Bg_Animate_Data_00), A2
 		bra.s   loc_5942
 loc_5912:
 		cmpi.w  #$000C, D0
 		bne.s   loc_5938
-		subq.w  #$01, (Camera_X_x4).w                        ; $FFFFEE18
+		subq.w  #$01, (Camera_X_x4).w
 		lea     ($FFFFAB00).w, A3
 		move.l  #$00018000, D2
 		moveq   #$06, D1
@@ -5588,15 +5589,15 @@ loc_5928:
 		dbra    D1, loc_5928
 loc_5938:
 		lea     ($FFFFAB00).w, A3
-		lea     (SS_Bg_Animate_Data_01), A2            ; loc_5987
+		lea     (SS_Bg_Animate_Data_01), A2
 loc_5942:
-		lea     (Scroll_Buffer_Data).w, A1                   ; $FFFFE000
-		move.w  (Camera_X_x4).w, D0                          ; $FFFFEE18
+		lea     (Scroll_Buffer_Data).w, A1
+		move.w  (Camera_X_x4).w, D0
 		neg.w   D0
 		swap.w  D0
 		moveq   #$00, D3
 		move.b  (A2)+, D3
-		move.w  (Camera_Y_x4).w, D2                          ; $FFFFEE0C
+		move.w  (Camera_Y_x4).w, D2
 		neg.w   D2
 		andi.w  #$00FF, D2
 		lsl.w   #$02, D2
@@ -5614,14 +5615,14 @@ loc_5968:
 		dbra    D3, loc_595E
 		rts
 ;-------------------------------------------------------------------------------
-SS_Bg_Animate_Data_00:                                         ; loc_597C
+SS_Bg_Animate_Data_00:
 		dc.b    $09, $28, $18, $10, $28, $18, $10, $30
 		dc.b    $18, $08, $10
 ;-------------------------------------------------------------------------------
-SS_Bg_Animate_Data_01:                                         ; loc_5987
+SS_Bg_Animate_Data_01:
 		dc.b    $06, $30, $30, $30, $28, $18, $18, $18
 ;-------------------------------------------------------------------------------
-SS_Bg_Animate_Data_02:                                         ; loc_598F
+SS_Bg_Animate_Data_02:
 		dc.b    $08, $02, $04, $FF, $02, $03, $08, $FF
 		dc.b    $04, $02, $02, $03, $08, $FD, $04, $02
 		dc.b    $02, $03, $02, $FF, $00
@@ -12147,7 +12148,7 @@ loc_A7E6:
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A820
-                not.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                not.b   player.Flip(A0)                         ; $0029
                 bne.s   loc_A816
                 neg.w   obj.XSpeed(A0)                                    ; $0010
                 bchg    #00, obj.Render(A0)                               ; $0001
@@ -12196,7 +12197,7 @@ loc_A880:
                 jsr     (ObjHitFloor)                          ; loc_14204
                 tst.w   D1
                 bpl.s   loc_A8BA
-                not.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                not.b   player.Flip(A0)                         ; $0029
                 bne.s   loc_A8B0
                 neg.w   obj.XSpeed(A0)                                    ; $0010
                 bchg    #00, obj.Render(A0)                               ; $0001
@@ -13519,7 +13520,7 @@ Title_Cards_MakeSprite:                                        ; loc_BA52
                 move.b  #$00, obj.Render(A1)                              ; $0001
                 move.b  #$00, obj.Priority(A1)                           ; $0018
                 move.w  #$003C, obj.AnimTime(A1)                         ; $001E
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, Title_Card_Loop                    ; loc_BA32
 ;-------------------------------------------------------------------------------  
 loc_BA88:
@@ -13735,7 +13736,7 @@ loc_BD54:
                 move.w  #$8580, obj.VRAM(A1)                         ; $0002
                 bsr     ModifySpriteAttr_2P_A1                 ; loc_DBDA
                 move.b  #$00, obj.Render(A1)                              ; $0001
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, loc_BD2E           
 ;-------------------------------------------------------------------------------
 loc_BD78:
@@ -13940,7 +13941,7 @@ loc_BF7E:
                 move.w  #$8580, obj.VRAM(A1)                         ; $0002
                 bsr     ModifySpriteAttr_2P_A1                 ; loc_DBDA
                 move.b  #$00, obj.Render(A1)                              ; $0001
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, loc_BF7E
                 moveq   #$07, D0
                 move.b  (Emerald_Count).w, D1                        ; $FFFFFE57
@@ -14080,7 +14081,7 @@ loc_C116:
                 move.w  #$8541, obj.VRAM(A1)                         ; $0002
                 bsr     ModifySpriteAttr_2P_A1                 ; loc_DBDA
                 move.b  #$00, obj.Render(A1)                              ; $0001
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, loc_C116
 loc_C15C:
                 move.b  obj.MapFrame(A0), D0                               ; $001A
@@ -14899,7 +14900,7 @@ Loop_Load_Object:
 		jsr     (A1)
 		moveq   #$00, D0
 Load_Next_Object:
-		lea     Obj_Size(A0), A0
+		lea     obj.Size(A0), A0
 		dbra    D7, Loop_Load_Object
 		rts
 loc_CED2:
@@ -14914,7 +14915,7 @@ Loop_Load_Object_2:
 		bpl.s   Load_Next_Object_2
 		bsr     DisplaySprite
 Load_Next_Object_2:
-		lea     Obj_Size(A0), A0
+		lea     obj.Size(A0), A0
 		dbra    D7, Loop_Load_Object_2
 		rts
 ;-------------------------------------------------------------------------------
@@ -16472,7 +16473,7 @@ TouchRings:                                                    ; loc_DEFC
 loc_DF12:
 		cmpa.l  A1, A2
 		beq     loc_DFAA
-		cmpi.w  #$005A, Obj_P_Invunerblt_Time(A0)                ; $0030
+		cmpi.w  #$005A, player.Hurt(A0)                ; $0030
 		bcc     loc_DFAA
 		move.w  obj.X(A0), D2                                    ; $0008
 		move.w  obj.Y(A0), D3                                    ; $000C
@@ -17236,7 +17237,7 @@ loc_E644:
 ; [ End ]
 ;-------------------------------------------------------------------------------
 loc_E64A:
-		lea     Obj_Size(A3), A3                                 ; $0040
+		lea     obj.Size(A3), A3                                 ; $0040
 		dbra    D2, loc_E62E
 		moveq   #$00, D2
 		movem.l (A7)+, A1/A3
@@ -17315,7 +17316,7 @@ SingleObjectLoad:                                              ; loc_E6FE
 Loop_Find_Free_Ram:                                            ; loc_E706
 		tst.b   (A1)
 		beq.s   Exit_SingleObjectLoad                  ; loc_E712
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D0, Loop_Find_Free_Ram                 ; loc_E706
 Exit_SingleObjectLoad:                                         ; loc_E712
 		rts
@@ -17338,7 +17339,7 @@ SingleObjectLoad_2:                                            ; loc_E714
 Loop_Find_Free_Ram_2:                                          ; loc_E722
 		tst.b   (A1)
 		beq.s   Exit_SingleObjectLoad_2                ; loc_E72E
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D0, Loop_Find_Free_Ram_2               ; loc_E722
 Exit_SingleObjectLoad_2:                                       ; loc_E72E
 		rts
@@ -17357,7 +17358,7 @@ Load_Object_List:                                              ; loc_E730
 Loop_Find_Free_Ram_3:                                          ; loc_E736
 		tst.b   (A1)
 		beq.s   Exit_Load_Object_List                  ; loc_E742
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D0, Loop_Find_Free_Ram_3               ; loc_E736
 Exit_Load_Object_List:                                         ; loc_E742
 		rts
@@ -18862,7 +18863,7 @@ Player_On_Spiral:                                              ; loc_F99A
 		btst    #$03, obj.Status(A1)                             ; $0022
 		beq.s   loc_F9B6
 		moveq   #$00, D0
-		move.b  Obj_Player_Last(A1), D0                          ; $003D
+		move.b  player.LastObj(A1), D0                          ; $003D
 		lsl.w   #$06, D0
 		addi.l  #Player_One, D0                              ; $FFFFB000
 		move.l  D0, A3
@@ -19013,10 +19014,10 @@ Sonic_Main:
 		move.w  #$600, (Sonic_Max_Speed).w
 		move.w  #$C, (Sonic_Acceleration).w
 		move.w  #$80, (Sonic_Deceleration).w
-		move.b  #$C, Obj_Player_Top_Solid(A0)
-		move.b  #$D, Obj_Player_LRB_Solid(A0)
-		move.b  #0, Obj_P_Flips_Remaining(A0)
-		move.b  #4, Obj_Player_Flip_Speed(A0)
+		move.b  #$C, player.TopSolid(A0)
+		move.b  #$D, player.LRBSolid(A0)
+		move.b  #0, player.FlipsRemaining(A0)
+		move.b  #4, player.FlipSpeed(A0)
 		move.b  #0, (Super_Sonic_Flag).w
 		move.b  #$1E, obj.Subtype(A0)
 		move.w  #0, ($FFFFEED2).w
@@ -19054,8 +19055,8 @@ loc_FBE4:
                 bsr.s   Sonic_Display                          ; loc_FC38
                 bsr     CopySonicMovesForTails                 ; loc_FCD4
                 bsr     Sonic_Water                            ; loc_FCF8
-                move.b  ($FFFFF768).w, Obj_Player_Next_Tilt(A0)          ; $0036
-                move.b  ($FFFFF76A).w, Obj_Player_Tilt(A0)               ; $0037
+                move.b  ($FFFFF768).w, player.NextTilt(A0)          ; $0036
+                move.b  ($FFFFF76A).w, player.Tilt(A0)               ; $0037
                 tst.b   ($FFFFF7C7).w
                 beq.s   loc_FC0C
                 tst.b   obj.Anim(A0)                               ; $001C
@@ -19094,9 +19095,9 @@ Sonic_MusicList:                                               ; loc_FC28
                 dc.b    $87	; NGHZ
 ;-------------------------------------------------------------------------------
 Sonic_Display:                                                 ; loc_FC38
-                move.w  Obj_P_Invunerblt_Time(A0), D0                    ; $0030
+                move.w  player.Hurt(A0), D0                    ; $0030
                 beq.s   loc_FC46
-                subq.w  #$01, Obj_P_Invunerblt_Time(A0)                  ; $0030
+                subq.w  #$01, player.Hurt(A0)                  ; $0030
                 lsr.w   #$03, D0
                 bcc.s   loc_FC4C
 loc_FC46:
@@ -19104,9 +19105,9 @@ loc_FC46:
 loc_FC4C:
                 tst.b   (Invincibility_Flag).w                       ; $FFFFFE2D
                 beq.s   loc_FC86
-                tst.w   Obj_P_Invcbility_Time(A0)                        ; $0032
+                tst.w   player.Invinc(A0)                        ; $0032
                 beq.s   loc_FC86
-                subq.w  #$01, Obj_P_Invcbility_Time(A0)                  ; $0032
+                subq.w  #$01, player.Invinc(A0)                  ; $0032
                 bne.s   loc_FC86
                 tst.b   (Boss_Flag).w                                ; $FFFFF7AA
                 bne.s   loc_FC80
@@ -19122,9 +19123,9 @@ loc_FC80:
 loc_FC86:
                 tst.b   (Hi_Speed_Flag).w                            ; $FFFFFE2E
                 beq.s   loc_FCD2
-                tst.w   Obj_P_Spd_Shoes_Time(A0)                         ; $0034
+                tst.w   player.Shoes(A0)                         ; $0034
                 beq.s   loc_FCD2
-                subq.w  #$01, Obj_P_Spd_Shoes_Time(A0)                   ; $0034
+                subq.w  #$01, player.Shoes(A0)                   ; $0034
                 bne.s   loc_FCD2
                 move.w  #$0600, (Sonic_Max_Speed).w                  ; $FFFFF760
                 move.w  #$000C, (Sonic_Acceleration).w               ; $FFFFF762
@@ -19291,7 +19292,7 @@ Sonic_Move:                                                    ; loc_FEC6
                 move.w  (Sonic_Deceleration).w, D4                   ; $FFFFF764
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_1013E
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne     loc_10106
                 btst    #$02, ($FFFFF602).w
                 beq.s   loc_FEEE
@@ -19312,7 +19313,7 @@ loc_FEFA:
                 btst    #$03, obj.Status(A0)                             ; $0022
                 beq     loc_FFF8
                 moveq   #$00, D0
-                move.b  Obj_Player_Last(A0), D0                          ; $003D
+                move.b  player.LastObj(A0), D0                          ; $003D
                 lsl.w   #$06, D0
                 lea     (Player_One).w, A1                           ; $FFFFB000
                 lea     $00(A1, D0), A1
@@ -19376,7 +19377,7 @@ loc_FFF8:
                 blt     loc_100E8
                 tst.b   (Super_Sonic_Flag).w                         ; $FFFFFE19
                 bne     loc_100C2
-                cmpi.b  #$03, Obj_Player_Next_Tilt(A0)                   ; $0036
+                cmpi.b  #$03, player.NextTilt(A0)                   ; $0036
                 bne.s   loc_1006C
                 btst    #$00, obj.Status(A0)                             ; $0022
                 bne.s   loc_10042
@@ -19399,7 +19400,7 @@ loc_10042:
                 bclr    #$00, obj.Status(A0)                             ; $0022
                 bra     loc_10106
 loc_1006C:
-                cmpi.b  #$03, Obj_Player_Tilt(A0)                        ; $0037
+                cmpi.b  #$03, player.Tilt(A0)                        ; $0037
                 bne.s   loc_100E8
                 btst    #$00, obj.Status(A0)                             ; $0022
                 beq.s   loc_1009C
@@ -19422,13 +19423,13 @@ loc_1009C:
                 bset    #$00, obj.Status(A0)                             ; $0022
                 bra.s   loc_10106
 loc_100C2:
-                cmpi.b  #$03, Obj_Player_Next_Tilt(A0)                   ; $0036
+                cmpi.b  #$03, player.NextTilt(A0)                   ; $0036
                 bne.s   loc_100D2
 loc_100CA:
                 bclr    #$00, obj.Status(A0)                             ; $0022
                 bra.s   loc_100E0
 loc_100D2:
-                cmpi.b  #$03, Obj_Player_Tilt(A0)                        ; $0037
+                cmpi.b  #$03, player.Tilt(A0)                        ; $0037
                 bne.s   loc_100E8
 loc_100DA:
                 bset    #$00, obj.Status(A0)                             ; $0022
@@ -19612,7 +19613,7 @@ Sonic_RollSpeed:                                               ; loc_102D4
                 move.w  #$0020, D4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_1034E
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne.s   loc_1030A
                 btst    #$02, ($FFFFF602).w
                 beq.s   loc_102FE
@@ -19848,8 +19849,8 @@ loc_10556:
                 bset    #$01, obj.Status(A0)                             ; $0022
                 bclr    #$05, obj.Status(A0)                             ; $0022
                 addq.l  #$04, A7
-                move.b  #$01, Obj_Player_Jump(A0)                        ; $003C
-                clr.b   Obj_Player_St_Convex(A0)                         ; $0038
+                move.b  #$01, player.Jump(A0)                        ; $003C
+                clr.b   player.Stick(A0)                         ; $0038
                 move.w  #$00A0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
                 move.b  #$13, obj.YRadius(A0)                           ; $0016
@@ -19868,7 +19869,7 @@ loc_105CA:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_JumpHeight:                                              ; loc_105D2
-                tst.b   Obj_Player_Jump(A0)                              ; $003C
+                tst.b   player.Jump(A0)                              ; $003C
                 beq.s   loc_105FE
                 move.w  #$FC00, D1
                 btst    #$06, obj.Status(A0)                             ; $0022
@@ -19891,7 +19892,7 @@ loc_1060C:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_Spindash:                                                ; loc_1060E
-                tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $0039
+                tst.b   player.Spindash(A0)                        ; $0039
                 bne.s   loc_10656
                 cmpi.b  #$08, obj.Anim(A0)                         ; $001C
                 bne.s   loc_10654
@@ -19902,8 +19903,8 @@ Sonic_Spindash:                                                ; loc_1060E
                 move.w  #$00E0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
                 addq.l  #$04, A7
-                move.b  #$01, Obj_Player_Spdsh_Flag(A0)                  ; $0039
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.b  #$01, player.Spindash(A0)                  ; $0039
+                move.w  #$0000, player.SpindashCount(A0)                 ; $003A
                 cmpi.b  #$0C, obj.Subtype(A0)                            ; $0028
                 bcs.s   loc_10654
                 move.b  #$02, ($FFFFB41C).w
@@ -19917,10 +19918,10 @@ loc_10656:
                 move.b  #$07, obj.XRadius(A0)                            ; $0017
                 move.b  #$02, obj.Anim(A0)                         ; $001C
                 addq.w  #$05, obj.Y(A0)                                  ; $000C
-                move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $0039
+                move.b  #$00, player.Spindash(A0)                  ; $0039
                 move.w  #$2000, ($FFFFEED0).w
                 moveq   #$00, D0
-                move.b  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003A
+                move.b  player.SpindashCount(A0), D0                     ; $003A
                 add.w   D0, D0
                 move.w  Sonic_Spindash_Speed(PC, D0), obj.GroundSpeed(A0) ; loc_106B6, $0014
                 tst.b   (Super_Sonic_Flag).w                         ; $FFFFFE19
@@ -19944,13 +19945,13 @@ Super_Sonic_Spindash_Speed:                                    ; loc_106C8
                 dc.w    $0F00
 ;-------------------------------------------------------------------------------
 loc_106DA:
-                tst.w   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                tst.w   player.SpindashCount(A0)                         ; $003A
                 beq.s   loc_106F2
-                move.w  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003A
+                move.w  player.SpindashCount(A0), D0                     ; $003A
                 lsr.w   #$05, D0
-                sub.w   D0, Obj_Player_Spdsh_Cnt(A0)                     ; $003A
+                sub.w   D0, player.SpindashCount(A0)                     ; $003A
                 bcc.s   loc_106F2
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.w  #$0000, player.SpindashCount(A0)                 ; $003A
 loc_106F2:
                 move.b  ($FFFFF603).w, D0
                 andi.b  #$70, D0
@@ -19958,10 +19959,10 @@ loc_106F2:
                 move.w  #$0900, obj.Anim(A0)                       ; $001C
                 move.w  #$00E0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
-                addi.w  #$0200, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
-                cmpi.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                addi.w  #$0200, player.SpindashCount(A0)                 ; $003A
+                cmpi.w  #$0800, player.SpindashCount(A0)                 ; $003A
                 bcs.s   loc_10722
-                move.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.w  #$0800, player.SpindashCount(A0)                 ; $003A
 loc_10722:
                 addq.l  #$04, A7
                 rts
@@ -20016,9 +20017,9 @@ loc_10796:
 ;-------------------------------------------------------------------------------
 Sonic_SlopeRepel:                                              ; loc_10798
                 nop
-                tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+                tst.b   player.Stick(A0)                         ; $0038
                 bne.s   loc_107D2
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne.s   loc_107D4
                 move.b  obj.Angle(A0), D0                                ; $0026
                 addi.b  #$20, D0
@@ -20032,11 +20033,11 @@ loc_107BC:
                 bcc.s   loc_107D2
                 clr.w   obj.GroundSpeed(A0)                                  ; $0014
                 bset    #$01, obj.Status(A0)                             ; $0022
-                move.w  #$001E, Obj_Player_Control(A0)                   ; $002E
+                move.w  #$001E, player.HorizLock(A0)                   ; $002E
 loc_107D2:
                 rts
 loc_107D4:
-                subq.w  #$01, Obj_Player_Control(A0)                     ; $002E
+                subq.w  #$01, player.HorizLock(A0)                     ; $002E
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_JumpAngle:                                               ; loc_107DA
@@ -20060,24 +20061,24 @@ loc_107F4:
                 tst.w   obj.GroundSpeed(A0)                                  ; $0014
                 bmi.s   loc_10818
 loc_10800:
-                move.b  Obj_Player_Flip_Speed(A0), D1                    ; $002D
+                move.b  player.FlipSpeed(A0), D1                    ; $002D
                 add.b   D1, D0
                 bcc.s   loc_10816
-                subq.b  #$01, Obj_P_Flips_Remaining(A0)                  ; $002C
+                subq.b  #$01, player.FlipsRemaining(A0)                  ; $002C
                 bcc.s   loc_10816
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 moveq   #$00, D0
 loc_10816:
                 bra.s   loc_10834
 loc_10818:
-                tst.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                tst.b   player.Flip(A0)                         ; $0029
                 bne.s   loc_10800
-                move.b  Obj_Player_Flip_Speed(A0), D1                    ; $002D
+                move.b  player.FlipSpeed(A0), D1                    ; $002D
                 sub.b   D1, D0
                 bcc.s   loc_10834
-                subq.b  #$01, Obj_P_Flips_Remaining(A0)                  ; $002C
+                subq.b  #$01, player.FlipsRemaining(A0)                  ; $002C
                 bcc.s   loc_10834
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 moveq   #$00, D0
 loc_10834:
                 move.b  D0, obj.FlipAngle(A0)                           ; $0027
@@ -20086,15 +20087,15 @@ loc_10838:
 ;-------------------------------------------------------------------------------
 Sonic_Floor:                                                   ; loc_1083A
                 move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-                cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+                cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
                 beq.s   loc_10852
                 move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_10852:
-                move.b  Obj_Player_LRB_Solid(A0), D5                     ; $003F
+                move.b  player.LRBSolid(A0), D5                     ; $003F
                 move.w  obj.XSpeed(A0), D1                                ; $0010
                 move.w  obj.YSpeed(A0), D2                              ; $0012
                 jsr     (CalcAngle)                            ; loc_351A
-                move.b  D0, Obj_Player_Status(A0)                        ; $002B
+                move.b  D0, player.Status(A0)                        ; $002B
                 subi.b  #$20, D0
                 andi.b  #$C0, D0
                 cmpi.b  #$40, D0
@@ -20265,11 +20266,11 @@ Sonic_ResetOnFloor:                                            ; loc_10A46
                 move.b  #$00, obj.Anim(A0)                         ; $001C
                 subq.w  #$05, obj.Y(A0)                                  ; $000C
 loc_10A7C:
-                move.b  #$00, Obj_Player_Jump(A0)                        ; $003C
+                move.b  #$00, player.Jump(A0)                        ; $003C
                 move.w  #$0000, ($FFFFF7D0).w
                 move.b  #$00, obj.FlipAngle(A0)                         ; $0027
-                move.b  #$00, Obj_Player_Flip_Flag(A0)                   ; $0029
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.Flip(A0)                   ; $0029
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 cmpi.b  #$14, obj.Anim(A0)                         ; $001C
                 bne.s   loc_10AA8
                 move.b  #$00, obj.Anim(A0)                         ; $001C
@@ -20308,7 +20309,7 @@ Sonic_HurtStop:
 		move.w  D0, obj.GroundSpeed(A0)
 		move.b  #0, obj.Anim(A0)			; Set animation to walking animation
 		subq.b  #2, obj.Routine(A0)			; Subtract to the main routine (0)
-		move.w  #120, Obj_P_Invunerblt_Time(A0)		; Set hurt time
+		move.w  #120, player.Hurt(A0)		; Set hurt time
 loc_10B20:
 		rts
 ;-------------------------------------------------------------------------------
@@ -20340,7 +20341,7 @@ Sonic_GameOver:
 		addq.b  #$1, (HUD_Life_Refresh_Flag).w		; Lose 1 life
 		subq.b  #$1, (Life_Count).w
 		bne.s   loc_10BB0				; Branch if it's not a Game Over
-		move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)
+		move.w  #$0000, player.SpindashCount(A0)
 		move.b  #$39, ($FFFFB080).w			; Load Obj39 (Game Over text)
 		move.b  #$39, ($FFFFB0C0).w			; Load Obj39 (Game Over text)
 		move.b  #$01, ($FFFFB0DA).w
@@ -20351,10 +20352,10 @@ loc_10B9E:
                 moveq   #$3, D0					; Load Game Over PLCs
                 jmp     (LoadPLC)
 loc_10BB0:
-                move.w  #$003C, Obj_Player_Spdsh_Cnt(A0)
+                move.w  #$003C, player.SpindashCount(A0)
                 tst.b   (Time_Over_Flag).w			; Is it a Time Over?
                 beq.s   loc_10BDC				; If not, branch
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)
+                move.w  #$0000, player.SpindashCount(A0)
                 move.b  #$39, ($FFFFB080).w			; Load Obj39 (Time Over text)
                 move.b  #$39, ($FFFFB0C0).w			; Load Obj39 (Time Over text)
                 move.b  #$02, ($FFFFB09A).w
@@ -20364,9 +20365,9 @@ loc_10BDC:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_ResetLevel:                                              ; loc_10BDE
-                tst.w   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                tst.w   player.SpindashCount(A0)                         ; $003A
                 beq.s   loc_10BF0
-                subq.w  #$01, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                subq.w  #$01, player.SpindashCount(A0)                   ; $003A
                 bne.s   loc_10BF0
                 move.w  #$0001, ($FFFFFE02).w
 loc_10BF0:
@@ -20549,7 +20550,7 @@ loc_10DB8:
                 rts
 loc_10DE6:
                 andi.b  #$FC, obj.Render(A0)                              ; $0001
-                tst.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                tst.b   player.Flip(A0)                         ; $0029
                 beq.s   loc_10DFE
                 ori.b   #$01, obj.Render(A0)                              ; $0001
                 addi.b  #$0B, D0
@@ -20863,10 +20864,10 @@ Tails_Main:                                                    ; loc_11148
                 move.w  #$0600, (Tails_Max_Speed).w                  ; $FFFFFEC0
                 move.w  #$000C, (Tails_Acceleration).w               ; $FFFFFEC2
                 move.w  #$0080, (Tails_Deceleration).w               ; $FFFFFEC4
-                move.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
-                move.b  #$0D, Obj_Player_LRB_Solid(A0)                   ; $003F
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
-                move.b  #$04, Obj_Player_Flip_Speed(A0)                  ; $002D
+                move.b  #$0C, player.TopSolid(A0)                   ; $003E
+                move.b  #$0D, player.LRBSolid(A0)                   ; $003F
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
+                move.b  #$04, player.FlipSpeed(A0)                  ; $002D
                 move.b  #$1E, obj.Subtype(A0)                            ; $0028
                 move.b  #$05, ($FFFFB1C0).w
 ;-------------------------------------------------------------------------------
@@ -20887,8 +20888,8 @@ loc_111DE:
                 bsr.s   Tails_Display                          ; loc_11232
                 bsr     Tails_RecordMoves                      ; loc_11376
                 bsr     Tails_Water                            ; loc_11390
-                move.b  ($FFFFF768).w, Obj_Player_Next_Tilt(A0)          ; $0036
-                move.b  ($FFFFF76A).w, Obj_Player_Tilt(A0)               ; $0037
+                move.b  ($FFFFF768).w, player.NextTilt(A0)          ; $0036
+                move.b  ($FFFFF76A).w, player.Tilt(A0)               ; $0037
                 tst.b   ($FFFFF7C7).w
                 beq.s   loc_11206
                 tst.b   obj.Anim(A0)                               ; $001C
@@ -20927,9 +20928,9 @@ Tails_MusicList:                                               ; loc_11222
                 dc.b    $87	; NGHZ
 ;-------------------------------------------------------------------------------
 Tails_Display:                                                 ; loc_11232
-                move.w  Obj_P_Invunerblt_Time(A0), D0                    ; $0030
+                move.w  player.Hurt(A0), D0                    ; $0030
                 beq.s   loc_11240
-                subq.w  #$01, Obj_P_Invunerblt_Time(A0)                  ; $0030
+                subq.w  #$01, player.Hurt(A0)                  ; $0030
                 lsr.w   #$03, D0
                 bcc.s   loc_11246
 loc_11240:
@@ -20937,9 +20938,9 @@ loc_11240:
 loc_11246:
                 tst.b   (Invincibility_Flag).w                       ; $FFFFFE2D
                 beq.s   loc_11280
-                tst.w   Obj_P_Invcbility_Time(A0)                        ; $0032
+                tst.w   player.Invinc(A0)                        ; $0032
                 beq.s   loc_11280
-                subq.w  #$01, Obj_P_Invcbility_Time(A0)                  ; $0032
+                subq.w  #$01, player.Invinc(A0)                  ; $0032
                 bne.s   loc_11280
                 tst.b   (Boss_Flag).w                                ; $FFFFF7AA
                 bne.s   loc_1127A
@@ -20955,9 +20956,9 @@ loc_1127A:
 loc_11280:
                 tst.b   (Hi_Speed_Flag).w                            ; $FFFFFE2E
                 beq.s   loc_112B4
-                tst.w   Obj_P_Spd_Shoes_Time(A0)                         ; $0034
+                tst.w   player.Shoes(A0)                         ; $0034
                 beq.s   loc_112B4
-                subq.w  #$01, Obj_P_Spd_Shoes_Time(A0)                   ; $0034
+                subq.w  #$01, player.Shoes(A0)                   ; $0034
                 bne.s   loc_112B4
                 move.w  #$0600, (Tails_Max_Speed).w                  ; $FFFFFEC0
                 move.w  #$000C, (Tails_Acceleration).w               ; $FFFFFEC2
@@ -21159,7 +21160,7 @@ Tails_Move:                                                    ; loc_114E4
                 move.w  (Tails_Deceleration).w, D4                   ; $FFFFFEC4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_115F6
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne     loc_115CA
                 btst    #$02, ($FFFFF606).w
                 beq.s   loc_1150C
@@ -21180,7 +21181,7 @@ loc_11518:
                 btst    #$03, obj.Status(A0)                             ; $0022
                 beq.s   loc_1157A
                 moveq   #$00, D0
-                move.b  Obj_Player_Last(A0), D0                          ; $003D
+                move.b  player.LastObj(A0), D0                          ; $003D
                 lsl.w   #$06, D0
                 lea     (Player_One).w, A1                           ; $FFFFB000
                 lea     $00(A1, D0), A1
@@ -21202,13 +21203,13 @@ loc_1157A:
                 jsr     (Player_HitFloor)                      ; loc_14160
                 cmpi.w  #$000C, D1
                 blt.s   loc_115AC
-                cmpi.b  #$03, Obj_Player_Next_Tilt(A0)                   ; $0036
+                cmpi.b  #$03, player.NextTilt(A0)                   ; $0036
                 bne.s   loc_11596
 loc_1158E:
                 bclr    #$00, obj.Status(A0)                             ; $0022
                 bra.s   loc_115A4
 loc_11596:
-                cmpi.b  #$03, Obj_Player_Tilt(A0)                        ; $0037
+                cmpi.b  #$03, player.Tilt(A0)                        ; $0037
                 bne.s   loc_115AC
 loc_1159E:
                 bset    #$00, obj.Status(A0)                             ; $0022
@@ -21389,7 +21390,7 @@ Tails_RollSpeed:                                               ; loc_1178C
                 asr.w   #$02, D4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_11808
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne.s   loc_117C4
                 btst    #$02, ($FFFFF606).w
                 beq.s   loc_117B8
@@ -21614,8 +21615,8 @@ loc_119F4:
                 bset    #$01, obj.Status(A0)                             ; $0022
                 bclr    #$05, obj.Status(A0)                             ; $0022
                 addq.l  #$04, A7
-                move.b  #$01, Obj_Player_Jump(A0)                        ; $003C
-                clr.b   Obj_Player_St_Convex(A0)                         ; $0038
+                move.b  #$01, player.Jump(A0)                        ; $003C
+                clr.b   player.Stick(A0)                         ; $0038
                 move.w  #$00A0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
                 move.b  #$0F, obj.YRadius(A0)                           ; $0016
@@ -21634,7 +21635,7 @@ loc_11A68:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_JumpHeight:                                              ; loc_11A70
-                tst.b   Obj_Player_Jump(A0)                              ; $003C
+                tst.b   player.Jump(A0)                              ; $003C
                 beq.s   loc_11A9C
                 move.w  #$FC00, D1
                 btst    #$06, obj.Status(A0)                             ; $0022
@@ -21657,7 +21658,7 @@ loc_11AAA:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_Spindash:                                                ; loc_11AAC
-                tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $0039
+                tst.b   player.Spindash(A0)                        ; $0039
                 bne.s   loc_11AF4
                 cmpi.b  #$08, obj.Anim(A0)                         ; $001C
                 bne.s   loc_11AF2
@@ -21668,8 +21669,8 @@ Tails_Spindash:                                                ; loc_11AAC
                 move.w  #$00E0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
                 addq.l  #$04, A7
-                move.b  #$01, Obj_Player_Spdsh_Flag(A0)                  ; $0039
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.b  #$01, player.Spindash(A0)                  ; $0039
+                move.w  #$0000, player.SpindashCount(A0)                 ; $003A
                 cmpi.b  #$0C, obj.Subtype(A0)                            ; $0028
                 bcs.s   loc_11AF2
                 move.b  #$02, ($FFFFB45C).w
@@ -21683,10 +21684,10 @@ loc_11AF4:
                 move.b  #$07, obj.XRadius(A0)                            ; $0017
                 move.b  #$02, obj.Anim(A0)                         ; $001C
                 addq.w  #$05, obj.Y(A0)                                  ; $000C
-                move.b  #$00, Obj_Player_Spdsh_Flag(A0)                  ; $0039
+                move.b  #$00, player.Spindash(A0)                  ; $0039
                 move.w  #$2000, ($FFFFEED4).w
                 moveq   #$00, D0
-                move.b  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003A
+                move.b  player.SpindashCount(A0), D0                     ; $003A
                 add.w   D0, D0
                 move.w  Tails_Spindash_Speed(PC, D0), obj.GroundSpeed(A0) ; loc_11B48, $0014
                 btst    #$00, obj.Status(A0)                             ; $0022
@@ -21702,13 +21703,13 @@ Tails_Spindash_Speed:                                          ; loc_11B48
                 dc.w    $0C00
 ;-------------------------------------------------------------------------------
 loc_11B5A:
-                tst.w   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                tst.w   player.SpindashCount(A0)                         ; $003A
                 beq.s   loc_11B72
-                move.w  Obj_Player_Spdsh_Cnt(A0), D0                     ; $003A
+                move.w  player.SpindashCount(A0), D0                     ; $003A
                 lsr.w   #$05, D0
-                sub.w   D0, Obj_Player_Spdsh_Cnt(A0)                     ; $003A
+                sub.w   D0, player.SpindashCount(A0)                     ; $003A
                 bcc.s   loc_11B72
-                move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.w  #$0000, player.SpindashCount(A0)                 ; $003A
 loc_11B72:
                 move.b  ($FFFFF603).w, D0
                 andi.b  #$70, D0
@@ -21716,10 +21717,10 @@ loc_11B72:
                 move.w  #$0900, obj.Anim(A0)                       ; $001C
                 move.w  #$00E0, D0
                 jsr     (Play_Sfx)                             ; loc_1512
-                addi.w  #$0200, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
-                cmpi.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                addi.w  #$0200, player.SpindashCount(A0)                 ; $003A
+                cmpi.w  #$0800, player.SpindashCount(A0)                 ; $003A
                 bcs.s   loc_11BA2
-                move.w  #$0800, Obj_Player_Spdsh_Cnt(A0)                 ; $003A
+                move.w  #$0800, player.SpindashCount(A0)                 ; $003A
 loc_11BA2:
                 addq.l  #$04, A7
                 rts
@@ -21774,9 +21775,9 @@ loc_11C16:
 ;-------------------------------------------------------------------------------
 Tails_SlopeRepel:                                              ; loc_11C18
                 nop
-                tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+                tst.b   player.Stick(A0)                         ; $0038
                 bne.s   loc_11C52
-                tst.w   Obj_Player_Control(A0)                           ; $002E
+                tst.w   player.HorizLock(A0)                           ; $002E
                 bne.s   loc_11C54
                 move.b  obj.Angle(A0), D0                                ; $0026
                 addi.b  #$20, D0
@@ -21790,11 +21791,11 @@ loc_11C3C:
                 bcc.s   loc_11C52
                 clr.w   obj.GroundSpeed(A0)                                  ; $0014
                 bset    #$01, obj.Status(A0)                             ; $0022
-                move.w  #$001E, Obj_Player_Control(A0)                   ; $002E
+                move.w  #$001E, player.HorizLock(A0)                   ; $002E
 loc_11C52:
                 rts
 loc_11C54:
-                subq.w  #$01, Obj_Player_Control(A0)                     ; $002E
+                subq.w  #$01, player.HorizLock(A0)                     ; $002E
                 rts
 ;-------------------------------------------------------------------------------
 Tails_JumpAngle:                                               ; loc_11C5A
@@ -21818,24 +21819,24 @@ loc_11C74:
                 tst.w   obj.GroundSpeed(A0)                                  ; $0014
                 bmi.s   loc_11C98
 loc_11C80:
-                move.b  Obj_Player_Flip_Speed(A0), D1                    ; $002D
+                move.b  player.FlipSpeed(A0), D1                    ; $002D
                 add.b   D1, D0
                 bcc.s   loc_11C96
-                subq.b  #$01, Obj_P_Flips_Remaining(A0)                  ; $002C
+                subq.b  #$01, player.FlipsRemaining(A0)                  ; $002C
                 bcc.s   loc_11C96
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 moveq   #$00, D0
 loc_11C96:
                 bra.s   loc_11CB4
 loc_11C98:
-                tst.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                tst.b   player.Flip(A0)                         ; $0029
                 bne.s   loc_11C80
-                move.b  Obj_Player_Flip_Speed(A0), D1                    ; $002D
+                move.b  player.FlipSpeed(A0), D1                    ; $002D
                 sub.b   D1, D0
                 bcc.s   loc_11CB4
-                subq.b  #$01, Obj_P_Flips_Remaining(A0)                  ; $002C
+                subq.b  #$01, player.FlipsRemaining(A0)                  ; $002C
                 bcc.s   loc_11CB4
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 moveq   #$00, D0
 loc_11CB4:
                 move.b  D0, obj.FlipAngle(A0)                           ; $0027
@@ -21844,15 +21845,15 @@ loc_11CB8:
 ;-------------------------------------------------------------------------------
 Tails_Floor:                                                   ; loc_11CBA
                 move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-                cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+                cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
                 beq.s   loc_11CD2
                 move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_11CD2:
-                move.b  Obj_Player_LRB_Solid(A0), D5                     ; $003F
+                move.b  player.LRBSolid(A0), D5                     ; $003F
                 move.w  obj.XSpeed(A0), D1                                ; $0010
                 move.w  obj.YSpeed(A0), D2                              ; $0012
                 jsr     (CalcAngle)                            ; loc_351A
-                move.b  D0, Obj_Player_Status(A0)                        ; $002B
+                move.b  D0, player.Status(A0)                        ; $002B
                 subi.b  #$20, D0
                 andi.b  #$C0, D0
                 cmpi.b  #$40, D0
@@ -22023,11 +22024,11 @@ Tails_ResetOnFloor:                                            ; loc_11EC6
                 move.b  #$00, obj.Anim(A0)                         ; $001C
                 subq.w  #$01, obj.Y(A0)                                  ; $000C
 loc_11EFC:
-                move.b  #$00, Obj_Player_Jump(A0)                        ; $003C
+                move.b  #$00, player.Jump(A0)                        ; $003C
                 move.w  #$0000, ($FFFFF7D0).w
                 move.b  #$00, obj.FlipAngle(A0)                         ; $0027
-                move.b  #$00, Obj_Player_Flip_Flag(A0)                   ; $0029
-                move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $002C
+                move.b  #$00, player.Flip(A0)                   ; $0029
+                move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
                 cmpi.b  #$14, obj.Anim(A0)                         ; $001C
                 bne.s   loc_11F28
                 move.b  #$00, obj.Anim(A0)                         ; $001C
@@ -22062,7 +22063,7 @@ Tails_HurtStop:                                                ; loc_11F5E
                 move.w  D0, obj.GroundSpeed(A0)                              ; $0014
                 move.b  #$00, obj.Anim(A0)                         ; $001C
                 move.b  #$02, obj.Routine(A0)                            ; $0024
-                move.w  #$0078, Obj_P_Invunerblt_Time(A0)                ; $0030
+                move.w  #$0078, player.Hurt(A0)                ; $0030
 loc_11F9A:
                 rts
 ;-------------------------------------------------------------------------------
@@ -22087,16 +22088,16 @@ Tails_GameOver:                                                ; loc_11FB8
                 move.w  D0, obj.Y(A0)                                    ; $000C
                 move.b  #$02, obj.Routine(A0)                            ; $0024
                 andi.w  #$7FFF, obj.VRAM(A0)                         ; $0002
-                move.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
-                move.b  #$0D, Obj_Player_LRB_Solid(A0)                   ; $003F
+                move.b  #$0C, player.TopSolid(A0)                   ; $003E
+                move.b  #$0D, player.LRBSolid(A0)                   ; $003F
                 nop
 loc_11FFA:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_ResetLevel:                                              ; loc_11FFC
-                tst.w   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                tst.w   player.SpindashCount(A0)                         ; $003A
                 beq.s   loc_1200E
-                subq.w  #$01, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                subq.w  #$01, player.SpindashCount(A0)                   ; $003A
                 bne.s   loc_1200E
                 move.w  #$0001, ($FFFFFE02).w
 loc_1200E:
@@ -22231,7 +22232,7 @@ loc_1214A:
                 rts
 loc_12178:
                 andi.b  #$FC, obj.Render(A0)                              ; $0001
-                tst.b   Obj_Player_Flip_Flag(A0)                         ; $0029
+                tst.b   player.Flip(A0)                         ; $0029
                 beq.s   loc_12190
                 ori.b   #$01, obj.Render(A0)                              ; $0001
                 addi.b  #$0B, D0
@@ -22519,9 +22520,9 @@ loc_1247C:
                 beq.s   loc_124A4
                 moveq   #$04, D0
 loc_124A4:
-                cmp.b   Obj_P_Invunerblt_Time(A0), D0                    ; $0030
+                cmp.b   player.Hurt(A0), D0                    ; $0030
                 beq.s   loc_124B4
-                move.b  D0, Obj_P_Invunerblt_Time(A0)                    ; $0030
+                move.b  D0, player.Hurt(A0)                    ; $0030
                 move.b  Obj05AniSelection(PC, D0), obj.Anim(A0)    ; $001C
 loc_124B4:
                 lea     (Obj05AniData), A1
@@ -23096,7 +23097,7 @@ loc_12BB2:
                 move.b  obj.Angle(A1), D1                                ; $0026
                 btst    #$01, D6
                 beq.s   loc_12BE4
-                move.b  Obj_Player_Status(A1), D1                        ; $002B
+                move.b  player.Status(A1), D1                        ; $002B
                 moveq   #$00, D6
 loc_12BE4:
                 andi.b  #$01, D6
@@ -23680,11 +23681,11 @@ Super_Sonic_Stars_Mappings:                                    ; loc_13620
 ;===============================================================================
 Player_AnglePos:                                               ; loc_13694
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
 		beq.s   loc_136AC
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_136AC:
-		move.b  Obj_Player_Top_Solid(A0), D5                     ; $003E
+		move.b  player.TopSolid(A0), D5                     ; $003E
 		btst    #$03, obj.Status(A0)                             ; $0022
 		beq.s   loc_136C4
 		moveq   #$00, D0
@@ -23772,7 +23773,7 @@ loc_13796:
 		add.w   D1, obj.Y(A0)                                    ; $000C
 		rts
 loc_1379C:
-		tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+		tst.b   player.Stick(A0)                         ; $0038
 		bne.s   loc_13796
 		bset    #$01, obj.Status(A0)                             ; $0022
 		bclr    #$05, obj.Status(A0)                             ; $0022
@@ -23867,7 +23868,7 @@ loc_1387A:
 		add.w   D1, obj.X(A0)                                    ; $0008
 		rts
 loc_13880:
-		tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+		tst.b   player.Stick(A0)                         ; $0038
 		bne.s   loc_1387A
 		bset    #$01, obj.Status(A0)                             ; $0022
 		bclr    #$05, obj.Status(A0)                             ; $0022
@@ -23938,7 +23939,7 @@ loc_13928:
 		sub.w   D1, obj.Y(A0)                                    ; $000C
 		rts
 loc_1392E:
-		tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+		tst.b   player.Stick(A0)                         ; $0038
 		bne.s   loc_13928
 		bset    #$01, obj.Status(A0)                             ; $0022
 		bclr    #$05, obj.Status(A0)                             ; $0022
@@ -24009,7 +24010,7 @@ loc_139D6:
 		sub.w   D1, obj.X(A0)                                    ; $0008
 		rts
 loc_139DC:
-		tst.b   Obj_Player_St_Convex(A0)                         ; $0038
+		tst.b   player.Stick(A0)                         ; $0038
 		bne.s   loc_139D6
 		bset    #$01, obj.Status(A0)                             ; $0022
 		bclr    #$05, obj.Status(A0)                             ; $0022
@@ -24514,11 +24515,11 @@ loc_13FD0:
 ;===============================================================================
 Player_WalkSpeed:                                              ; loc_13FD8
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
 		beq.s   loc_13FF0
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_13FF0:
-		move.b  Obj_Player_LRB_Solid(A0), D5                     ; $003F
+		move.b  player.LRBSolid(A0), D5                     ; $003F
 		move.l  obj.X(A0), D3                                    ; $0008
 		move.l  obj.Y(A0), D2                                    ; $000C
 		move.w  obj.XSpeed(A0), D1                                ; $0010
@@ -24571,11 +24572,11 @@ loc_14052:
 ;===============================================================================
 CalcRoomOverHead:                                              ; loc_1405E
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
 		beq.s   loc_14076
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_14076:
-		move.b  Obj_Player_LRB_Solid(A0), D5                     ; $003F
+		move.b  player.LRBSolid(A0), D5                     ; $003F
 		move.b  D0, ($FFFFF768).w
 		move.b  D0, ($FFFFF76A).w
 		addi.b  #$20, D0
@@ -24588,11 +24589,11 @@ loc_14076:
 		beq     Player_DontRunOnWallsR                 ; loc_14286
 loc_140A2: ; Referenced by players
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
 		beq.s   loc_140BA
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_140BA:
-		move.b  Obj_Player_Top_Solid(A0), D5                     ; $003E
+		move.b  player.TopSolid(A0), D5                     ; $003E
 		move.w  obj.Y(A0), D2                                    ; $000C
 		move.w  obj.X(A0), D3                                    ; $0008
 		moveq   #$00, D0
@@ -24668,7 +24669,7 @@ Player_HitFloor_D3:                                            ; loc_14164
 		ext.w   D0
 		add.w   D0, D2
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A0)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A0)                   ; $003E
 		beq.s   loc_1418A
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_1418A:
@@ -24676,7 +24677,7 @@ loc_1418A:
 		move.b  #$00, (A4)
 		move.w  #$0010, A3
 		move.w  #$0000, D6
-		move.b  Obj_Player_Top_Solid(A0), D5                     ; $003E
+		move.b  player.TopSolid(A0), D5                     ; $003E
 		bsr     FindFloor                              ; loc_13C30
 		move.b  ($FFFFF768).w, D3
 		btst    #$00, D3
@@ -24693,7 +24694,7 @@ Player_HitFloor_A1:                                            ; loc_141B2
 		ext.w   D0
 		add.w   D0, D2
 		move.l  #Primary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD000, $FFFFF796
-		cmpi.b  #$0C, Obj_Player_Top_Solid(A1)                   ; $003E
+		cmpi.b  #$0C, player.TopSolid(A1)                   ; $003E
 		beq.s   loc_141DC
 		move.l  #Secundary_Colision_Data_Buffer, (Current_Colision_Pointer).w ; $FFFFD600, $FFFFF796
 loc_141DC:
@@ -24701,7 +24702,7 @@ loc_141DC:
 		move.b  #$00, (A4)
 		move.w  #$0010, A3
 		move.w  #$0000, D6
-		move.b  Obj_Player_Top_Solid(A1), D5                     ; $003E
+		move.b  player.TopSolid(A1), D5                     ; $003E
 		bsr     FindFloor                              ; loc_13C30
 		move.b  ($FFFFF768).w, D3
 		btst    #$00, D3
@@ -26895,8 +26896,8 @@ loc_164A6:
 loc_164C8:
                 bclr    #$03, obj.Status(A1)                             ; $0022
                 bclr    D6, obj.Status(A0)                               ; $0022
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $002C
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $002D
+                move.b  #$00, player.FlipsRemaining(A1)                  ; $002C
+                move.b  #$04, player.FlipSpeed(A1)                  ; $002D
                 rts
 loc_164E0:
                 btst    #$03, obj.Status(A1)                             ; $0022
@@ -27011,7 +27012,7 @@ loc_166FC:
                 add.w   D0, D2
                 addq.w  #$03, D2
                 move.w  D2, obj.Y(A1)                                    ; $000C
-                move.b  #$01, Obj_Player_Flip_Flag(A1)                   ; $0029
+                move.b  #$01, player.Flip(A1)                   ; $0029
                 bsr     Player_On_Spiral                       ; loc_F99A
                 move.w  #$0001, obj.Anim(A1)                       ; $001C
                 move.b  #$00, (A2)
@@ -27032,8 +27033,8 @@ loc_1676A:
 loc_16786:
                 bclr    #$03, obj.Status(A1)                             ; $0022
                 bclr    D6, obj.Status(A0)                               ; $0022
-                move.b  #$00, Obj_P_Flips_Remaining(A1)                  ; $002C
-                move.b  #$04, Obj_Player_Flip_Speed(A1)                  ; $002D
+                move.b  #$00, player.FlipsRemaining(A1)                  ; $002C
+                move.b  #$04, player.FlipSpeed(A1)                  ; $002D
                 bset    #$01, obj.Status(A1)                             ; $0022
                 rts
 loc_167A4:
@@ -31018,14 +31019,14 @@ loc_1A23A:
                 dc.w    $0000, $F000, $1000, $0000, $0000, $1000, $F000, $0000 
 ;-------------------------------------------------------------------------------
 loc_1A24A:
-                cmpi.b  #$02, Obj_P_Flips_Remaining(A0)                  ; $002C
+                cmpi.b  #$02, player.FlipsRemaining(A0)                  ; $002C
                 beq.s   loc_1A284
-                cmpi.b  #$02, Obj_Player_Next_Tilt(A0)                   ; $0036
+                cmpi.b  #$02, player.NextTilt(A0)                   ; $0036
                 beq.s   loc_1A284
                 subq.w  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_1A284
                 move.w  #$0001, obj.AnimTime(A0)                         ; $001E
-                tst.b   Obj_Player_Top_Solid(A0)                         ; $003E
+                tst.b   player.TopSolid(A0)                         ; $003E
                 beq.s   loc_1A27A
                 cmpi.b  #$07, obj.MapFrame(A0)                             ; $001A
                 beq.s   loc_1A284
@@ -31051,7 +31052,7 @@ loc_1A284:
                 rts    
 ;-------------------------------------------------------------------------------
 loc_1A2AA:
-                subq.w  #$01, Obj_Player_Jump(A0)                        ; $003C
+                subq.w  #$01, player.Jump(A0)                        ; $003C
                 bpl.s   loc_1A2B4
                 move.b  #$00, (A4)
 loc_1A2B4:
@@ -32085,11 +32086,11 @@ loc_1B278:
                 move.w  #$0001, obj.GroundSpeed(A1)                          ; $0014
                 move.b  #$01, obj.FlipAngle(A1)                         ; $0027
                 move.b  #$00, obj.Anim(A1)                         ; $001C
-                move.b  #$01, Obj_P_Flips_Remaining(A1)                  ; $002C
-                move.b  #$08, Obj_Player_Flip_Speed(A1)                  ; $002D
+                move.b  #$01, player.FlipsRemaining(A1)                  ; $002C
+                move.b  #$08, player.FlipSpeed(A1)                  ; $002D
                 btst    #$01, D0
                 bne.s   loc_1B2C4
-                move.b  #$03, Obj_P_Flips_Remaining(A1)                  ; $002C
+                move.b  #$03, player.FlipsRemaining(A1)                  ; $002C
 loc_1B2C4:
                 btst    #$00, obj.Status(A1)                             ; $0022
                 beq.s   loc_1B2D4
@@ -32099,13 +32100,13 @@ loc_1B2D4:
                 andi.b  #$0C, D0
                 cmpi.b  #$04, D0
                 bne.s   loc_1B2EA
-                move.b  #$0C, Obj_Player_Top_Solid(A1)                   ; $003E
-                move.b  #$0D, Obj_Player_LRB_Solid(A1)                   ; $003F
+                move.b  #$0C, player.TopSolid(A1)                   ; $003E
+                move.b  #$0D, player.LRBSolid(A1)                   ; $003F
 loc_1B2EA:
                 cmpi.b  #$08, D0
                 bne.s   loc_1B2FC
-                move.b  #$0E, Obj_Player_Top_Solid(A1)                   ; $003E
-                move.b  #$0F, Obj_Player_LRB_Solid(A1)                   ; $003F
+                move.b  #$0E, player.TopSolid(A1)                   ; $003E
+                move.b  #$0F, player.LRBSolid(A1)                   ; $003F
 loc_1B2FC:
                 move.w  #$00CC, D0
                 jmp     (Play_Sfx)                             ; loc_1512   
@@ -33008,7 +33009,7 @@ loc_1BDE8:
                 bclr    #$00, obj.Status(A1)                             ; $0022
                 neg.w   obj.XSpeed(A1)                                    ; $0010
 loc_1BE12:
-                move.w  #$000F, Obj_Player_Control(A1)                   ; $002E
+                move.w  #$000F, player.HorizLock(A1)                   ; $002E
                 move.w  obj.XSpeed(A1), obj.GroundSpeed(A1)            ; $0010, $0014
                 btst    #$02, obj.Status(A1)                             ; $0022
                 bne.s   loc_1BE2C
@@ -33023,11 +33024,11 @@ loc_1BE38:
                 move.w  #$0001, obj.GroundSpeed(A1)                          ; $0014
                 move.b  #$01, obj.FlipAngle(A1)                         ; $0027
                 move.b  #$00, obj.Anim(A1)                         ; $001C
-                move.b  #$01, Obj_P_Flips_Remaining(A1)                  ; $002C
-                move.b  #$08, Obj_Player_Flip_Speed(A1)                  ; $002D
+                move.b  #$01, player.FlipsRemaining(A1)                  ; $002C
+                move.b  #$08, player.FlipSpeed(A1)                  ; $002D
                 btst    #$01, D0
                 bne.s   loc_1BE68
-                move.b  #$03, Obj_P_Flips_Remaining(A1)                  ; $002C
+                move.b  #$03, player.FlipsRemaining(A1)                  ; $002C
 loc_1BE68:
                 btst    #$00, obj.Status(A1)                             ; $0022
                 beq.s   loc_1BE78
@@ -33037,13 +33038,13 @@ loc_1BE78:
                 andi.b  #$0C, D0
                 cmpi.b  #$04, D0
                 bne.s   loc_1BE8E
-                move.b  #$0C, Obj_Player_Top_Solid(A1)                   ; $003E
-                move.b  #$0D, Obj_Player_LRB_Solid(A1)                   ; $003F
+                move.b  #$0C, player.TopSolid(A1)                   ; $003E
+                move.b  #$0D, player.LRBSolid(A1)                   ; $003F
 loc_1BE8E:
                 cmpi.b  #$08, D0
                 bne.s   loc_1BEA0
-                move.b  #$0E, Obj_Player_Top_Solid(A1)                   ; $003E
-                move.b  #$0F, Obj_Player_LRB_Solid(A1)                   ; $003F
+                move.b  #$0E, player.TopSolid(A1)                   ; $003E
+                move.b  #$0F, player.LRBSolid(A1)                   ; $003F
 loc_1BEA0:
                 bclr    #$05, obj.Status(A0)                             ; $0022
                 bclr    #$06, obj.Status(A0)                             ; $0022
@@ -35369,7 +35370,7 @@ loc_1DAC4:
                 ror.b   #$02, D0
                 andi.b  #$C0, D0
                 move.b  D0, obj.Angle(A0)                                ; $0026
-                lea     Obj_Player_Flip_Flag(A0), A2                     ; $0029
+                lea     player.Flip(A0), A2                     ; $0029
                 move.b  obj.Subtype(A0), D1                              ; $0028
                 andi.w  #$0007, D1
                 move.b  #$00, (A2)+
@@ -35385,7 +35386,7 @@ loc_1DAC4:
 loc_1DB4A:
                 bsr     Jmp_06_To_SingleObjectLoad             ; loc_1DC8A
                 bne.s   loc_1DBA4
-                addq.b  #$01, Obj_Player_Flip_Flag(A0)                   ; $0029
+                addq.b  #$01, player.Flip(A0)                   ; $0029
                 move.w  A1, D5
                 subi.w  #$B000, D5
                 lsr.w   #$06, D5
@@ -35426,7 +35427,7 @@ loc_1DBD0:
                 jsr     (CalcSine)                             ; loc_3282
                 move.w  Obj_Control_Var_0C(A0), D2                       ; $0038
                 move.w  Obj_Control_Var_0E(A0), D3                       ; $003A
-                lea     Obj_Player_Flip_Flag(A0), A2                     ; $0029
+                lea     player.Flip(A0), A2                     ; $0029
                 moveq   #$00, D6
                 move.b  (A2)+, D6
 loc_1DBF2:
@@ -35457,7 +35458,7 @@ loc_1DC22:
                 bra     Jmp_0D_To_DisplaySprite                ; loc_1DC84
 loc_1DC3A:
                 moveq   #$00, D2
-                lea     Obj_Player_Flip_Flag(A0), A2                     ; $0029
+                lea     player.Flip(A0), A2                     ; $0029
                 move.b  (A2)+, D2
 loc_1DC42:
                 moveq   #$00, D0
@@ -41425,7 +41426,7 @@ loc_22F3A:
 loc_22F50:
                 cmp.w   obj.Y(A1), D0                                    ; $000C
                 beq.s   loc_22F66
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, loc_22F50
                 bra.s   loc_22F86
 ;-------------------------------------------------------------------------------
@@ -46816,7 +46817,7 @@ loc_27BA4:
                 move.b  #$03, obj.Priority(A1)                           ; $0018
                 addq.b  #$02, obj.Routine(A1)                            ; $0024
                 move.b  #$05, obj.MapFrame(A1)                             ; $001A
-                move.b  loc_27C00(PC, D2), Obj_Player_Flip_Flag(A1); $0029
+                move.b  loc_27C00(PC, D2), player.Flip(A1); $0029
                 cmpi.b  #$02, D2
                 ble.s   loc_27BEC
                 move.b  #$01, Obj_Control_Var_0E(A1)                     ; $003A
@@ -46858,7 +46859,7 @@ loc_27C46:
 loc_27C54:
                 move.w  Obj_Control_Var_0C(A0), D2                       ; $0038
                 move.w  obj.Control(A0), D3                                ; $002A
-                move.b  Obj_Player_Flip_Flag(A0), D0                     ; $0029
+                move.b  player.Flip(A0), D0                     ; $0029
                 jsr     (CalcSine)                             ; loc_3282
                 muls.w  #$0024, D1
                 asr.w   #$08, D1
@@ -46878,16 +46879,16 @@ loc_27C54:
                 addq.b  #$04, obj.Subtype(A0)                            ; $0028
                 tst.b   Obj_Control_Var_0E(A0)                           ; $003A
                 beq.s   loc_27CBA
-                subq.b  #$02, Obj_Player_Flip_Flag(A0)                   ; $0029
+                subq.b  #$02, player.Flip(A0)                   ; $0029
                 bpl.s   loc_27CD2
-                move.b  #$02, Obj_Player_Flip_Flag(A0)                   ; $0029
+                move.b  #$02, player.Flip(A0)                   ; $0029
                 move.b  #$00, Obj_Control_Var_0E(A0)                     ; $003A
                 rts
 loc_27CBA:
-                addq.b  #$02, Obj_Player_Flip_Flag(A0)                   ; $0029
-                cmpi.b  #$82, Obj_Player_Flip_Flag(A0)                   ; $0029
+                addq.b  #$02, player.Flip(A0)                   ; $0029
+                cmpi.b  #$82, player.Flip(A0)                   ; $0029
                 bne.s   loc_27CD2
-                move.b  #$7E, Obj_Player_Flip_Flag(A0)                   ; $0029
+                move.b  #$7E, player.Flip(A0)                   ; $0029
                 move.b  #$01, Obj_Control_Var_0E(A0)                     ; $003A
 loc_27CD2:
                 rts
@@ -47166,7 +47167,7 @@ loc_27F92:
 loc_27F9A:
                 bsr     Object_Settings                        ; loc_27EA4
                 move.b  #$10, obj.Control(A0)                              ; $002A
-                move.b  #$06, Obj_Player_Status(A0)                      ; $002B
+                move.b  #$06, player.Status(A0)                      ; $002B
                 rts     
 ;-------------------------------------------------------------------------------
 loc_27FAC:
@@ -47176,7 +47177,7 @@ loc_27FAC:
                 bsr     Jmp_17_To_AnimateSprite                ; loc_2A7AC
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_27FC0:
-                subq.b  #$01, Obj_Player_Status(A0)                      ; $002B
+                subq.b  #$01, player.Status(A0)                      ; $002B
                 bpl.s   loc_27FE0
                 move.b  #$06, obj.Routine(A0)                            ; $0024
                 bclr    #$00, obj.Status(A0)                             ; $0022
@@ -47298,7 +47299,7 @@ loc_280FC:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_28106:
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
-                st      Obj_Player_Status(A0)                            ; $002B
+                st      player.Status(A0)                            ; $002B
                 bsr     loc_2823C
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0 
 ;-------------------------------------------------------------------------------
@@ -47371,7 +47372,7 @@ loc_281B2:
 ;-------------------------------------------------------------------------------
 loc_281B6:
                 move.w  obj.Control(A0), A1                                ; $002A
-                tst.b   Obj_Player_Status(A1)                            ; $002B
+                tst.b   player.Status(A1)                            ; $002B
                 bne.s   loc_281C4
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_281C4:
@@ -47767,7 +47768,7 @@ loc_2859C:
 loc_285B0:
                 bsr     Jmp_10_To_SingleObjectLoad             ; loc_2A79A
                 bne.s   loc_285EE
-                st      Obj_Player_Status(A0)                            ; $002B
+                st      player.Status(A0)                            ; $002B
                 move.b  #$93, obj.ID(A1)                                 ; $0000
                 move.b  obj.Subtype(A0), obj.Subtype(A1)          ; $0028, $0028
                 move.w  A0, obj.Control(A1)                                ; $002A
@@ -47823,7 +47824,7 @@ loc_28634:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 ;-------------------------------------------------------------------------------
 Spiker_Sub: ; Used by Object 0x92 - Spiker
-                tst.b   Obj_Player_Status(A0)                            ; $002B
+                tst.b   player.Status(A0)                            ; $002B
                 bne.s   loc_2865E
                 bsr     Object_Check_Player_Position           ; loc_27F1C
                 addi.w  #$0020, D2
@@ -48177,7 +48178,7 @@ loc_28A9C:
                 move.b  #$20, obj.Control(A0)                              ; $002A
                 move.w  Obj_Control_Var_02(A0), D0                       ; $002E
                 lsr.w   #$01, D0
-                move.b  loc_28ABA(PC, D0), Obj_Player_Status(A0)   ; $002B
+                move.b  loc_28ABA(PC, D0), player.Status(A0)   ; $002B
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0 
 ;-------------------------------------------------------------------------------  
 loc_28ABA:
@@ -48246,10 +48247,10 @@ loc_28B72:
 loc_28B84:
                 rts
 loc_28B86:
-                move.b  Obj_Player_Status(A0), D0                        ; $002B
+                move.b  player.Status(A0), D0                        ; $002B
                 move.b  Obj_Control_Var_0C(A0), D1                       ; $0038
                 add.b   D1, D0
-                move.b  D0, Obj_Player_Status(A0)                        ; $002B
+                move.b  D0, player.Status(A0)                        ; $002B
                 subi.b  #$18, D0
                 beq.s   loc_28BA2
                 bcs.s   loc_28BA2
@@ -48292,7 +48293,7 @@ loc_28C00:
                 move.w  D0, A1
                 lea     loc_28CA4(PC), A2
                 moveq   #$00, D0
-                move.b  Obj_Player_Status(A0), D0                        ; $002B
+                move.b  player.Status(A0), D0                        ; $002B
                 andi.b  #$7F, D0
                 move.w  D0, D1
                 andi.w  #$001F, D0
@@ -49851,9 +49852,9 @@ loc_2A018:
                 rts  
 ;-------------------------------------------------------------------------------
 loc_2A02A:
-                tst.b   Obj_Player_Status(A0)                            ; $002B
+                tst.b   player.Status(A0)                            ; $002B
                 beq.s   loc_2A038
-                subq.b  #$01, Obj_Player_Status(A0)                      ; $002B
+                subq.b  #$01, player.Status(A0)                      ; $002B
                 bra     loc_2A046
 loc_2A038:
                 bsr     Object_Check_Player_Position           ; loc_27F1C
@@ -49872,21 +49873,21 @@ loc_2A056:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2A068:
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.b  #$28, Obj_Player_Status(A0)                      ; $002B
+                move.b  #$28, player.Status(A0)                      ; $002B
                 move.b  #$02, obj.MapFrame(A0)                             ; $001A
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0    
 ;-------------------------------------------------------------------------------
 loc_2A07C:
-                subq.b  #$01, Obj_Player_Status(A0)                      ; $002B
+                subq.b  #$01, player.Status(A0)                      ; $002B
                 bmi.s   loc_2A092
-                cmpi.b  #$14, Obj_Player_Status(A0)                      ; $002B
+                cmpi.b  #$14, player.Status(A0)                      ; $002B
                 bne.s   loc_2A08E
                 bsr     Load_Spiny_Horizontal_Shot_Obj         ; loc_2A13C
 loc_2A08E:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2A092:
                 subq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.b  #$40, Obj_Player_Status(A0)                      ; $002B
+                move.b  #$40, player.Status(A0)                      ; $002B
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0             
 ;===============================================================================
 ; Object 0xA5 - Spiny (crawling badnik) Enemy from Chemical Plant
@@ -49915,9 +49916,9 @@ loc_2A0B4:
                 rts  
 ;-------------------------------------------------------------------------------
 loc_2A0C6:
-                tst.b   Obj_Player_Status(A0)                            ; $002B
+                tst.b   player.Status(A0)                            ; $002B
                 beq.s   loc_2A0D4
-                subq.b  #$01, Obj_Player_Status(A0)                      ; $002B
+                subq.b  #$01, player.Status(A0)                      ; $002B
                 bra     loc_2A0E2
 loc_2A0D4:
                 bsr     Object_Check_Player_Position           ; loc_27F1C
@@ -49936,21 +49937,21 @@ loc_2A0F2:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2A104:
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.b  #$28, Obj_Player_Status(A0)                      ; $002B
+                move.b  #$28, player.Status(A0)                      ; $002B
                 move.b  #$05, obj.MapFrame(A0)                             ; $001A
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0    
 ;-------------------------------------------------------------------------------
 loc_2A118:
-                subq.b  #$01, Obj_Player_Status(A0)                      ; $002B
+                subq.b  #$01, player.Status(A0)                      ; $002B
                 bmi.s   loc_2A12E
-                cmpi.b  #$14, Obj_Player_Status(A0)                      ; $002B
+                cmpi.b  #$14, player.Status(A0)                      ; $002B
                 bne.s   loc_2A12A
                 bsr     Load_Spiny_Vertical_Shot_Obj           ; loc_2A188
 loc_2A12A:
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 loc_2A12E:
                 subq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.b  #$40, Obj_Player_Status(A0)                      ; $002B
+                move.b  #$40, player.Status(A0)                      ; $002B
                 bra     Jmp_26_To_MarkObjGone                  ; loc_2A7A0
 ;-------------------------------------------------------------------------------                
 Load_Spiny_Horizontal_Shot_Obj:                                ; loc_2A13C
@@ -50918,7 +50919,7 @@ Touch_Loop:                                                    ; loc_2B22C
 		move.b  obj.ColType(A1), D0                            ; $0020
 		bne     Touch_Height                           ; loc_2B240
 Touch_NextObject:                                              ; loc_2B234
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D6, Touch_Loop                         ; loc_2B22C
 		moveq   #$00, D0
 		rts
@@ -50990,7 +50991,7 @@ loc_2B312:
 		move.b  obj.ColType(A1), D0                            ; $0020
 		bne.s   loc_2B324
 loc_2B318:
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D6, loc_2B312
 		moveq   #$00, D0
 		rts
@@ -51038,7 +51039,7 @@ loc_2B366:
 		andi.b  #$3F, D0
 		cmpi.b  #$06, D0
 		beq.s   loc_2B3A0
-		cmpi.w  #$005A, Obj_P_Invunerblt_Time(A0)                ; $0030
+		cmpi.w  #$005A, player.Hurt(A0)                ; $0030
 		bcc     loc_2B39E
 		move.b  #$04, obj.Routine(A1)                            ; $0024
 loc_2B39E:
@@ -51073,7 +51074,7 @@ loc_2B3E0:
 loc_2B3F8:
 		btst    #$06, obj.Render(A1)                              ; $0001
 		beq.s   loc_2B42A
-		tst.b   Obj_P_Invcbility_Time(A1)                        ; $0032
+		tst.b   player.Invinc(A1)                        ; $0032
 		beq.s   loc_2B428
 		neg.w   obj.XSpeed(A0)                                    ; $0010
 		neg.w   obj.YSpeed(A0)                                  ; $0012
@@ -51083,7 +51084,7 @@ loc_2B3F8:
 		asr.w   obj.YSpeed(A0)                                  ; $0012
 loc_2B41E:
 		move.b  #$00, obj.ColType(A1)                          ; $0020
-		subq.b  #$01, Obj_P_Invcbility_Time(A1)                  ; $0032
+		subq.b  #$01, player.Invinc(A1)                  ; $0032
 loc_2B428:
 		rts
 loc_2B42A:
@@ -51109,12 +51110,12 @@ Touch_KillEnemy:                                               ; loc_2B454
 		bcs.s   loc_2B46C
 		moveq   #$06, D0
 loc_2B46C:
-		move.w  D0, Obj_Player_Top_Solid(A1)                     ; $003E
+		move.w  D0, player.TopSolid(A1)                     ; $003E
 		move.w  Enemy_Points(PC, D0), D0               ; loc_2B4BC
 		cmpi.w  #$0020, ($FFFFF7D0).w
 		bcs.s   loc_2B486
 		move.w  #$03E8, D0
-		move.w  #$000A, Obj_Player_Top_Solid(A1)                 ; $003E
+		move.w  #$000A, player.TopSolid(A1)                 ; $003E
 loc_2B486:
 		bsr     AddPoints                              ; loc_2D2D4
 		move.b  #$27, obj.ID(A1)                                 ; $0000
@@ -51150,7 +51151,7 @@ loc_2B4D0:
 ;-------------------------------------------------------------------------------
 Touch_Hurt:                                                    ; loc_2B4D4
 		nop
-		tst.w   Obj_P_Invunerblt_Time(A0)                        ; $0030
+		tst.w   player.Hurt(A0)                        ; $0030
 		bne.s   loc_2B4D0
 		move.l  A1, A2
 ;-------------------------------------------------------------------------------
@@ -51184,7 +51185,7 @@ Hurt_Reverse:
 Hurt_ChkSpikes:
 		move.w  #$0, obj.GroundSpeed(A0)                             ; $0014
 		move.b  #$1A, obj.Anim(A0)                         ; $001C
-		move.w  #$0078, Obj_P_Invunerblt_Time(A0)                ; $0030
+		move.w  #$0078, player.Hurt(A0)                ; $0030
 		move.w  #$A3, D0              ; play normal hurt sound
 		cmpi.b  #$36, (A2)            ; was the damage caused by spikes?
 		bne.s   Hurt_Sound            ; if not, branch
@@ -51209,7 +51210,7 @@ KillCharacter:
 		move.w  #$F900, obj.YSpeed(A0)                          ; $0012
 		move.w  #$0000, obj.XSpeed(A0)                            ; $0010
 		move.w  #$0000, obj.GroundSpeed(A0)                          ; $0014
-		move.w  obj.Y(A0), Obj_Player_St_Convex(A0)       ; $000C, $0038
+		move.w  obj.Y(A0), player.Stick(A0)       ; $000C, $0038
 		move.b  #$18, obj.Anim(A0)                         ; $001C
 		bset    #$07, obj.VRAM(A0)                           ; $0002
 		move.w  #$00A3, D0
@@ -51830,7 +51831,7 @@ loc_2BCE0:
 loc_2BCE2:
 		move.b  (A0)+, (A1)+
 		dbra    D2, loc_2BCE2
-		lea     Obj_Size(A1), A1                                 ; $0040
+		lea     obj.Size(A1), A1                                 ; $0040
 		dbra    D1, loc_2BCE0
 		lea     (SS_Ram_Layout_Address+$0008), A1            ; $FFFF4008
 		lea     (SS_obj.Mappings_Ptr), A0              ; loc_2BD22
@@ -52131,7 +52132,7 @@ Player_In_SS_Control:                                          ; loc_2BFD4
                 beq.s   loc_2BFE8
                 move.w  #$0001, (Debug_Mode_Flag_Index).w            ; $FFFFFE08
 loc_2BFE8:
-                move.b  #$00, Obj_P_Invunerblt_Time(A0)                  ; $0030
+                move.b  #$00, player.Hurt(A0)                  ; $0030
                 moveq   #$00, D0
                 move.b  obj.Status(A0), D0                               ; $0022
                 andi.w  #$0002, D0
@@ -52320,7 +52321,7 @@ loc_2C1E4:
                 move.w  #$0000, (Boss_Move_Buffer+$02).w             ; $FFFFF752
                 move.w  #$4000, (Boss_Move_Buffer).w                 ; $FFFFF750
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.w  #$003C, Obj_Player_St_Convex(A0)                 ; $0038
+                move.w  #$003C, player.Stick(A0)                 ; $0038
 loc_2C202:
                 move.w  (Boss_Move_Buffer).w, D0                     ; $FFFFF750
                 add.w   (Boss_Move_Buffer+$02).w, D0                 ; $FFFFF752
@@ -52331,7 +52332,7 @@ loc_2C202:
                 jmp     (DisplaySprite)                        ; loc_D322
 ;-------------------------------------------------------------------------------                 
 Player_In_SS_Exit_Test:                                        ; loc_2C224
-                subq.w  #$01, Obj_Player_St_Convex(A0)                   ; $0038
+                subq.w  #$01, player.Stick(A0)                   ; $0038
                 bne.s   loc_2C230
                 move.b  #gm_PlayMode, (Game_Mode).w             ; $0C, $FFFFF600
 loc_2C230:
@@ -52432,8 +52433,8 @@ loc_2C320:
 loc_2C334:
                 rts
 loc_2C336:
-                move.b  D4, Obj_P_Invunerblt_Time(A0)                    ; $0030
-                move.l  A1, Obj_P_Invcbility_Time(A0)                    ; $0032
+                move.b  D4, player.Hurt(A0)                    ; $0030
+                move.l  A1, player.Invinc(A0)                    ; $0032
                 moveq   #-$01, D5
                 rts
 ;-------------------------------------------------------------------------------                
@@ -52452,7 +52453,7 @@ Player_In_SS_ChkItems: ; Touch_Rings                           ; loc_2C342
                 adda.w  D4, A1
                 move.b  (A1), D4
                 bne.s   loc_2C37C
-                tst.b   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                tst.b   player.SpindashCount(A0)                         ; $003A
                 bne     loc_2C44C
                 moveq   #$00, D4
                 rts
@@ -52515,18 +52516,18 @@ loc_2C41A:
 loc_2C428:
                 cmpi.b  #$41, D4
                 bne.s   loc_2C434
-                move.b  #$01, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                move.b  #$01, player.SpindashCount(A0)                   ; $003A
 loc_2C434:
                 cmpi.b  #$4A, D4
                 bne.s   loc_2C448
-                cmpi.b  #$01, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                cmpi.b  #$01, player.SpindashCount(A0)                   ; $003A
                 bne.s   loc_2C448
-                move.b  #$02, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                move.b  #$02, player.SpindashCount(A0)                   ; $003A
 loc_2C448:
                 moveq   #-$01, D4
                 rts
 loc_2C44C:
-                cmpi.b  #$02, Obj_Player_Spdsh_Cnt(A0)                   ; $003A
+                cmpi.b  #$02, player.SpindashCount(A0)                   ; $003A
                 bne.s   loc_2C476
                 lea     ($FFFF1020), A1
                 moveq   #$3F, D1
@@ -52539,29 +52540,29 @@ loc_2C45E:
 loc_2C468:
                 addq.w  #$01, A1
                 dbra    D2, loc_2C45E
-                lea     Obj_Size(A1), A1                                 ; $0040
+                lea     obj.Size(A1), A1                                 ; $0040
                 dbra    D1, loc_2C45C
 loc_2C476:
-                clr.b   Obj_Player_Spdsh_Cnt(A0)                         ; $003A
+                clr.b   player.SpindashCount(A0)                         ; $003A
                 moveq   #$00, D4
                 rts
 ;-------------------------------------------------------------------------------                
 Player_In_SS_ChkItems2:                                        ; loc_2C47E
-                move.b  Obj_P_Invunerblt_Time(A0), D0                    ; $0030
+                move.b  player.Hurt(A0), D0                    ; $0030
                 bne.s   loc_2C49E
-                subq.b  #$01, Obj_Player_Next_Tilt(A0)                   ; $0036
+                subq.b  #$01, player.NextTilt(A0)                   ; $0036
                 bpl.s   loc_2C490
-                move.b  #$00, Obj_Player_Next_Tilt(A0)                   ; $0036
+                move.b  #$00, player.NextTilt(A0)                   ; $0036
 loc_2C490:
-                subq.b  #$01, Obj_Player_Tilt(A0)                        ; $0037
+                subq.b  #$01, player.Tilt(A0)                        ; $0037
                 bpl.s   loc_2C49C
-                move.b  #$00, Obj_Player_Tilt(A0)                        ; $0037
+                move.b  #$00, player.Tilt(A0)                        ; $0037
 loc_2C49C:
                 rts
 loc_2C49E:
                 cmpi.b  #$25, D0
                 bne.s   loc_2C516
-                move.l  Obj_P_Invcbility_Time(A0), D1                    ; $0032
+                move.l  player.Invinc(A0), D1                    ; $0032
                 subi.l  #$FFFF0001, D1
                 move.w  D1, D2
                 andi.w  #$007F, D1
@@ -52585,7 +52586,7 @@ loc_2C49E:
                 bsr     loc_2BAA4
                 bne.s   loc_2C50C
                 move.b  #$02, (A2)
-                move.l  Obj_P_Invcbility_Time(A0), D0                    ; $0032
+                move.l  player.Invinc(A0), D0                    ; $0032
                 subq.l  #$01, D0
                 move.l  D0, obj.Map(A2)                                  ; $0004
 loc_2C50C:
@@ -52601,13 +52602,13 @@ loc_2C516:
 loc_2C52C:
                 cmpi.b  #$29, D0
                 bne.s   loc_2C560
-                tst.b   Obj_Player_Next_Tilt(A0)                         ; $0036
+                tst.b   player.NextTilt(A0)                         ; $0036
                 bne     loc_2C610
-                move.b  #$1E, Obj_Player_Next_Tilt(A0)                   ; $0036
+                move.b  #$1E, player.NextTilt(A0)                   ; $0036
                 btst    #$06, (Boss_Move_Buffer+$03).w               ; $FFFFF753
                 beq.s   loc_2C556
                 asl.w   (Boss_Move_Buffer+$02).w                     ; $FFFFF752
-                move.l  Obj_P_Invcbility_Time(A0), A1                    ; $0032
+                move.l  player.Invinc(A0), A1                    ; $0032
                 subq.l  #$01, A1
                 move.b  #$2A, (A1)
 loc_2C556:
@@ -52616,13 +52617,13 @@ loc_2C556:
 loc_2C560:
                 cmpi.b  #$2A, D0
                 bne.s   loc_2C594
-                tst.b   Obj_Player_Next_Tilt(A0)                         ; $0036
+                tst.b   player.NextTilt(A0)                         ; $0036
                 bne     loc_2C610
-                move.b  #$1E, Obj_Player_Next_Tilt(A0)                   ; $0036
+                move.b  #$1E, player.NextTilt(A0)                   ; $0036
                 btst    #$06, (Boss_Move_Buffer+$03).w               ; $FFFFF753
                 bne.s   loc_2C58A
                 asr.w   (Boss_Move_Buffer+$02).w                     ; $FFFFF752
-                move.l  Obj_P_Invcbility_Time(A0), A1                    ; $0032
+                move.l  player.Invinc(A0), A1                    ; $0032
                 subq.l  #$01, A1
                 move.b  #$29, (A1)
 loc_2C58A:
@@ -52631,13 +52632,13 @@ loc_2C58A:
 loc_2C594:
                 cmpi.b  #$2B, D0
                 bne.s   loc_2C5CA
-                tst.b   Obj_Player_Tilt(A0)                              ; $0037
+                tst.b   player.Tilt(A0)                              ; $0037
                 bne     loc_2C610
-                move.b  #$1E, Obj_Player_Tilt(A0)                        ; $0037
+                move.b  #$1E, player.Tilt(A0)                        ; $0037
                 bsr     loc_2BAA4
                 bne.s   loc_2C5BC
                 move.b  #$04, (A2)
-                move.l  Obj_P_Invcbility_Time(A0), D0                    ; $0032
+                move.l  player.Invinc(A0), D0                    ; $0032
                 subq.l  #$01, D0
                 move.l  D0, obj.Map(A2)                                  ; $0004
 loc_2C5BC:
@@ -52657,7 +52658,7 @@ loc_2C5E2:
                 bsr     loc_2BAA4
                 bne.s   loc_2C606
                 move.b  #$06, (A2)
-                move.l  Obj_P_Invcbility_Time(A0), A1                    ; $0032
+                move.l  player.Invinc(A0), A1                    ; $0032
                 subq.l  #$01, A1
                 move.l  A1, obj.Map(A2)                                  ; $0004
                 move.b  (A1), D0

@@ -1,175 +1,3 @@
-; Constants
-
-gm_SEGALogo                    equ $00
-gm_TitleScreen                 equ $04
-gm_DemoMode                    equ $08
-gm_PlayMode                    equ $0C
-gm_SpecialStage                equ $10 
-gm_Continue                    equ $14
-
-obj.ID                         equ $0000
-obj.Render                     equ $0001
-obj.VRAM                       equ $0002
-obj.Map                        equ $0004
-obj.X                          equ $0008
-obj.YSub                       equ $000A
-obj.Y                          equ $000C
-obj.XSpeed                     equ $0010
-obj.YSpeed                     equ $0012
-obj.GroundSpeed                equ $0014
-obj.YRadius                    equ $0016
-obj.XRadius                    equ $0017
-obj.Priority                   equ $0018
-obj.Width                      equ $0019
-obj.MapFrame                   equ $001A
-obj.AnimFrame                  equ $001B
-obj.Anim                       equ $001C
-obj.PrevAnim                   equ $001D
-obj.AnimTime                   equ $001E
-obj.AnimTime2                  equ $001F
-obj.ColType                    equ $0020
-obj.ColStatus                  equ $0021
-obj.Status                     equ $0022
-obj.Respawn                    equ $0023
-obj.Routine                    equ $0024
-obj.Routine2                   equ $0025
-obj.Angle                      equ $0026
-obj.FlipAngle                  equ $0027
-obj.Subtype                    equ $0028
-obj.Control                    equ $002A
-Obj_Control_Var_00             equ $002C
-Obj_Control_Var_01             equ $002D
-Obj_Control_Var_02             equ $002E
-Obj_Control_Var_03             equ $002F
-Obj_Control_Var_04             equ $0030
-Obj_Control_Var_05             equ $0031
-Obj_Control_Var_06             equ $0032
-Obj_Control_Var_07             equ $0033  
-Obj_Control_Var_08             equ $0034
-Obj_Control_Var_09             equ $0035
-Obj_Control_Var_0A             equ $0036
-Obj_Control_Var_0B             equ $0037
-Obj_Control_Var_0C             equ $0038
-Obj_Control_Var_0D             equ $0039
-Obj_Control_Var_0E             equ $003A
-Obj_Control_Var_0F             equ $003B
-Obj_Control_Var_10             equ $003C
-Obj_Control_Var_11             equ $003D
-Obj_Control_Var_12             equ $003E
-Obj_Control_Var_13             equ $003F
-Obj_Size                       equ $0040
-
-Obj_Player_Flip_Flag           equ $0029
-Obj_Player_Status              equ $002B
-Obj_P_Flips_Remaining          equ $002C
-Obj_Player_Flip_Speed          equ $002D
-Obj_Player_Control             equ $002E
-Obj_P_Invunerblt_Time          equ $0030
-Obj_P_Invcbility_Time          equ $0032
-Obj_P_Spd_Shoes_Time           equ $0034
-Obj_Player_Next_Tilt           equ $0036
-Obj_Player_Tilt                equ $0037
-Obj_Player_St_Convex           equ $0038
-Obj_Player_Spdsh_Flag          equ $0039
-Obj_Player_Spdsh_Cnt           equ $003A
-Obj_Player_Jump                equ $003C
-Obj_Player_Last                equ $003D
-Obj_Player_Top_Solid           equ $003E
-Obj_Player_LRB_Solid           equ $003F
-
-Obj_Boss_Routine               equ $000A
-Obj_Boss_Ani_Map               equ $000B
-Obj_Ani_Boss_Cnt               equ $000F 
-Obj_Ani_Boss_Frame             equ $0015
-Obj_Boss_Hit                   equ $0021
-Obj_Ani_Boss_Routine           equ $0026
-Obj_Boss_Hit_2                 equ $0032
-
-HTz_Robotnik_Pos_X             equ $0010
-HTz_Robotnik_Pos_Y             equ $0012 
-
-NGHz_Robotnik_Pos_X            equ $0010
-NGHz_Robotnik_Pos_Y            equ $0012
-NGHz_Hammer_Pos_X              equ $0016
-NGHz_Hammer_Pos_Y              equ $0018
-NGHz_Ship_Boost_Pos_X          equ $001C
-NGHz_Ship_Boost_Pos_Y          equ $001E
-
-DHz_Front_Drill_Pos_X          equ $0010
-DHz_Front_Drill_Pos_Y          equ $0012
-DHz_Ship_Boost_Pos_X           equ $0016
-DHz_Ship_Boost_Pos_Y           equ $0018
-DHz_Robotnik_Pos_X             equ $001C
-DHz_Robotnik_Pos_Y             equ $001E
-DHz_Back_Drill_Pos_X           equ $0022
-DHz_Back_Drill_Pos_Y           equ $0024
-
-CNz_R_Catcher_Pos_X            equ $0010
-CNz_R_Catcher_Pos_Y            equ $0012
-CNz_Boss_Ship_Pos_X            equ $0016
-CNz_Boss_Ship_Pos_Y            equ $0018
-CNz_Robotnik_Pos_X             equ $001C
-CNz_Robotnik_Pos_Y             equ $001E
-CNz_L_Catcher_Pos_X            equ $0022
-CNz_L_Catcher_Pos_Y            equ $0024
-CNz_L_Catcher_Pos_Y_1          equ $002E
-CNz_R_Catcher_Fall_Y           equ $0034
-CNz_L_Catcher_Fall_Y           equ $003A
-
-Obj_Page_Size_2P               equ $000C
-
-; Level Select Text
-_0 = $00
-_1 = $01
-_2 = $02                
-_A = $11
-_B = $12
-_C = $13
-_D = $14                
-_E = $15
-_F = $16
-_G = $17
-_H = $18
-_I = $19
-_J = $1A
-_K = $1B
-_L = $1C
-_M = $1D
-_N = $1E
-_O = $1F
-_P = $20
-_Q = $21
-_R = $22
-_S = $23
-_T = $24
-_U = $25
-_V = $26
-_W = $27
-_X = $28
-_Y = $0F
-_Z = $10
-__ = $FF 
-
-; Z80
-
-Z80RAM				equ $00A00000 
-
-; I/O
-
-IO_Hardware_Version            equ $00A10001 
-IO_Joypad_Port_0               equ $00A10003
-IO_Port_0_Control              equ $00A10008
-IO_Port_1_Control              equ $00A1000A
-IO_Expansion_Control           equ $00A1000C
-
-Z80BUS				equ $00A11100 
-Z80RESET			equ $00A11200 
-
-; VDP
-
-VDPDATA				equ $00C00000
-VDPCTRL				equ $00C00004
-
 ; RAM
 
 M68K_RAM_Start                 equ $FFFF0000
@@ -177,7 +5,7 @@ M68K_RAM_Start                 equ $FFFF0000
 SS_Ram_Layout_Address          equ M68K_RAM_Start+$4000
 
 Level_Map_Buffer               equ M68K_RAM_Start+$8000
-Level_Map_Bg_Buffer            equ Level_Map_Buffer+$0080
+Level_Map_Bg_Buffer            equ Level_Map_Buffer+$80
 
 Blocks_Mem_Address             equ M68K_RAM_Start+$9000
 
@@ -185,10 +13,10 @@ Obj_Memory_Address             equ M68K_RAM_Start+$B000
 Player_One                     equ Obj_Memory_Address
 Player_One_Position_X          equ Player_One+obj.X
 Player_One_Position_Y          equ Player_One+obj.Y
-Player_Two                     equ Obj_Memory_Address+$0040
+Player_Two                     equ Obj_Memory_Address+$40
 Player_Two_Position_X          equ Player_Two+obj.X
 Player_Two_Position_Y          equ Player_Two+obj.Y
-Title_Card_RAM_Obj_Data        equ Obj_Memory_Address+$0080
+Title_Card_RAM_Obj_Data        equ Obj_Memory_Address+$80
 HUD_RAM_Obj_Data               equ Obj_Memory_Address+$0380
 Level_Results_RAM_Obj_Data     equ Obj_Memory_Address+$05C0
 
@@ -297,6 +125,3 @@ Auto_Control_Player_Flag       equ M68K_RAM_Start+$FFF0
 Hardware_Id                    equ M68K_RAM_Start+$FFF8 
 Debug_Mode_Active_Flag         equ M68K_RAM_Start+$FFFA 
 Init_Flag                      equ M68K_RAM_Start+$FFFC
-
-; CRAM
-Color_RAM_Address              equ $C0000000
