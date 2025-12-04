@@ -434,7 +434,7 @@ loc_B3E:
 loc_B42:
 		move.b  (VBlank_Index).w, D0
 		move.b  #$00, (VBlank_Index).w
-		move.w  #$0001, ($FFFFF644).w
+		move.w  #$0001, (hIntFlag).w
 		andi.w  #$003E, D0
 		move.w  VBlank_List(PC, D0), D0
 		jsr     VBlank_List(PC, D0)
@@ -471,7 +471,7 @@ VBlank_00:
 		startZ80
 		bra.s   loc_B5E
 loc_BBC:
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq     loc_C60
 		move.w  VDPCTRL, D0
 		btst    #$06, (Hardware_Id).w
@@ -480,7 +480,7 @@ loc_BBC:
 loc_BD6:
 		dbra    D0, loc_BD6
 loc_BDA:
-		move.w  #$0001, ($FFFFF644).w
+		move.w  #$0001, (hIntFlag).w
 		stopZ80
 		tst.b   ($FFFFF64E).w
 		bne.s   loc_C1E
@@ -489,8 +489,8 @@ loc_BDA:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bra.s   loc_C42
 loc_C1E:
 		lea     VDPCTRL, A5
@@ -498,8 +498,8 @@ loc_C1E:
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 loc_C42:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
 		move.w  #$8230, VDPCTRL
@@ -516,7 +516,7 @@ loc_C60:
 loc_C84:
 		dbra    D0, loc_C84
 loc_C88:
-		move.w  #$0001, ($FFFFF644).w
+		move.w  #$0001, (hIntFlag).w
 		move.w  (Horizontal_Interrupt_Count).w, VDPCTRL
 		move.w  #$8230, VDPCTRL
 		move.l  ($FFFFF61E).w, ($FFFFEEEC).w
@@ -526,8 +526,8 @@ loc_C88:
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		jsr     (Sound_Driver_Input)
 		startZ80
 		bra     loc_B5E
@@ -577,8 +577,8 @@ VBlank_08:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bra.s   loc_DB6
 loc_D92:
 		lea     VDPCTRL, A5
@@ -586,8 +586,8 @@ loc_D92:
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 loc_DB6:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
 		move.w  #$8230, VDPCTRL
@@ -596,15 +596,15 @@ loc_DB6:
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bsr     Process_DMA
 		jsr     (Sound_Driver_Input)
 		startZ80
@@ -637,22 +637,22 @@ VBlank_0A:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bsr     Process_DMA
 		jsr     (Sound_Driver_Input)
 		startZ80
@@ -674,8 +674,8 @@ VBlank_18:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bra.s   loc_F7E
 loc_F5A:
 		lea     VDPCTRL, A5
@@ -683,8 +683,8 @@ loc_F5A:
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 loc_F7E:
 		move.w  (Horizontal_Interrupt_Count).w, (A5)
 		lea     VDPCTRL, A5
@@ -692,15 +692,15 @@ loc_F7E:
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bsr     Process_DMA
 		jsr     (Sound_Driver_Input)
 		startZ80
@@ -732,22 +732,22 @@ VBlank_16:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		jsr     (Sound_Driver_Input)
 		startZ80
 		tst.w   (Timer_Count_Down).w
@@ -765,8 +765,8 @@ loc_10BE:
 		move.l  #$96FD9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		bra.s   loc_1124
 loc_1100:
 		lea     VDPCTRL, A5
@@ -774,23 +774,23 @@ loc_1100:
 		move.l  #$96FD9540, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$C000, (A5)
-		move.w  #$0080, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0080, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 loc_1124:
 		lea     VDPCTRL, A5
 		move.l  #$94019340, (A5)
 		move.l  #$96FC9500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		lea     VDPCTRL, A5
 		move.l  #$940193C0, (A5)
 		move.l  #$96F09500, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7C00, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		jsr     (Sound_Driver_Input)
 		startZ80
 		rts
@@ -804,11 +804,11 @@ loc_1124:
 ; [ Begin ]
 ;===============================================================================
 HBlank:
-		tst.w   ($FFFFF644).w
+		tst.w   (hIntFlag).w
 		beq     loc_1226
 		tst.w   (Two_Player_Flag).w
 		beq     Pal_To_ColorRAM
-		move.w  #$0000, ($FFFFF644).w
+		move.w  #$0000, (hIntFlag).w
 		move.l  A5, -(A7)
 		move.l  D0, -(A7)
 loc_1196:
@@ -827,8 +827,8 @@ loc_1196:
 		move.l  #$96EE9580, (A5)
 		move.w  #$977F, (A5)
 		move.w  #$7800, (A5)
-		move.w  #$0083, ($FFFFF640).w
-		move.w  ($FFFFF640).w, (A5)
+		move.w  #$0083, (dmaCmdLow).w
+		move.w  (dmaCmdLow).w, (A5)
 		startZ80
 loc_1208:
 		move.w  VDPCTRL, D0
@@ -847,7 +847,7 @@ loc_1226:
 ;-------------------------------------------------------------------------------
 Pal_To_ColorRAM:
 		move    #$2700, SR
-		move.w  #$0000, ($FFFFF644).w
+		move.w  #$0000, (hIntFlag).w
 		movem.l A0/A1, -(A7)
 		lea     VDPDATA, A1
 		lea     ($FFFFFA80).w, A0
@@ -2917,7 +2917,7 @@ Pal_FadeIn:
 loc_2616:
 		bsr.s   Pal_AddColor
 		dbra    D0, loc_2616
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_263E
 		moveq   #$00, D0
 		lea     ($FFFFFA80).w, A0
@@ -3044,7 +3044,7 @@ Pal_WhiteToBlack:
 loc_273A:
 		bsr.s   Pal_DecColor_2
 		dbra    D0, loc_273A
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_2762
 		moveq   #$00, D0
 		lea     ($FFFFFA80).w, A0
@@ -3908,9 +3908,9 @@ loc_3BE0:
 		move.b  #$04, (VBlank_Index).w
 		bsr     Wait_For_VSync
 		bsr     RunPLC
-		move.w  (Player_One_Position_X).w, D0
+		move.w  (player1XPos).w, D0
 		addq.w  #$02, D0
-		move.w  D0, (Player_One_Position_X).w
+		move.w  D0, (player1XPos).w
 		cmpi.w  #$1C00, D0
 		bcs.s   loc_3C06
 		move.b  #$00, (Game_Mode).w
@@ -4289,7 +4289,7 @@ loc_426E:
 		cmpi.b  #$08, (Level_Id).w
 		bne.s   Init_No_Water
 Init_Water:
-		move.b  #$01, (Water_Level_Flag).w
+		move.b  #$01, (Water_Level_flag).w
 		move.w  #$0000, (Two_Player_Flag).w
 Init_No_Water:
 		lea     VDPCTRL, A6
@@ -4319,7 +4319,7 @@ loc_42DA:
 loc_42F4:
 		move.w  (Horizontal_Interrupt_Count).w, (A6)
 		move.l  #DMA_Buffer_List, (DMA_Buffer_List_End).w
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   LevelInit_NoWater
 		move.w  #$8014, (A6)
 		moveq   #$00, D0
@@ -4330,7 +4330,7 @@ loc_42F4:
 		andi.w  #$FFFFFFFE, D0
 		lea     (Water_Height_Array), A1
 		move.w  $00(A1, D0), D0
-		move.w  D0, (Water_Level).w
+		move.w  D0, (waterLevel).w
 		move.w  D0, (Water_Level_Change).w
 		move.w  D0, (Water_Level_New).w
 		clr.b   ($FFFFF64D).w
@@ -4339,7 +4339,7 @@ loc_42F4:
 LevelInit_NoWater:
 		moveq   #$03, D0
 		bsr     PalLoad2
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   LevelInit_NoUndewaterPalette
 		moveq   #$15, D0
 		cmpi.b  #$08, (Level_Id).w
@@ -4386,21 +4386,21 @@ loc_43C0:
 		jsr     (FloorLog_Unk)
 		bsr     Load_Colision_Index
 		bsr     Water_Effects
-		move.b  #$01, (Player_One).w
+		move.b  #$01, (player1).w
 		tst.w   (Auto_Control_Player_Flag).w
 		bmi.s   loc_4402
 		move.b  #$21, (HUD_RAM_Obj_Data).w
 loc_4402:
-		move.b  #$02, (Player_Two).w
-		move.w  (Player_One_Position_X).w, (Player_Two_Position_X).w
-		move.w  (Player_One_Position_Y).w, (Player_Two_Position_Y).w
-		subi.w  #$0020, (Player_Two_Position_X).w
-		addi.w  #$0004, (Player_Two_Position_Y).w
+		move.b  #$02, (player2).w
+		move.w  (player1XPos).w, (player2XPos).w
+		move.w  (player1YPos).w, (player2YPos).w
+		subi.w  #$0020, (player2XPos).w
+		addi.w  #$0004, (player2YPos).w
 		move.b  #$08, ($FFFFB400).w
 		move.b  #$08, ($FFFFB440).w
 		move.w  #$0000, ($FFFFF602).w
 		move.w  #$0000, (Control_Ports_Buffer_Data).w
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_4456
 		move.b  #$04, ($FFFFB780).w
 		move.w  #$0060, ($FFFFB788).w
@@ -4468,7 +4468,7 @@ loc_4516:
 		bne.s   loc_4550
 		move.w  #$01FE, (Timer_Count_Down).w
 loc_4550:
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_4570
 		moveq   #$15, D0
 		cmpi.b  #$08, (Level_Id).w
@@ -4511,7 +4511,7 @@ Level_Main_Loop:
 		bne     Level
 		tst.w   (Debug_Mode_Flag_Index).w
 		bne.s   loc_45E8
-		cmpi.b  #$06, (Player_One+obj.Routine).w
+		cmpi.b  #$06, (player1+obj.Routine).w
 		bcc.s   loc_45EC
 loc_45E8:
 		bsr     Background_Scroll_Layer
@@ -4571,7 +4571,7 @@ loc_46A6:
 ; [ Begin ]
 ;-------------------------------------------------------------------------------
 Change_Water_Surface_Pos:
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_46D6
 		move.w  (Camera_X).w, D1
 		btst    #$00, ($FFFFFE05).w
@@ -4595,11 +4595,11 @@ loc_46D6:
 ; [ Begin ]
 ;-------------------------------------------------------------------------------
 Water_Effects:
-		tst.b   (Water_Level_Flag).w
+		tst.b   (Water_Level_flag).w
 		beq.s   loc_4734
 		tst.b   (Level_Scroll_Flag).w
 		bne.s   loc_46F0
-		cmpi.b  #$06, (Player_One+obj.Routine).w
+		cmpi.b  #$06, (player1+obj.Routine).w
 		bcc.s   loc_46F0
 		bsr     Dynamic_Water_Height
 loc_46F0:
@@ -4611,8 +4611,8 @@ loc_46F0:
 		lsr.w   #$01, D0
 loc_4704:
 		add.w   (Water_Level_Change).w, D0
-		move.w  D0, (Water_Level).w
-		move.w  (Water_Level).w, D0
+		move.w  D0, (waterLevel).w
+		move.w  (waterLevel).w, D0
 		sub.w   (Camera_Y).w, D0
 		bcc.s   loc_4726
 		tst.w   D0
@@ -4707,7 +4707,7 @@ S1_Lz_Wind_Tunnels:  ; Leftover from Sonic 1
 		moveq   #$01, D1
 		subq.w  #$08, A2
 loc_47E0:
-		lea     (Player_One).w, A1
+		lea     (player1).w, A1
 loc_47E4:
 		move.w  obj.X(A1), D0
 		cmp.w   (A2), D0
@@ -4773,7 +4773,7 @@ S1_LZ_Wind_Data:
 		dc.w    $0C80, $0600, $13D0, $0680
 ;-------------------------------------------------------------------------------
 S1_LZ_Water_Slides:
-		lea     (Player_One).w, A1
+		lea     (player1).w, A1
 		btst    #$01, obj.Status(A1)
 		bne.s   loc_48F6
 		move.w  obj.Y(A1), D0
@@ -5026,7 +5026,7 @@ Oscillate_Data:                                                ; loc_4BF6
 		dc.w    $00FE
 ;-------------------------------------------------------------------------------
 Oscillate_Num_Do:                                              ; loc_4C38
-		cmpi.b  #$06, (Player_One+obj.Routine).w             ; $FFFFB024
+		cmpi.b  #$06, (player1+obj.Routine).w             ; $FFFFB024
 		bcc.s   loc_4C8E
 		lea     ($FFFFFE5E).w, A1
 		lea     (Oscillate_Data2), A2                  ; loc_4C90
@@ -5247,7 +5247,7 @@ loc_536C:
 		jsr     (Special_Stage_Load)
 		move.l  #$00000000, (Camera_X).w
 		move.l  #$00000000, (Camera_Y).w
-		move.b  #$09, (Player_One).w
+		move.b  #$09, (player1).w
 		bsr     Special_Stage_Pal_Cycle
 		clr.w   ($FFFFF750).w
 		move.w  #$0040, ($FFFFF752).w
@@ -5722,8 +5722,8 @@ Level_Load_Player_Position:                                    ; loc_5B3E
 		tst.b   (Saved_Level_Flag).w                         ; $FFFFFE30
 		beq.s   Level_Load_Player_Position_From_Start  ; loc_5B54
 		jsr     (Level_Restore_Info)                   ; loc_14650
-		move.w  (Player_One_Position_X).w, D1                ; $FFFFB008
-		move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+		move.w  (player1XPos).w, D1                ; $FFFFB008
+		move.w  (player1YPos).w, D0                ; $FFFFB00C
 		bra.s   Level_Load_Player_Position_2           ; loc_5B70
 Level_Load_Player_Position_From_Start:                         ; loc_5B54
 		move.w  (Level_Id).w, D0                             ; $FFFFFE10
@@ -5732,10 +5732,10 @@ Level_Load_Player_Position_From_Start:                         ; loc_5B54
 		lea     Player_Start_Position_Array(PC, D0), A1 ; loc_5BAA
 		moveq   #$00, D1
 		move.w  (A1)+, D1
-		move.w  D1, (Player_One_Position_X).w                ; $FFFFB008
+		move.w  D1, (player1XPos).w                ; $FFFFB008
 		moveq   #$00, D0
 		move.w  (A1), D0
-		move.w  D0, (Player_One_Position_Y).w                ; $FFFFB00C
+		move.w  D0, (player1YPos).w                ; $FFFFB00C
 Level_Load_Player_Position_2:                                  ; loc_5B70
 		subi.w  #$00A0, D1
 		bcc.s   loc_5B78
@@ -6021,7 +6021,7 @@ loc_5E0C:
 		clr.w   (Scroll_Flag_Array+$000A).w                  ; $FFFFEE5A
 		clr.w   (Scroll_Flag_Array+$000C).w                  ; $FFFFEE5C
 		clr.w   (Scroll_Flag_Array+$000E).w                  ; $FFFFEE5E
-		lea     (Player_One).w, A0                           ; $FFFFB000
+		lea     (player1).w, A0                           ; $FFFFB000
 		lea     (Camera_X).w, A1                             ; $FFFFEE00
 		lea     (Sonic_Level_Limits_Min_X).w, A2             ; $FFFFEEC8
 		lea     (Scroll_Flag_Array).w, A3                    ; $FFFFEE50
@@ -6039,7 +6039,7 @@ loc_5E0C:
 		bsr     Scroll_Vertical_2                      ; loc_6DA6
 		tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
 		beq.s   loc_5EB2
-		lea     (Player_Two).w, A0                           ; $FFFFB040
+		lea     (player2).w, A0                           ; $FFFFB040
 		lea     (Camera_X_2).w, A1                           ; $FFFFEE20
 		lea     (Tails_Level_Limits_Min_X).w, A2             ; $FFFFEEF8
 		lea     (Scroll_Flag_Array+$0008).w, A3              ; $FFFFEE58
@@ -9974,13 +9974,13 @@ loc_864E:
                 bsr     loc_870E
                 bra     loc_85D0
 loc_866E:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 moveq   #$3B, D5
                 movem.l D1-D4, -(A7)
                 bsr.s   loc_8688
                 movem.l (A7)+, D1-D4
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 subq.b  #$01, D6
                 moveq   #$3F, D5
 loc_8688:
@@ -10037,7 +10037,7 @@ loc_870C:
                 rts
 loc_870E:
                 moveq   #$00, D0
-                tst.w   (Player_One+obj.XSpeed).w                     ; $FFFFB010
+                tst.w   (player1+obj.XSpeed).w                     ; $FFFFB010
                 bne.s   loc_8720
                 move.b  ($FFFFFE0F).w, D0
                 andi.w  #$001C, D0
@@ -10048,7 +10048,7 @@ loc_8720:
                 swap.w  D2
                 move.b  loc_874C(PC, D0), D2
                 moveq   #$00, D0
-                tst.w   (Player_Two+obj.XSpeed).w                     ; $FFFFB050
+                tst.w   (player2+obj.XSpeed).w                     ; $FFFFB050
                 bne.s   loc_873E
                 move.b  ($FFFFFE0F).w, D0
                 andi.w  #$001C, D0
@@ -10476,7 +10476,7 @@ loc_8D08:
 loc_8D16:
                 tst.b   Obj_Control_Var_08(A0)                           ; $0034
                 bne.s   loc_8D3C
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   Obj_Control_Var_0E(A0), D0                       ; $003A
                 addi.w  #$0020, D0
                 cmpi.w  #$0040, D0
@@ -10578,7 +10578,7 @@ loc_8E44:
                 bne.s   loc_8E70
                 move.b  D1, Obj_Control_Var_11(A1)                       ; $003D
 loc_8E70:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 cmp.b   Obj_Control_Var_11(A1), D0                       ; $003D
                 bne.s   loc_8E7E
                 move.b  D1, Obj_Control_Var_11(A1)                       ; $003D
@@ -11037,12 +11037,12 @@ loc_9436:
                 bne.s   loc_9464
                 bclr    #$03, obj.Status(A0)                             ; $0022
                 beq.s   loc_9450
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_9492
 loc_9450:
                 bclr    #$04, obj.Status(A0)                             ; $0022
                 beq.s   loc_945E
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr.s   loc_9492
 loc_945E:
                 move.b  #$06, obj.Routine(A0)                            ; $0024
@@ -11211,9 +11211,9 @@ loc_96E8:
                 bsr     loc_96BE
                 subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $0038
                 bne.s   loc_9716
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_96FC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_96FC:
                 btst    #$03, obj.Status(A1)                             ; $0022
                 beq.s   loc_9716
@@ -11315,9 +11315,9 @@ loc_9842:
                 bsr     loc_9818
                 subq.b  #$01, Obj_Control_Var_0C(A0)                     ; $0038
                 bne.s   loc_9870
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_9856
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_9856:
                 btst    #$03, obj.Status(A1)                             ; $0022
                 beq.s   loc_9870
@@ -11748,14 +11748,14 @@ loc_A2FA:
                 move.w  Obj_Control_Var_0C(A0), D2                       ; $0038
 loc_A30C:
                 move.b  #$00, obj.Routine2(A0)                          ; $0025
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   D2, D0
                 bcs     loc_A328
                 cmp.w   D3, D0
                 bcc     loc_A328
                 move.b  #$02, obj.Routine2(A0)                          ; $0025
 loc_A328:
-                move.w  (Player_Two_Position_X).w, D0                ; $FFFFB048
+                move.w  (player2XPos).w, D0                ; $FFFFB048
                 cmp.w   D2, D0
                 bcs     loc_A33E
                 cmp.w   D3, D0
@@ -12085,7 +12085,7 @@ loc_A722:
                 bra     DisplaySprite                          ; loc_D322
 loc_A734:
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bcs.s   loc_A74C
                 subi.w  #$0180, D0
                 bpl.s   loc_A74C
@@ -12227,13 +12227,13 @@ loc_A8FA:
 loc_A8FC:
                 bset    #$00, obj.Render(A0)                              ; $0001
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bcc.s   loc_A912
                 bclr    #$00, obj.Render(A0)                              ; $0001
 loc_A912:
                 rts
 loc_A914:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 subi.w  #$00B8, D0
                 rts   
@@ -12666,7 +12666,7 @@ loc_ADA8:
                 move.w  obj.X(A0), obj.X(A1)                      ; $0008, $0008
                 move.w  obj.Y(A0), obj.Y(A1)                      ; $000C, $000C
                 move.l  A0, Obj_Control_Var_10(A1)                       ; $003C
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   obj.X(A0), D0                                    ; $0008
                 bcs.s   loc_ADDA
                 bset    #$00, obj.Render(A1)                              ; $0001
@@ -13095,9 +13095,9 @@ loc_B3C8:
 Monitor_Shoes:                                                 ; loc_B3D2
                 move.b  #$01, (Hi_Speed_Flag).w                      ; $FFFFFE2E
                 move.w  #$04B0, ($FFFFB034).w
-                move.w  #$0C00, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0018, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0080, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0C00, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0018, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0080, (sonicDecel).w               ; $FFFFF764
                 move.w  #$00FB, D0
                 jmp     (Play_Music)                           ; loc_150C
 ;-------------------------------------------------------------------------------
@@ -13127,9 +13127,9 @@ Monitor_Question_Mark:                                         ; loc_B43C
                 move.b  #$81, ($FFFFB02A).w
                 move.b  #$1F, ($FFFFB01C).w
                 move.b  #$7E, ($FFFFB540).w
-                move.w  #$0A00, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0030, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0100, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0A00, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0030, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0100, (sonicDecel).w               ; $FFFFF764
                 move.w  #$0000, ($FFFFB032).w
                 move.b  #$01, (Invincibility_Flag).w                 ; $FFFFFE2D
                 move.w  #$00DF, D0
@@ -13150,7 +13150,7 @@ loc_B492:
 ; [ Begin ]
 ;-------------------------------------------------------------------------------
 loc_B49E:
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		move.w  obj.X(A1), D0                                    ; $0008
 		sub.w   obj.X(A0), D0                                    ; $0008
 		add.w   D1, D0
@@ -13171,7 +13171,7 @@ loc_B49E:
 		bcc.s   loc_B4F6
 		tst.b   obj.Control(A1)                                    ; $002A
 		bmi.s   loc_B4F6
-		cmpi.b  #$06, (Player_One+obj.Routine).w             ; $FFFFB024
+		cmpi.b  #$06, (player1+obj.Routine).w             ; $FFFFB024
 		bcc.s   loc_B4F6
 		tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
 		bne.s   loc_B4F6
@@ -14523,12 +14523,12 @@ loc_C8AA:
                 move.b  D6, D0
                 andi.b  #$08, D0
                 beq.s   loc_C8E4
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
 loc_C8E4:
                 andi.b  #$10, D6
                 beq.s   loc_C8F2
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
 loc_C8F2:
                 move.w  Obj_Control_Var_04(A0), D0                       ; $0030
@@ -14552,13 +14552,13 @@ loc_C8FA:
                 move.b  D6, D0
                 andi.b  #$01, D0
                 beq.s   loc_C93A
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
                 bclr    #$05, obj.Status(A0)                             ; $0022
 loc_C93A:
                 andi.b  #$02, D6
                 beq.s   loc_C94E
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
                 bclr    #$06, obj.Status(A0)                             ; $0022
 loc_C94E:
@@ -14582,12 +14582,12 @@ loc_C956:
                 move.b  D6, D0
                 andi.b  #$04, D0
                 beq.s   loc_C98E
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
 loc_C98E:
                 andi.b  #$08, D6
                 beq.s   loc_C99C
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     Touch_ChkHurt2                         ; loc_C9A4
 loc_C99C:
                 move.w  Obj_Control_Var_04(A0), D0                       ; $0030
@@ -14889,7 +14889,7 @@ Load_Objects:
 		lea     (Obj_Memory_Address).w, A0
 		moveq   #$7F, D7
 		moveq   #$00, D0
-		cmpi.b  #$06, (Player_One+obj.Routine).w
+		cmpi.b  #$06, (player1+obj.Routine).w
 		bcc.s   loc_CED2
 Loop_Load_Object:
 		move.b  (A0), D0
@@ -15718,7 +15718,7 @@ Build_Sprites_Screen_Pos_2P:                                   ; loc_D792
 		dc.l    $00000000, $FFFFEE00, $FFFFEE08, $FFFFEE18
 ;-------------------------------------------------------------------------------
 Build_Sprites_2P:                                              ; loc_D7A2
-		tst.w   ($FFFFF644).w
+		tst.w   (hIntFlag).w
 		bne.s   Build_Sprites_2P                       ; loc_D7A2
 		lea     ($FFFFF800).w, A2
 		moveq   #$02, D5
@@ -16466,7 +16466,7 @@ loc_DEF0:
 TouchRings:                                                    ; loc_DEFC
 		move.w  ($FFFFF712).w, A1
 		move.w  ($FFFFF714).w, A2
-		cmpa.w  #Player_One, A0                                  ; $B000
+		cmpa.w  #player1, A0                                  ; $B000
 		beq.s   loc_DF12
 		move.w  ($FFFFF716).w, A1
 		move.w  ($FFFFF718).w, A2
@@ -17463,7 +17463,7 @@ loc_E858:
                 move.w  #$0008, D2
                 move.w  #$0010, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     SolidObject_2_A1                       ; loc_F3B4
@@ -17472,7 +17472,7 @@ loc_E858:
                 bsr.s   loc_E8A4
 loc_E880:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     SolidObject_2_A1                       ; loc_F3B4
                 btst    #$04, obj.Status(A0)                             ; $0022
@@ -17549,7 +17549,7 @@ loc_E982:
                 bsr.s   loc_E9CA
 loc_E98A:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     SolidObject_2_A1                       ; loc_F3B4
                 btst    #$06, obj.Status(A0)                             ; $0022
@@ -17639,7 +17639,7 @@ loc_EAC4:
                 move.w  D2, D3
                 subi.w  #$0018, D2
                 addi.w  #$0018, D3
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 btst    #$01, obj.Status(A1)                             ; $0022
                 bne.s   loc_EB18
                 move.w  obj.GroundSpeed(A1), D4                              ; $0014
@@ -17663,7 +17663,7 @@ loc_EAEC:
                 bsr     loc_E9CA
                 move.w  (A7)+, D0
 loc_EB18:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 btst    #$01, obj.Status(A1)                             ; $0022
                 bne.s   loc_EB5A
                 move.w  obj.GroundSpeed(A1), D4                              ; $0014
@@ -17692,7 +17692,7 @@ loc_EB5C:
                 move.w  #$0008, D2
                 move.w  #$0010, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     SolidObject_2_A1                       ; loc_F3B4
@@ -17701,7 +17701,7 @@ loc_EB5C:
                 bsr.s   loc_EBA4
 loc_EB82:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     SolidObject_2_A1                       ; loc_F3B4
                 cmpi.w  #$FFFE, D4
@@ -17761,7 +17761,7 @@ loc_EC48:
                 move.w  #$0010, D2
                 move.w  obj.X(A0), D4                                    ; $0008
                 lea     loc_EE8A(PC), A2
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     SolidObject_3_A1                       ; loc_F406
@@ -17770,7 +17770,7 @@ loc_EC48:
                 bsr.s   loc_EC94
 loc_EC70:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     SolidObject_3_A1                       ; loc_F406
                 btst    #$04, obj.Status(A0)                             ; $0022
@@ -17850,7 +17850,7 @@ loc_ED7E:
                 move.w  #$0010, D2
                 move.w  obj.X(A0), D4                                    ; $0008
                 lea     loc_EEA6(PC), A2
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     SolidObject_3_A1                       ; loc_F406
@@ -17859,7 +17859,7 @@ loc_ED7E:
                 bsr.s   loc_EDC6
 loc_EDA4:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     SolidObject_3_A1                       ; loc_F406
                 cmpi.w  #$FFFE, D4
@@ -18094,7 +18094,7 @@ loc_F0D2:
                 move.b  #$04, obj.Priority(A0)                           ; $0018
 ;-------------------------------------------------------------------------------
 loc_F0FA:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bcs.s   loc_F122
                 cmpi.w  #$0020, D0
@@ -18152,14 +18152,14 @@ loc_F1B0:
 loc_F1C0:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne     loc_F25A
-                btst    #$01, (Player_One+obj.Status).w              ; $FFFFB022
+                btst    #$01, (player1+obj.Status).w              ; $FFFFB022
                 bne.s   loc_F1DC
                 move.b  #$01, ($FFFFF7CC).w
                 move.w  #$0800, ($FFFFF602).w
 loc_F1DC:
                 tst.b   (Obj_Memory_Address).w                       ; $FFFFB000
                 beq.s   loc_F1F2
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 move.w  (Sonic_Level_Limits_Max_X).w, D1             ; $FFFFEECA
                 addi.w  #$0128, D1
                 cmp.w   D1, D0
@@ -18233,12 +18233,12 @@ End_Panel_Mappings:                                            ; loc_F2B2
 		nop
 ;-------------------------------------------------------------------------------
 SolidObject:                                                   ; loc_F344
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   SolidObject_A1                         ; loc_F362
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		tst.b   obj.Render(A1)                                    ; $0001
 		bpl     loc_F39C
 		addq.b  #$01, D6
@@ -18268,12 +18268,12 @@ loc_F39C:
 		rts
 ;-------------------------------------------------------------------------------
 SolidObject_2:                                                 ; loc_F39E
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   SolidObject_2_A1                       ; loc_F3B4
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 SolidObject_2_A1:                                              ; loc_F3B4
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18300,12 +18300,12 @@ loc_F3E6:
 		rts
 ;-------------------------------------------------------------------------------
 SolidObject_3:                                                 ; loc_F3F0
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   SolidObject_3_A1                       ; loc_F406
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 SolidObject_3_A1:                                              ; loc_F406
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18332,12 +18332,12 @@ loc_F438:
 		rts
 ;-------------------------------------------------------------------------------
 loc_F442:
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   loc_F458
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 loc_F458:
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18364,12 +18364,12 @@ loc_F48A:
 		rts
 ;-------------------------------------------------------------------------------
 loc_F494:
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   loc_F4AA
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 loc_F4AA:
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18722,12 +18722,12 @@ loc_F826:
 		bra.s   loc_F7E6
 ;-------------------------------------------------------------------------------
 Platform_Object:                                               ; loc_F82C
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   Platform_Object_A1                     ; loc_F842
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 Platform_Object_A1:                                            ; loc_F842
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18754,12 +18754,12 @@ loc_F874:
 		rts
 ;-------------------------------------------------------------------------------
 Platform_Object_2:                                             ; loc_F87E
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   Platform_Object_2_A1                   ; loc_F894
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 Platform_Object_2_A1:                                          ; loc_F894
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18786,12 +18786,12 @@ loc_F8C6:
 		rts
 ;-------------------------------------------------------------------------------
 Platform_Object_3:                                             ; loc_F8D0
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		moveq   #$03, D6
 		movem.l D1-D4, -(A7)
 		bsr.s   Platform_Object_3_A1                   ; loc_F8E6
 		movem.l (A7)+, D1-D4
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		addq.b  #$01, D6
 Platform_Object_3_A1:                                          ; loc_F8E6
 		btst    D6, obj.Status(A0)                               ; $0022
@@ -18865,7 +18865,7 @@ Player_On_Spiral:                                              ; loc_F99A
 		moveq   #$00, D0
 		move.b  player.LastObj(A1), D0                          ; $003D
 		lsl.w   #$06, D0
-		addi.l  #Player_One, D0                              ; $FFFFB000
+		addi.l  #player1, D0                              ; $FFFFB000
 		move.l  D0, A3
 		bclr    D6, obj.Status(A3)                               ; $0022
 loc_F9B6:
@@ -18935,7 +18935,7 @@ loc_FA40:
 Exit_Plaform:                                                  ; loc_FA68
 		move.w  D1, D2
 		add.w   D2, D2
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		btst    #$01, obj.Status(A1)                             ; $0022
 		bne.s   loc_FA88
 		move.w  obj.X(A1), D0                                    ; $0008
@@ -18952,7 +18952,7 @@ loc_FA9A:
 		rts
 ;-------------------------------------------------------------------------------
 loc_FA9C: ; Usado pelo Object 0x30 - Terremoto na Hill Top
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		btst    #$03, obj.Status(A0)                             ; $0022
 		beq.s   loc_FAC4
 		jsr     (Player_HitFloor_A1)                   ; loc_141B2
@@ -18960,11 +18960,11 @@ loc_FA9C: ; Usado pelo Object 0x30 - Terremoto na Hill Top
 		beq.s   loc_FAB4
 		bpl.s   loc_FAC4
 loc_FAB4:
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		bclr    #$03, obj.Status(A1)                             ; $0022
 		bclr    #$03, obj.Status(A0)                             ; $0022
 loc_FAC4:
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		btst    #$04, obj.Status(A0)                             ; $0022
 		beq.s   loc_FAEC
 		jsr     (Player_HitFloor_A1)                   ; loc_141B2
@@ -18972,7 +18972,7 @@ loc_FAC4:
 		beq.s   loc_FADC
 		bpl.s   loc_FAEC
 loc_FADC:
-		lea     (Player_Two).w, A1                           ; $FFFFB040
+		lea     (player2).w, A1                           ; $FFFFB040
 		bclr    #$03, obj.Status(A1)                             ; $0022
 		bclr    #$04, obj.Status(A0)                             ; $0022
 loc_FAEC:
@@ -19011,9 +19011,9 @@ Sonic_Main:
 		move.b  #2, obj.Priority(A0)
 		move.b  #$18, obj.Width(A0)
 		move.b  #4, obj.Render(A0)
-		move.w  #$600, (Sonic_Max_Speed).w
-		move.w  #$C, (Sonic_Acceleration).w
-		move.w  #$80, (Sonic_Deceleration).w
+		move.w  #$600, (sonicMaxSpeed).w
+		move.w  #$C, (sonicAccel).w
+		move.w  #$80, (sonicDecel).w
 		move.b  #$C, player.TopSolid(A0)
 		move.b  #$D, player.LRBSolid(A0)
 		move.b  #0, player.FlipsRemaining(A0)
@@ -19127,14 +19127,14 @@ loc_FC86:
                 beq.s   loc_FCD2
                 subq.w  #$01, player.Shoes(A0)                   ; $0034
                 bne.s   loc_FCD2
-                move.w  #$0600, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$000C, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0080, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0600, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$000C, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0080, (sonicDecel).w               ; $FFFFF764
                 tst.b   (Super_Sonic_Flag).w                         ; $FFFFFE19
                 beq.s   loc_FCC2
-                move.w  #$0A00, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0030, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0100, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0A00, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0030, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0100, (sonicDecel).w               ; $FFFFF764
 loc_FCC2:
                 move.b  #$00, (Hi_Speed_Flag).w                      ; $FFFFFE2E
                 move.w  #$00FC, D0
@@ -19154,13 +19154,13 @@ CopySonicMovesForTails:                                        ; loc_FCD4
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_Water:                                                   ; loc_FCF8
-                tst.b   (Water_Level_Flag).w                         ; $FFFFF730
+                tst.b   (Water_Level_flag).w                         ; $FFFFF730
                 bne.s   Sonic_InLevelWithWater                 ; loc_FD00
 loc_FCFE:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_InLevelWithWater:                                        ; loc_FD00
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bge.s   Sonic_NotInWater                       ; loc_FD70
                 bset    #$06, obj.Status(A0)                             ; $0022
@@ -19170,14 +19170,14 @@ Sonic_InLevelWithWater:                                        ; loc_FD00
                 move.b  #$0A, ($FFFFB340).w
                 move.b  #$81, ($FFFFB368).w
                 move.l  A0, ($FFFFB37C).w
-                move.w  #$0300, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0006, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0040, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0300, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0006, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0040, (sonicDecel).w               ; $FFFFF764
                 tst.b   (Super_Sonic_Flag).w                         ; $FFFFFE19
                 beq.s   loc_FD52
-                move.w  #$0500, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0018, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0080, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0500, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0018, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0080, (sonicDecel).w               ; $FFFFF764
 loc_FD52:
                 asr.w   obj.XSpeed(A0)                                    ; $0010
                 asr.w   obj.YSpeed(A0)                                  ; $0012
@@ -19192,14 +19192,14 @@ Sonic_NotInWater:                                              ; loc_FD70
                 beq.s   loc_FCFE
                 move.l  A0, A1
                 bsr     Resume_Music                           ; loc_12A30
-                move.w  #$0600, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$000C, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0080, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0600, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$000C, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0080, (sonicDecel).w               ; $FFFFF764
                 tst.b   (Super_Sonic_Flag).w                         ; $FFFFFE19
                 beq.s   loc_FDA8
-                move.w  #$0A00, (Sonic_Max_Speed).w                  ; $FFFFF760
-                move.w  #$0030, (Sonic_Acceleration).w               ; $FFFFF762
-                move.w  #$0100, (Sonic_Deceleration).w               ; $FFFFF764
+                move.w  #$0A00, (sonicMaxSpeed).w                  ; $FFFFF760
+                move.w  #$0030, (sonicAccel).w               ; $FFFFF762
+                move.w  #$0100, (sonicDecel).w               ; $FFFFF764
 loc_FDA8:
                 cmpi.b  #$04, obj.Routine(A0)                            ; $0024
                 beq.s   loc_FDB4
@@ -19287,9 +19287,9 @@ loc_FEBC:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_Move:                                                    ; loc_FEC6
-                move.w  (Sonic_Max_Speed).w, D6                      ; $FFFFF760
-                move.w  (Sonic_Acceleration).w, D5                   ; $FFFFF762
-                move.w  (Sonic_Deceleration).w, D4                   ; $FFFFF764
+                move.w  (sonicMaxSpeed).w, D6                      ; $FFFFF760
+                move.w  (sonicAccel).w, D5                   ; $FFFFF762
+                move.w  (sonicDecel).w, D4                   ; $FFFFF764
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_1013E
                 tst.w   player.HorizLock(A0)                           ; $002E
@@ -19315,7 +19315,7 @@ loc_FEFA:
                 moveq   #$00, D0
                 move.b  player.LastObj(A0), D0                          ; $003D
                 lsl.w   #$06, D0
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     $00(A1, D0), A1
                 tst.b   obj.Status(A1)                                   ; $0022
                 bmi     loc_100E8
@@ -19606,9 +19606,9 @@ loc_102D2:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_RollSpeed:                                               ; loc_102D4
-                move.w  (Sonic_Max_Speed).w, D6                      ; $FFFFF760
+                move.w  (sonicMaxSpeed).w, D6                      ; $FFFFF760
                 asl.w   #$01, D6
-                move.w  (Sonic_Acceleration).w, D5                   ; $FFFFF762
+                move.w  (sonicAccel).w, D5                   ; $FFFFF762
                 asr.w   #$01, D5
                 move.w  #$0020, D4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
@@ -19694,8 +19694,8 @@ loc_103C4:
                 rts
 ;-------------------------------------------------------------------------------
 Sonic_ChgJumpDir:                                              ; loc_103CA
-                move.w  (Sonic_Max_Speed).w, D6                      ; $FFFFF760
-                move.w  (Sonic_Acceleration).w, D5                   ; $FFFFF762
+                move.w  (sonicMaxSpeed).w, D6                      ; $FFFFF760
+                move.w  (sonicAccel).w, D5                   ; $FFFFF762
                 asl.w   #$01, D5
                 btst    #$04, obj.Status(A0)                             ; $0022
                 bne.s   loc_10414
@@ -20861,9 +20861,9 @@ Tails_Main:                                                    ; loc_11148
                 move.b  #$02, obj.Priority(A0)                           ; $0018
                 move.b  #$18, obj.Width(A0)                              ; $0019
                 move.b  #$84, obj.Render(A0)                              ; $0001
-                move.w  #$0600, (Tails_Max_Speed).w                  ; $FFFFFEC0
-                move.w  #$000C, (Tails_Acceleration).w               ; $FFFFFEC2
-                move.w  #$0080, (Tails_Deceleration).w               ; $FFFFFEC4
+                move.w  #$0600, (tailsMaxSpeed).w                  ; $FFFFFEC0
+                move.w  #$000C, (tailsAccel).w               ; $FFFFFEC2
+                move.w  #$0080, (tailsDecel).w               ; $FFFFFEC4
                 move.b  #$0C, player.TopSolid(A0)                   ; $003E
                 move.b  #$0D, player.LRBSolid(A0)                   ; $003F
                 move.b  #$00, player.FlipsRemaining(A0)                  ; $002C
@@ -20960,9 +20960,9 @@ loc_11280:
                 beq.s   loc_112B4
                 subq.w  #$01, player.Shoes(A0)                   ; $0034
                 bne.s   loc_112B4
-                move.w  #$0600, (Tails_Max_Speed).w                  ; $FFFFFEC0
-                move.w  #$000C, (Tails_Acceleration).w               ; $FFFFFEC2
-                move.w  #$0080, (Tails_Deceleration).w               ; $FFFFFEC4
+                move.w  #$0600, (tailsMaxSpeed).w                  ; $FFFFFEC0
+                move.w  #$000C, (tailsAccel).w               ; $FFFFFEC2
+                move.w  #$0080, (tailsDecel).w               ; $FFFFFEC4
                 move.b  #$00, (Hi_Speed_Flag).w                      ; $FFFFFE2E
                 move.w  #$00FC, D0
                 jmp     (Play_Music)                           ; loc_150C
@@ -21026,7 +21026,7 @@ loc_11324:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_Copy_Sonic_Moves:                                        ; loc_11344
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bpl.s   loc_11350
                 neg.w   D0
@@ -21055,13 +21055,13 @@ Tails_RecordMoves:                                             ; loc_11376
                 rts
 ;-------------------------------------------------------------------------------
 Tails_Water:                                                   ; loc_11390
-                tst.b   (Water_Level_Flag).w                         ; $FFFFF730
+                tst.b   (Water_Level_flag).w                         ; $FFFFF730
                 bne.s   Tails_InLevelWithWater                 ; loc_11398
 loc_11396:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_InLevelWithWater:                                        ; loc_11398
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bge.s   Tails_NotInWater                       ; loc_113F0
                 bset    #$06, obj.Status(A0)                             ; $0022
@@ -21071,9 +21071,9 @@ Tails_InLevelWithWater:                                        ; loc_11398
                 move.b  #$0A, ($FFFFB300).w
                 move.b  #$81, ($FFFFB328).w
                 move.l  A0, ($FFFFB33C).w
-                move.w  #$0300, (Tails_Max_Speed).w                  ; $FFFFFEC0
-                move.w  #$0006, (Tails_Acceleration).w               ; $FFFFFEC2
-                move.w  #$0040, (Tails_Deceleration).w               ; $FFFFFEC4
+                move.w  #$0300, (tailsMaxSpeed).w                  ; $FFFFFEC0
+                move.w  #$0006, (tailsAccel).w               ; $FFFFFEC2
+                move.w  #$0040, (tailsDecel).w               ; $FFFFFEC4
                 asr.w   obj.XSpeed(A0)                                    ; $0010
                 asr.w   obj.YSpeed(A0)                                  ; $0012
                 asr.w   obj.YSpeed(A0)                                  ; $0012
@@ -21087,9 +21087,9 @@ Tails_NotInWater:                                              ; loc_113F0
                 beq.s   loc_11396
                 move.l  A0, A1
                 bsr     Resume_Music                           ; loc_12A30
-                move.w  #$0600, (Tails_Max_Speed).w                  ; $FFFFFEC0
-                move.w  #$000C, (Tails_Acceleration).w               ; $FFFFFEC2
-                move.w  #$0080, (Tails_Deceleration).w               ; $FFFFFEC4
+                move.w  #$0600, (tailsMaxSpeed).w                  ; $FFFFFEC0
+                move.w  #$000C, (tailsAccel).w               ; $FFFFFEC2
+                move.w  #$0080, (tailsDecel).w               ; $FFFFFEC4
                 cmpi.b  #$04, obj.Routine(A0)                            ; $0024
                 beq.s   loc_1141C
                 asl.w   obj.YSpeed(A0)                                  ; $0012
@@ -21155,9 +21155,9 @@ loc_114DA:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_Move:                                                    ; loc_114E4
-                move.w  (Tails_Max_Speed).w, D6                      ; $FFFFFEC0
-                move.w  (Tails_Acceleration).w, D5                   ; $FFFFFEC2
-                move.w  (Tails_Deceleration).w, D4                   ; $FFFFFEC4
+                move.w  (tailsMaxSpeed).w, D6                      ; $FFFFFEC0
+                move.w  (tailsAccel).w, D5                   ; $FFFFFEC2
+                move.w  (tailsDecel).w, D4                   ; $FFFFFEC4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_115F6
                 tst.w   player.HorizLock(A0)                           ; $002E
@@ -21183,7 +21183,7 @@ loc_11518:
                 moveq   #$00, D0
                 move.b  player.LastObj(A0), D0                          ; $003D
                 lsl.w   #$06, D0
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     $00(A1, D0), A1
                 tst.b   obj.Status(A1)                                   ; $0022
                 bmi.s   loc_115AC
@@ -21382,11 +21382,11 @@ loc_1178A:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_RollSpeed:                                               ; loc_1178C
-                move.w  (Tails_Max_Speed).w, D6                      ; $FFFFFEC0
+                move.w  (tailsMaxSpeed).w, D6                      ; $FFFFFEC0
                 asl.w   #$01, D6
-                move.w  (Tails_Acceleration).w, D5                   ; $FFFFFEC2
+                move.w  (tailsAccel).w, D5                   ; $FFFFFEC2
                 asr.w   #$01, D5
-                move.w  (Tails_Deceleration).w, D4                   ; $FFFFFEC4
+                move.w  (tailsDecel).w, D4                   ; $FFFFFEC4
                 asr.w   #$02, D4
                 tst.b   (Player_Status_Flag).w                       ; $FFFFF7CA
                 bne     loc_11808
@@ -21471,8 +21471,8 @@ loc_1187E:
                 rts
 ;-------------------------------------------------------------------------------
 Tails_ChgJumpDir:                                              ; loc_11884
-                move.w  (Tails_Max_Speed).w, D6                      ; $FFFFFEC0
-                move.w  (Tails_Acceleration).w, D5                   ; $FFFFFEC2
+                move.w  (tailsMaxSpeed).w, D6                      ; $FFFFFEC0
+                move.w  (tailsAccel).w, D5                   ; $FFFFFEC2
                 asl.w   #$01, D5
                 btst    #$04, obj.Status(A0)                             ; $0022
                 bne.s   loc_118CE
@@ -22080,10 +22080,10 @@ Tails_GameOver:                                                ; loc_11FB8
                 addi.w  #$0100, D0
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bcc     loc_11FFA
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 subi.w  #$0040, D0
                 move.w  D0, obj.X(A0)                                    ; $0008
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 subi.w  #$0080, D0
                 move.w  D0, obj.Y(A0)                                    ; $000C
                 move.b  #$02, obj.Routine(A0)                            ; $0024
@@ -22512,8 +22512,8 @@ loc_12454:
 loc_1247C:
                 move.b  ($FFFFB066).w, obj.Angle(A0)                     ; $0026
                 move.b  ($FFFFB062).w, obj.Status(A0)                    ; $0022
-                move.w  (Player_Two_Position_X).w, obj.X(A0)         ; $FFFFB048; $0008
-                move.w  (Player_Two_Position_Y).w, obj.Y(A0)         ; $FFFFB04C; $000C
+                move.w  (player2XPos).w, obj.X(A0)         ; $FFFFB048; $0008
+                move.w  (player2YPos).w, obj.Y(A0)         ; $FFFFB04C; $000C
                 moveq   #$00, D0
                 move.b  ($FFFFB05C).w, D0
                 btst    #$05, ($FFFFB062).w
@@ -22652,7 +22652,7 @@ loc_125C4:
                 jsr     (AnimateSprite)                        ; loc_D372
 ;-------------------------------------------------------------------------------
 loc_125D0:
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bcs.s   loc_125F6
                 move.b  #$06, obj.Routine(A0)                            ; $0024
@@ -23047,8 +23047,8 @@ loc_12B3A:
                 bne.s   loc_12B6A
                 tst.b   (Shield_Flag).w                              ; $FFFFFE2C
                 beq.s   loc_12B6C
-                move.w  (Player_One_Position_X).w, obj.X(A0)         ; $FFFFB008; $0008
-                move.w  (Player_One_Position_Y).w, obj.Y(A0)         ; $FFFFB00C; $000C
+                move.w  (player1XPos).w, obj.X(A0)         ; $FFFFB008; $0008
+                move.w  (player1YPos).w, obj.Y(A0)         ; $FFFFB00C; $000C
                 move.b  ($FFFFB022).w, obj.Status(A0)                    ; $0022
                 lea     (Shield_AnimateData), A1               ; loc_13066
                 jsr     (AnimateSprite)                        ; loc_D372
@@ -23384,7 +23384,7 @@ loc_13226:
                 dc.w    loc_13288-loc_13226
 ;-------------------------------------------------------------------------------
 loc_1322E:
-                move.w  (Water_Level).w, obj.Y(A0)                   ; $FFFFF646; $000C
+                move.w  (waterLevel).w, obj.Y(A0)                   ; $000C
                 tst.b   obj.PrevAnim(A0)                                 ; $001D
                 bne.s   loc_13290
                 move.w  obj.X(A2), obj.X(A0)                      ; $0008, $0008
@@ -23645,8 +23645,8 @@ loc_135D2:
                 tst.b   Obj_Control_Var_05(A0)                           ; $0031
                 bne.s   loc_135E4
 loc_135D8:
-                move.w  (Player_One_Position_X).w, obj.X(A0)         ; $FFFFB008; $0008
-                move.w  (Player_One_Position_Y).w, obj.Y(A0)         ; $FFFFB00C; $000C
+                move.w  (player1XPos).w, obj.X(A0)         ; $FFFFB008; $0008
+                move.w  (player1YPos).w, obj.Y(A0)         ; $FFFFB00C; $000C
 loc_135E4:
                 jmp     (DisplaySprite)                        ; loc_D322
 loc_135EA:
@@ -25062,12 +25062,12 @@ loc_1453C:
                 move.b  #$04, obj.Routine(A0)                            ; $0024
                 bra     loc_145C2
 loc_1457A:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 addi.w  #$0008, D0
                 cmpi.w  #$0010, D0
                 bcc     loc_145C2
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 sub.w   obj.Y(A0), D0                                    ; $000C
                 addi.w  #$0040, D0
                 cmpi.w  #$0068, D0
@@ -25116,8 +25116,8 @@ Level_Save_Info:                                               ; loc_145D6
 ;-------------------------------------------------------------------------------
 Level_Restore_Info:                                            ; loc_14650
                 move.b  ($FFFFFE31).w, (Saved_Level_Flag).w          ; $FFFFFE30
-                move.w  ($FFFFFE32).w, (Player_One_Position_X).w     ; $FFFFB008
-                move.w  ($FFFFFE34).w, (Player_One_Position_Y).w     ; $FFFFB00C
+                move.w  ($FFFFFE32).w, (player1XPos).w     ; $FFFFB008
+                move.w  ($FFFFFE34).w, (player1YPos).w     ; $FFFFB00C
                 move.w  ($FFFFFE36).w, (Ring_Count).w                ; $FFFFFE20
                 move.b  ($FFFFFE54).w, (Ring_Life_Flag).w            ; $FFFFFE1B
                 clr.w   (Ring_Count).w                               ; $FFFFFE20
@@ -25137,7 +25137,7 @@ Level_Restore_Info:                                            ; loc_14650
                 move.w  ($FFFFFE4A).w, (Camera_Y_x4_Mod_10).w        ; $FFFFEE14
                 move.w  ($FFFFFE4C).w, (Camera_X_x4).w               ; $FFFFEE18
                 move.w  ($FFFFFE4E).w, (Camera_Y_x4_Mod_10_2).w      ; $FFFFEE1C
-                tst.b   (Water_Level_Flag).w                         ; $FFFFF730
+                tst.b   (Water_Level_flag).w                         ; $FFFFF730
                 beq.s   loc_146E6
                 move.w  ($FFFFFE50).w, (Water_Level_Change).w        ; $FFFFF648
                 move.b  ($FFFFFE52).w, ($FFFFF64D).w
@@ -25179,7 +25179,7 @@ loc_1477A:
                 moveq   #$10, D2
                 move.w  D2, D3
                 add.w   D3, D3
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.w  obj.X(A1), D0                                    ; $0008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 add.w   D2, D0
@@ -25275,12 +25275,12 @@ loc_1487E:
 loc_148AC:
                 move.b  obj.ColStatus(A0), D0                             ; $0021
                 beq     loc_14978
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bclr    #$00, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_148C2
                 bsr.s   loc_148D8
 loc_148C2:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bclr    #$01, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_148D0
                 bsr.s   loc_148D8
@@ -25397,7 +25397,7 @@ loc_14A48:
                 move.b  #$01, Obj_Control_Var_02(A0)                     ; $002E
 ;-------------------------------------------------------------------------------
 loc_14A62:
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bcs.s   loc_14A7A
                 move.b  #$06, obj.Routine(A0)                            ; $0024
@@ -25440,7 +25440,7 @@ loc_14AE0:
 loc_14AE4:
                 tst.w   Obj_Control_Var_0A(A0)                           ; $0036
                 bne.s   loc_14B46
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bcc     loc_14BF2
                 tst.b   obj.Render(A0)                                    ; $0001
@@ -25516,7 +25516,7 @@ loc_14BF2:
                 sub.w   ($FFFFF7DA).w, D0
                 cmpi.w  #$0280, D0
                 bhi     DeleteObject                           ; loc_D314
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 cmp.w   obj.Y(A0), D0                                    ; $000C
                 bcs     DisplaySprite                          ; loc_D322
                 rts
@@ -25526,9 +25526,9 @@ loc_14C14:
                 dc.w    $0100
 ;-------------------------------------------------------------------------------
 loc_14C26:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_14C30
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_14C30:
                 tst.b   obj.Control(A1)                                    ; $002A
                 bmi     loc_14CD0
@@ -25900,8 +25900,8 @@ loc_15096:
                 rts
 ;-------------------------------------------------------------------------------
 loc_15098:
-                dc.l    Player_One                                   ; $FFFFB000
-                dc.l    Player_Two                                   ; $FFFFB040
+                dc.l    player1                                   ; $FFFFB000
+                dc.l    player2                                   ; $FFFFB040
                 dc.l    $00000000
                 dc.l    $00000000
                 dc.l    $00000000
@@ -26243,7 +26243,7 @@ loc_15582:
                 move.l  Obj_Control_Var_0C(A0), A1                       ; $0038
                 move.b  #$12, obj.MapFrame(A0)                             ; $001A
                 move.w  Obj_Control_Var_08(A0), D0                       ; $0034
-                move.w  (Water_Level).w, D1                          ; $FFFFF646
+                move.w  (waterLevel).w, D1                          
                 cmp.w   D0, D1
                 bcc.s   loc_1559A
                 move.w  D1, D0
@@ -26337,7 +26337,7 @@ loc_159E0:
                 bra     loc_15AB2
 ;-------------------------------------------------------------------------------
 loc_15A20:
-                move.w  (Water_Level).w, D1                          ; $FFFFF646
+                move.w  (waterLevel).w, D1                          
                 move.w  D1, obj.Y(A0)                                    ; $000C
                 tst.b   Obj_Control_Var_06(A0)                           ; $0032
                 bne.s   loc_15A42
@@ -26371,7 +26371,7 @@ Water_Surface_Data:                                            ; loc_15A72
                 dc.b    $01, $00, $01, $00, $01, $00, $01, $00
 ;-------------------------------------------------------------------------------
 loc_15AB2:
-                move.w  (Water_Level).w, D1                          ; $FFFFF646
+                move.w  (waterLevel).w, D1                          
                 move.w  D1, obj.Y(A0)                                    ; $000C
                 tst.b   Obj_Control_Var_06(A0)                           ; $0032
                 bne.s   loc_15AD4
@@ -26445,7 +26445,7 @@ loc_15CF4:
                 addi.w  #$0040, D2
                 move.b  obj.Subtype(A0), D3                              ; $0028
                 move.b  #$00, obj.MapFrame(A0)                             ; $001A
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   D1, D0
                 bcs.s   loc_15D26
                 cmp.w   D2, D0
@@ -26454,7 +26454,7 @@ loc_15CF4:
                 add.b   D3, obj.MapFrame(A0)                               ; $001A
                 bra     Jmp_02_To_DisplaySprite                ; loc_16390
 loc_15D26:
-                move.w  (Player_Two_Position_X).w, D0                ; $FFFFB048
+                move.w  (player2XPos).w, D0                ; $FFFFB048
                 cmp.w   D1, D0
                 bcs.s   loc_15D38
                 cmp.w   D2, D0
@@ -26723,12 +26723,12 @@ loc_1625E:
 loc_16294:
                 move.b  obj.ColStatus(A0), D0                             ; $0021
                 beq     loc_162FE
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bclr    #$00, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_162AA
                 bsr.s   loc_162C0
 loc_162AA:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bclr    #$01, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_162B8
                 bsr.s   loc_162C0
@@ -26820,10 +26820,10 @@ loc_163DE:
                 bra     loc_166E6      
 ;------------------------------------------------------------------------------- 
 loc_163F6:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   loc_16404
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 addq.b  #$01, D6
 loc_16404:
                 btst    D6, obj.Status(A0)                               ; $0022
@@ -26980,11 +26980,11 @@ Spiral_Data_2:                                                 ; loc_16546
                 dc.b    $20, $20, $20, $20, $20, $20, $20, $20
 ;-------------------------------------------------------------------------------
 loc_166E6:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     ($FFFFF7B2).w, A2
                 moveq   #$03, D6
                 bsr.s   loc_166FC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     ($FFFFF7B3).w, A2
                 addq.b  #$01, D6
 loc_166FC:
@@ -27133,7 +27133,7 @@ loc_16898:
                 btst    #$03, obj.Status(A0)                             ; $0022
                 beq.s   loc_168F2
                 moveq   #$02, D1
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.w  obj.X(A0), D0                                    ; $0008
                 sub.w   obj.X(A1), D0                                    ; $0008
                 bcc.s   loc_168B8
@@ -27147,7 +27147,7 @@ loc_168C0:
                 btst    #$04, obj.Status(A0)                             ; $0022
                 beq.s   loc_1692A
                 moveq   #$02, D2
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.w  obj.X(A0), D0                                    ; $0008
                 sub.w   obj.X(A1), D0                                    ; $0008
                 bcc.s   loc_168DC
@@ -27169,7 +27169,7 @@ loc_168F2:
                 btst    #$04, obj.Status(A0)                             ; $0022
                 beq.s   loc_16918
                 moveq   #$02, D1
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.w  obj.X(A0), D0                                    ; $0008
                 sub.w   obj.X(A1), D0                                    ; $0008
                 bcc.s   loc_1690E
@@ -27328,12 +27328,12 @@ loc_16AD4:
                 move.b  D1, Obj_Control_Var_0E(A0)                       ; $003A
                 cmp.b   obj.MapFrame(A1), D1                               ; $001A
                 beq.s   loc_16AFE
-                lea     (Player_One).w, A2                           ; $FFFFB000
+                lea     (player1).w, A2                           ; $FFFFB000
                 bclr    #$03, obj.Status(A1)                             ; $0022
                 beq.s   loc_16AF0
                 bsr.s   loc_16B0C
 loc_16AF0:
-                lea     (Player_Two).w, A2                           ; $FFFFB040
+                lea     (player2).w, A2                           ; $FFFFB040
                 bclr    #$04, obj.Status(A1)                             ; $0022
                 beq.s   loc_16AFE
                 bsr.s   loc_16B0C
@@ -27364,7 +27364,7 @@ loc_16B46:
                 bchg    #05, obj.VRAM(A0)                            ; $0002
 loc_16B56:
                 andi.b  #$FE, obj.Render(A0)                              ; $0001
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bcs.s   loc_16B6C
                 ori.b   #$01, obj.Render(A0)                              ; $0001
@@ -27787,7 +27787,7 @@ loc_17160:
                 move.w  D2, D3
                 subi.w  #$0010, D2
                 addi.w  #$0010, D3
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 btst    #$01, obj.Status(A1)                             ; $0022
                 bne.s   loc_171BC
                 move.w  obj.X(A1), D4                                    ; $0008
@@ -27804,7 +27804,7 @@ loc_17160:
                 bsr     loc_171F0
                 move.w  (A7)+, D0
 loc_171BC:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 btst    #$01, obj.Status(A1)                             ; $0022
                 bne.s   loc_171EC
                 move.w  obj.X(A1), D4                                    ; $0008
@@ -28017,10 +28017,10 @@ loc_1740A:
                 move.w  loc_17404(PC, D0), obj.Control(A0)           ; $002A  
 ;-------------------------------------------------------------------------------
 loc_1741E:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     Obj_Control_Var_00(A0), A4                       ; $002C
                 bsr.s   loc_17430
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     Obj_Control_Var_0A(A0), A4                       ; $0036
 loc_17430:
                 moveq   #$00, D0
@@ -28829,10 +28829,10 @@ loc_18212:
                 move.b  #$0D, ($FFFFB07F).w
                 bra.s   loc_181D0
 loc_18220:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.b  Obj_Control_Var_06(A0), D0                       ; $0032
                 bsr.s   loc_1826E
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.b  Obj_Control_Var_07(A0), D0                       ; $0033
                 bsr.s   loc_1826E
                 bra     loc_182D4
@@ -28851,7 +28851,7 @@ loc_18256:
                 move.b  #$0D, ($FFFFB03F).w
                 bra     loc_181D0
 loc_18266:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_18274
                 bra.s   loc_182D4
 loc_1826E:
@@ -28881,7 +28881,7 @@ loc_182BE:
                 move.b  #$0D, ($FFFFB07F).w
                 bra     loc_181D0
 loc_182CE:
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr.s   loc_18274
 loc_182D4:
                 move.w  Obj_Control_Var_0C(A0), ($FFFFF7D0).w            ; $0038
@@ -28972,10 +28972,10 @@ loc_183EC:
                 cmpi.b  #$02, Obj_Control_Var_07(A0)                     ; $0033
                 bne.s   loc_183E8
 loc_18402:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.b  Obj_Control_Var_06(A0), D0                       ; $0032
                 bsr.s   loc_18432
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.b  Obj_Control_Var_07(A0), D0                       ; $0033
                 bsr.s   loc_18432
                 bra     loc_18482
@@ -28985,7 +28985,7 @@ loc_1841A:
                 beq.s   loc_1846A
                 cmpi.b  #$02, Obj_Control_Var_06(A0)                     ; $0032
                 bne.s   loc_183E8
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_18438
                 bra.s   loc_18482
 loc_18432:
@@ -29007,7 +29007,7 @@ loc_1846A:
                 beq     loc_183E8
                 cmpi.b  #$02, Obj_Control_Var_07(A0)                     ; $0033
                 bne     loc_183E8
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr.s   loc_18438
 loc_18482:
                 move.w  Obj_Control_Var_0C(A0), ($FFFFF7D0).w            ; $0038
@@ -29075,31 +29075,30 @@ CPz_Tunel_Obstacle_Mappings:                                   ; loc_186B6
 		include 'mappings/sprite/obj32_cpz.asm'
 ;-------------------------------------------------------------------------------
 		nop
-Jmp_04_To_DisplaySprite:                                       ; loc_186DC
-		jmp     (DisplaySprite)                        ; loc_D322
-Jmp_06_To_DeleteObject:                                        ; loc_186E2
-		jmp     (DeleteObject)                         ; loc_D314
-Jmp_00_To_SingleObjectLoad:                                    ; loc_186E8
-		jmp     (SingleObjectLoad)                     ; loc_E6FE
-Jmp_06_To_MarkObjGone:                                         ; loc_186EE
-		jmp     (MarkObjGone)                          ; loc_D200
-Jmp_06_To_ModifySpriteAttr_2P:                                 ; loc_186F4
-		jmp     (ModifySpriteAttr_2P)                  ; loc_DBBE
-Jmp_00_To_Smash_Object:                                        ; loc_186FA
-		jmp     (Smash_Object)                         ; loc_CD24
-Jmp_00_To_SolidObject:                                         ; loc_18700
-		jmp     (SolidObject)                          ; loc_F344
-Jmp_04_To_SpeedToPos:                                          ; loc_18706
-		jmp     (SpeedToPos)                           ; loc_D1DA
+Jmp_04_To_DisplaySprite:
+		jmp     (DisplaySprite)
+Jmp_06_To_DeleteObject:
+		jmp     (DeleteObject)
+Jmp_00_To_SingleObjectLoad:
+		jmp     (SingleObjectLoad)
+Jmp_06_To_MarkObjGone:
+		jmp     (MarkObjGone)
+Jmp_06_To_ModifySpriteAttr_2P:
+		jmp     (ModifySpriteAttr_2P)
+Jmp_00_To_Smash_Object:
+		jmp     (Smash_Object)
+Jmp_00_To_SolidObject:
+		jmp     (SolidObject)
+Jmp_04_To_SpeedToPos:
+		jmp     (SpeedToPos)
 ;-------------------------------------------------------------------------------
-Obj30_Earthquake_Tiles_Attributes:                          ; loc_1870C
 ;===============================================================================
-; Object 0x30 - Atributos dos tiles usados durante os terremotos na Hill Top
+; Object 0x30 - Large rising lava during earthquake in HTZ
 ; [ Begin ] 
-;===============================================================================   
-; loc_1870C:
+;===============================================================================
+Obj30_Earthquake_Tiles_Attributes:
                 moveq   #$00, D0
-                move.b  obj.Routine(A0), D0                              ; $0024
+                move.b  obj.Routine(A0), D0
                 move.w  loc_1871A(PC, D0), D1
                 jmp     loc_1871A(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -29175,7 +29174,7 @@ loc_187D2:
                 beq.s   loc_187E8
                 move.l  A0, -(A7)
                 move.l  A0, A1
-                lea     (Player_One).w, A0                           ; $FFFFB000
+                lea     (player1).w, A0                           ; $FFFFB000
                 bsr     loc_18906
                 move.l  (A7)+, A0
 loc_187E8:
@@ -29183,7 +29182,7 @@ loc_187E8:
                 beq.s   loc_187FE
                 move.l  A0, -(A7)
                 move.l  A0, A1
-                lea     (Player_Two).w, A0                           ; $FFFFB040
+                lea     (player2).w, A0                           ; $FFFFB040
                 bsr     loc_18906
                 move.l  (A7)+, A0
 loc_187FE:
@@ -29234,31 +29233,31 @@ loc_18834:
                 dc.b    $D3, $D3, $D2, $D2, $D1, $D1, $D0, $D0
                 dc.b    $D0, $D0, $D0, $D0
 ;===============================================================================
-; Object 0x30 - Atributos dos tiles usados durante os terremotos na Hill Top
+; Object 0x30 - Large rising lava during earthquake in HTZ
 ; [ End ] 
 ;===============================================================================
 ;-------------------------------------------------------------------------------
-Jmp_07_To_DeleteObject:                                        ; loc_18900
-		jmp     (DeleteObject)                         ; loc_D314
+Jmp_07_To_DeleteObject:
+		jmp     (DeleteObject)
 loc_18906:
 		jmp     (loc_2B4CA)
-Jmp_01_To_MarkObjGone_3:                                       ; loc_1890C
-		jmp     (MarkObjGone_3)                        ; loc_D26C
+Jmp_01_To_MarkObjGone_3:
+		jmp     (MarkObjGone_3)
 loc_18912:
 		jmp     (loc_FA9C)
-Jmp_00_To_SolidObject_2:                                       ; loc_18918
-		jmp     (SolidObject_2)                        ; loc_F39E
-Jmp_00_To_SolidObject_3:                                       ; loc_1891E
-		jmp     (SolidObject_3)                        ; loc_F3F0
+Jmp_00_To_SolidObject_2:
+		jmp     (SolidObject_2)
+Jmp_00_To_SolidObject_3:
+		jmp     (SolidObject_3)
 ;-------------------------------------------------------------------------------
-Obj33_Touch_Booster:                                        ; loc_18924
+Obj33_Touch_Booster:
 ;===============================================================================
 ; Object 0x33 - Aceleradores (Toque para ganhar impulso) na Oil Ocean
 ; [ Begin ]
 ;===============================================================================
 ; loc_18924:
                 moveq   #$00, D0
-                move.b  obj.Routine(A0), D0                              ; $0024
+                move.b  obj.Routine(A0), D0
                 move.w  loc_18932(PC, D0), D1
                 jmp     loc_18932(PC, D1)
 ;-------------------------------------------------------------------------------
@@ -29268,48 +29267,48 @@ loc_18932:
                 dc.w    loc_18BCA-loc_18932     
 ;-------------------------------------------------------------------------------
 loc_18938:
-                addq.b  #$02, obj.Routine(A0)                            ; $0024
-                move.l  #Touch_Booster_Mappings, obj.Map(A0) ; loc_18C0C, $0004
-                move.w  #$632C, obj.VRAM(A0)                         ; $0002
-                move.b  #$04, obj.Render(A0)                              ; $0001
-                move.b  #$03, obj.Priority(A0)                           ; $0018
-                move.b  #$18, obj.Width(A0)                              ; $0019
-                move.w  obj.Y(A0), Obj_Control_Var_04(A0)         ; $000C, $0030
-                addq.b  #$02, obj.Routine2(A0)                          ; $0025
-                move.w  #$0078, Obj_Control_Var_0A(A0)                   ; $0036
-                tst.b   obj.Subtype(A0)                                  ; $0028
+                addq.b  #$02, obj.Routine(A0)
+                move.l  #Touch_Booster_Mappings, obj.Map(A0)
+                move.w  #$632C, obj.VRAM(A0)
+                move.b  #$04, obj.Render(A0)
+                move.b  #$03, obj.Priority(A0)
+                move.b  #$18, obj.Width(A0)
+                move.w  obj.Y(A0), Obj_Control_Var_04(A0)
+                addq.b  #$02, obj.Routine2(A0)
+                move.w  #$0078, Obj_Control_Var_0A(A0)
+                tst.b   obj.Subtype(A0)
                 beq.s   loc_18978
-                move.b  #$04, obj.Routine2(A0)                          ; $0025
+                move.b  #$04, obj.Routine2(A0)
 loc_18978:
-                bsr     Jmp_04_To_SingleObjectLoad_2           ; loc_18C62
+                bsr     Jmp_04_To_SingleObjectLoad_2
                 bne.s   loc_189C0
-                move.b  obj.ID(A0), obj.ID(A1)                    ; $0000, $0000
-                move.b  #$04, obj.Routine(A1)                            ; $0024
-                move.w  obj.X(A0), obj.X(A1)                      ; $0008, $0008
-                move.w  obj.Y(A0), obj.Y(A1)                      ; $000C, $000C
-                subi.w  #$0010, obj.Y(A1)                                ; $000C
-                move.l  #Touch_Booster_Mappings_01, obj.Map(A1) ; loc_18C20, $0004
-                move.w  #$62E2, obj.VRAM(A1)                         ; $0002
-                move.b  #$04, obj.Render(A1)                              ; $0001
-                move.b  #$04, obj.Priority(A1)                           ; $0018
-                move.b  #$10, obj.Width(A1)                              ; $0019
-                move.l  A0, Obj_Control_Var_10(A1)                       ; $003C     
+                move.b  obj.ID(A0), obj.ID(A1)
+                move.b  #$04, obj.Routine(A1)
+                move.w  obj.X(A0), obj.X(A1)
+                move.w  obj.Y(A0), obj.Y(A1)
+                subi.w  #$0010, obj.Y(A1)
+                move.l  #Touch_Booster_Mappings_01, obj.Map(A1)
+                move.w  #$62E2, obj.VRAM(A1)
+                move.b  #$04, obj.Render(A1)
+                move.b  #$04, obj.Priority(A1)
+                move.b  #$10, obj.Width(A1)
+                move.l  A0, Obj_Control_Var_10(A1)     
 ;-------------------------------------------------------------------------------
 loc_189C0:
-                move.w  obj.X(A0), -(A7)                                 ; $0008
+                move.w  obj.X(A0), -(A7)
                 moveq   #$00, D0
-                move.b  obj.Routine2(A0), D0                            ; $0025
+                move.b  obj.Routine2(A0), D0
                 move.w  loc_189EC(PC, D0), D1
                 jsr     loc_189EC(PC, D1)
                 move.w  (A7)+, D4
                 moveq   #$00, D1
-                move.b  obj.Width(A0), D1                                ; $0019
+                move.b  obj.Width(A0), D1
                 addi.w  #$000B, D1
                 moveq   #$08, D2
                 move.w  D2, D3
                 addq.w  #$01, D3
-                bsr     Jmp_01_To_SolidObject                  ; loc_18C68
-                bra     Jmp_07_To_MarkObjGone                  ; loc_18C5C             
+                bsr     Jmp_01_To_SolidObject
+                bra     Jmp_07_To_MarkObjGone             
 ;-------------------------------------------------------------------------------  
 loc_189EC:
                 dc.w    loc_189F6-loc_189EC
@@ -29319,132 +29318,132 @@ loc_189EC:
                 dc.w    loc_18BC8-loc_189EC     
 ;-------------------------------------------------------------------------------  
 loc_189F6:
-                subq.w  #$01, Obj_Control_Var_0A(A0)                     ; $0036
+                subq.w  #$01, Obj_Control_Var_0A(A0)
                 bpl.s   loc_18A18
-                move.w  #$0078, Obj_Control_Var_0A(A0)                   ; $0036
-                move.l  #$FFF69800, Obj_Control_Var_06(A0)               ; $0032
-                addq.b  #$02, obj.Routine2(A0)                          ; $0025
+                move.w  #$0078, Obj_Control_Var_0A(A0)
+                move.l  #$FFF69800, Obj_Control_Var_06(A0)
+                addq.b  #$02, obj.Routine2(A0)
                 move.w  #$00D4, D0
-                jsr     (Play_Sfx_Ex)                          ; loc_151E
+                jsr     (Play_Sfx_Ex)
 loc_18A18:
                 rts  
 ;------------------------------------------------------------------------------- 
 loc_18A1A:
-                move.l  obj.Y(A0), D1                                    ; $000C
-                add.l   Obj_Control_Var_06(A0), D1                       ; $0032
-                move.l  D1, obj.Y(A0)                                    ; $000C
-                addi.l  #$00003800, Obj_Control_Var_06(A0)               ; $0032
+                move.l  obj.Y(A0), D1
+                add.l   Obj_Control_Var_06(A0), D1
+                move.l  D1, obj.Y(A0)
+                addi.l  #$00003800, Obj_Control_Var_06(A0)
                 swap.w  D1
-                cmp.w   Obj_Control_Var_04(A0), D1                       ; $0030
+                cmp.w   Obj_Control_Var_04(A0), D1
                 bcs.s   loc_18A54
-                move.l  Obj_Control_Var_06(A0), D0                       ; $0032
+                move.l  Obj_Control_Var_06(A0), D0
                 cmpi.l  #$00010000, D0
                 bcc.s   loc_18A46
-                subq.b  #$02, obj.Routine2(A0)                          ; $0025
+                subq.b  #$02, obj.Routine2(A0)
 loc_18A46:
                 lsr.l   #$02, D0
                 neg.l   D0
-                move.l  D0, Obj_Control_Var_06(A0)                       ; $0032
-                move.w  Obj_Control_Var_04(A0), obj.Y(A0)         ; $000C, $0030
+                move.l  D0, Obj_Control_Var_06(A0)
+                move.w  Obj_Control_Var_04(A0), obj.Y(A0)
 loc_18A54:
                 rts   
 ;------------------------------------------------------------------------------- 
 loc_18A56:
-                move.w  obj.X(A0), D2                                    ; $0008
+                move.w  obj.X(A0), D2
                 move.w  D2, D3
                 subi.w  #$0010, D2
                 addi.w  #$0010, D3
-                move.b  obj.Status(A0), D0                               ; $0022
+                move.b  obj.Status(A0), D0
                 andi.b  #$18, D0
                 beq.s   loc_18ACE
                 cmpi.b  #$18, D0
                 beq.s   loc_18AD0
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1
                 moveq   #$03, D6
                 bsr.s   loc_18A82
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1
                 addq.b  #$01, D6
 loc_18A82:
-                btst    D6, obj.Status(A0)                               ; $0022
+                btst    D6, obj.Status(A0)
                 beq.s   loc_18ACE
-                move.w  obj.X(A1), D0                                    ; $0008
+                move.w  obj.X(A1), D0
                 cmp.w   D2, D0
                 bcs.s   loc_18ACE
                 cmp.w   D3, D0
                 bcc.s   loc_18ACE
-                move.b  #$01, obj.Control(A1)                              ; $002A
-                move.w  #$0000, obj.GroundSpeed(A1)                          ; $0014
-                move.w  #$0000, obj.XSpeed(A1)                            ; $0010
-                move.w  #$0000, obj.YSpeed(A1)                          ; $0012
-                bclr    #$05, obj.Status(A1)                             ; $0022
-                bclr    #$07, obj.VRAM(A1)                           ; $0002
-                move.l  #$FFF69800, Obj_Control_Var_06(A0)               ; $0032
-                addq.b  #$02, obj.Routine2(A0)                          ; $0025
+                move.b  #$01, obj.Control(A1)
+                move.w  #$0000, obj.GroundSpeed(A1)
+                move.w  #$0000, obj.XSpeed(A1)
+                move.w  #$0000, obj.YSpeed(A1)
+                bclr    #$05, obj.Status(A1)
+                bclr    #$07, obj.VRAM(A1)
+                move.l  #$FFF69800, Obj_Control_Var_06(A0)
+                addq.b  #$02, obj.Routine2(A0)
                 move.w  #$00D4, D0
-                jsr     (Play_Sfx_Ex)                          ; loc_151E
+                jsr     (Play_Sfx_Ex)
 loc_18ACE:
                 rts
 loc_18AD0:
-                lea     (Player_One).w, A1                           ; $FFFFB000
-                move.w  obj.X(A1), D0                                    ; $0008
+                lea     (player1).w, A1
+                move.w  obj.X(A1), D0
                 cmp.w   D2, D0
                 bcs.s   loc_18B4E
                 cmp.w   D3, D0
                 bcc.s   loc_18B4E
-                lea     (Player_Two).w, A2                           ; $FFFFB040
-                move.w  obj.X(A2), D0                                    ; $0008
+                lea     (player2).w, A2
+                move.w  obj.X(A2), D0
                 cmp.w   D2, D0
                 bcs.s   loc_18B4E
                 cmp.w   D3, D0
                 bcc.s   loc_18B4E
-                move.b  #$01, obj.Control(A1)                              ; $002A
-                move.w  #$0000, obj.GroundSpeed(A1)                          ; $0014
-                move.w  #$0000, obj.XSpeed(A1)                            ; $0010
-                move.w  #$0000, obj.YSpeed(A1)                          ; $0012
-                bclr    #$05, obj.Status(A1)                             ; $0022
-                bclr    #$07, obj.VRAM(A1)                           ; $0002
-                move.b  #$01, obj.Control(A2)                              ; $002A
-                move.w  #$0000, obj.GroundSpeed(A2)                          ; $0014
-                move.w  #$0000, obj.XSpeed(A2)                            ; $0010
-                move.w  #$0000, obj.YSpeed(A2)                          ; $0012
-                bclr    #$05, obj.Status(A2)                             ; $0022
-                bclr    #$07, obj.VRAM(A2)                           ; $0002
-                move.l  #$FFF69800, Obj_Control_Var_06(A0)               ; $0032
-                addq.b  #$02, obj.Routine2(A0)                          ; $0025
-                move.w  #$00D4, D0
-                jsr     (Play_Sfx_Ex)                          ; loc_151E
+                move.b  #$01, obj.Control(A1)
+                move.w  #$0000, obj.GroundSpeed(A1)
+                move.w  #$0000, obj.XSpeed(A1)
+                move.w  #$0000, obj.YSpeed(A1)
+                bclr    #$05, obj.Status(A1)
+                bclr    #$07, obj.VRAM(A1)
+                move.b  #$01, obj.Control(A2)
+                move.w  #$0000, obj.GroundSpeed(A2)
+                move.w  #$0000, obj.XSpeed(A2)
+                move.w  #$0000, obj.YSpeed(A2)
+                bclr    #$05, obj.Status(A2)
+                bclr    #$07, obj.VRAM(A2)
+                move.l  #$FFF69800, Obj_Control_Var_06(A0)
+                addq.b  #$02, obj.Routine2(A0)
+                move.w  #$D4, D0
+                jsr     (Play_Sfx_Ex)
 loc_18B4E:
                 rts 
 ;------------------------------------------------------------------------------- 
 loc_18B50:
-                move.l  obj.Y(A0), D1                                    ; $000C
-                add.l   Obj_Control_Var_06(A0), D1                       ; $0032
-                move.l  D1, obj.Y(A0)                                    ; $000C
-                addi.l  #$00003800, Obj_Control_Var_06(A0)               ; $0032
+                move.l  obj.Y(A0), D1
+                add.l   Obj_Control_Var_06(A0), D1
+                move.l  D1, obj.Y(A0)
+                addi.l  #$00003800, Obj_Control_Var_06(A0)
                 swap.w  D1
-                move.w  Obj_Control_Var_04(A0), D0                       ; $0030
+                move.w  Obj_Control_Var_04(A0), D0
                 subi.w  #$007D, D0
                 cmp.w   D0, D1
                 bne.s   loc_18BC6
-                addq.b  #$02, obj.Routine2(A0)                          ; $0025
-                lea     (Obj_Memory_Address).w, A1                   ; $FFFFB000
-                move.b  obj.Status(A0), D0                               ; $0022
+                addq.b  #$02, obj.Routine2(A0)
+                lea     (Obj_Memory_Address).w, A1
+                move.b  obj.Status(A0), D0
                 andi.b  #$08, D0
                 bsr.s   loc_18B90
-                lea     (Player_Two).w, A1                           ; $FFFFB040
-                move.b  obj.Status(A0), D0                               ; $0022
+                lea     (player2).w, A1
+                move.b  obj.Status(A0), D0
                 andi.b  #$10, D0
 loc_18B90:
                 beq.s   loc_18BC6
-                move.w  obj.X(A0), obj.X(A1)                      ; $0008, $0008
-                move.b  #$02, obj.Anim(A1)                         ; $001C
-                move.w  #$0800, obj.GroundSpeed(A1)                          ; $0014
-                bset    #$01, obj.Status(A1)                             ; $0022
-                move.w  #$F000, obj.YSpeed(A1)                          ; $0012
-                bclr    #$03, obj.Status(A1)                             ; $0022
-                move.b  #$00, obj.Control(A1)                              ; $002A
+                move.w  obj.X(A0), obj.X(A1)
+                move.b  #$02, obj.Anim(A1)
+                move.w  #$0800, obj.GroundSpeed(A1)
+                bset    #$01, obj.Status(A1)
+                move.w  #$F000, obj.YSpeed(A1)
+                bclr    #$03, obj.Status(A1)
+                move.b  #$00, obj.Control(A1)
                 move.w  #$00CC, D0
-                jsr     (Play_Sfx_Ex)                          ; loc_151E
+                jsr     (Play_Sfx_Ex)
 loc_18BC6:
                 rts      
 ;------------------------------------------------------------------------------- 
@@ -29452,18 +29451,18 @@ loc_18BC8:
                 rts    
 ;------------------------------------------------------------------------------- 
 loc_18BCA:
-                move.l  Obj_Control_Var_10(A0), A1                       ; $003C
-                move.w  obj.Y(A0), D0                                    ; $000C
-                sub.w   obj.Y(A1), D0                                    ; $000C
+                move.l  Obj_Control_Var_10(A0), A1
+                move.w  obj.Y(A0), D0
+                sub.w   obj.Y(A1), D0
                 cmpi.w  #$0014, D0
                 blt.s   loc_18BF2
-                move.b  #$9B, obj.ColType(A0)                          ; $0020
-                lea     (Touch_Booster_Animate_Data), A1       ; loc_18C00
-                jsr     (AnimateSprite)                        ; loc_D372
-                bra     Jmp_07_To_MarkObjGone                  ; loc_18C5C
+                move.b  #$9B, obj.ColType(A0)
+                lea     (Touch_Booster_Animate_Data), A1
+                jsr     (AnimateSprite)
+                bra     Jmp_07_To_MarkObjGone
 loc_18BF2:
-                move.b  #$00, obj.ColType(A0)                          ; $0020
-                move.b  #$00, obj.AnimFrame(A0)                          ; $001B
+                move.b  #$00, obj.ColType(A0)
+                move.b  #$00, obj.AnimFrame(A0)
                 rts
 ;-------------------------------------------------------------------------------                    
 Touch_Booster_Animate_Data:                                    ; loc_18C00
@@ -29500,12 +29499,12 @@ loc_18C4A:
 ; [ End ]
 ;===============================================================================
 ;-------------------------------------------------------------------------------
-Jmp_07_To_MarkObjGone:                                         ; loc_18C5C
-		jmp     (MarkObjGone)                          ; loc_D200
-Jmp_04_To_SingleObjectLoad_2:                                  ; loc_18C62
-		jmp     (SingleObjectLoad_2)                   ; loc_E714
-Jmp_01_To_SolidObject:                                         ; loc_18C68
-		jmp     (SolidObject)                          ; loc_F344
+Jmp_07_To_MarkObjGone:
+		jmp     (MarkObjGone)
+Jmp_04_To_SingleObjectLoad_2:
+		jmp     (SingleObjectLoad_2)
+Jmp_01_To_SolidObject:
+		jmp     (SolidObject)
 		dc.w    $0000
 ;-------------------------------------------------------------------------------
 Obj43_Giant_Spikeball:                                      ; loc_18C70
@@ -29694,7 +29693,7 @@ loc_18E62:
                 bset    #$07, obj.Status(A0)                             ; $0022  
 ;-------------------------------------------------------------------------------
 loc_18E84:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$08, D1
                 move.b  obj.Status(A0), D0                               ; $0022
                 and.b   D1, D0
@@ -29715,7 +29714,7 @@ loc_18EAA:
                 move.w  obj.X(A1), D4                                    ; $0008
                 move.w  D4, obj.X(A0)                                    ; $0008
                 bsr     Jmp_00_To_Platform_Object_A1           ; loc_18F1A
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$10, D1
                 move.b  obj.Status(A0), D0                               ; $0022
                 and.b   D1, D0
@@ -29832,10 +29831,10 @@ loc_18FD0:
                 bsr     loc_19B10
                 rts
 loc_18FEE:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   loc_18FFC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
 loc_18FFC:
                 bclr    D6, obj.Status(A0)                               ; $0022
@@ -29887,7 +29886,7 @@ loc_190A2:
                 move.w  #$000C, D2
                 move.w  #$000D, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     Jmp_00_To_SolidObject_2_A1             ; loc_19B0A
@@ -29904,7 +29903,7 @@ loc_190DE:
                 bsr     loc_19164
 loc_190E8:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     Jmp_00_To_SolidObject_2_A1             ; loc_19B0A
                 cmpi.w  #$0001, D4
@@ -29998,10 +29997,10 @@ loc_191F8:
                 move.b  obj.Status(A0), D0                               ; $0022
                 andi.b  #$60, D0
                 beq     loc_192F8
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$05, D6
                 bsr.s   loc_19212
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$06, D6
 loc_19212:
                 bclr    D6, obj.Status(A0)                               ; $0022
@@ -30680,11 +30679,11 @@ loc_19C88:
                 cmpi.b  #$02, Obj_Control_Var_07(A0)                     ; $0033
                 bne.s   loc_19C84
 loc_19C9E:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.b  Obj_Control_Var_06(A0), D0                       ; $0032
                 move.w  Obj_Control_Var_08(A0), D1                       ; $0034
                 bsr.s   loc_19CDA
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.b  Obj_Control_Var_07(A0), D0                       ; $0033
                 move.w  Obj_Control_Var_0A(A0), D1                       ; $0036
                 bsr.s   loc_19CDA
@@ -30718,7 +30717,7 @@ loc_19D10:
                 beq     loc_19C84
                 cmpi.b  #$02, Obj_Control_Var_07(A0)                     ; $0033
                 bne     loc_19C84
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 move.w  Obj_Control_Var_0A(A0), D1                       ; $0036
                 bsr.s   loc_19CE0
 loc_19D2C:
@@ -30747,10 +30746,10 @@ loc_19D64:
                 bra     Jmp_05_To_DisplaySprite                ; loc_1A004      
 ;-------------------------------------------------------------------------------  
 loc_19D7A:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     Obj_Control_Var_00(A0), A4                       ; $002C
                 bsr.s   loc_19D9C
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     Obj_Control_Var_0A(A0), A4                       ; $0036
                 bsr.s   loc_19D9C
                 move.b  Obj_Control_Var_00(A0), D0                       ; $002C
@@ -30903,11 +30902,11 @@ loc_1A0AC:
                 move.b  #$01, obj.Priority(A0)                           ; $0018  
 ;-------------------------------------------------------------------------------
 loc_1A0BE:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     Obj_Control_Var_00(A0), A4                       ; $002C
                 moveq   #$2C, D2
                 bsr.s   loc_1A0D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     Obj_Control_Var_0A(A0), A4                       ; $0036
                 moveq   #$36, D2
 loc_1A0D4:
@@ -31107,9 +31106,9 @@ loc_1A498:
                 cmpi.b  #$02, obj.Anim(A0)                         ; $001C
                 beq.s   loc_1A4BE
                 moveq   #$00, D2
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_1A4CC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr.s   loc_1A4CC
                 tst.b   D2
                 bne.s   loc_1A4BA
@@ -31312,9 +31311,9 @@ loc_1A70E:
 loc_1A716:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   loc_1A744
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_1A726
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_1A726:
                 move.w  obj.X(A0), D0                                    ; $0008
                 sub.w   obj.X(A1), D0                                    ; $0008
@@ -31434,10 +31433,10 @@ loc_1A886:
                 lea     (loc_1A966), A2
                 addq.b  #$07, obj.MapFrame(A0)                             ; $001A
                 bsr     loc_1A9AC
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 bsr.s   loc_1A8AC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 addq.b  #$01, D6
                 bra     loc_1A944
 loc_1A8AC:
@@ -31466,9 +31465,9 @@ loc_1A8EC:
 loc_1A8F2:
                 tst.w   (Debug_Mode_Flag_Index).w                    ; $FFFFFE08
                 bne.s   loc_1A91A
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_1A902
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_1A902:
                 move.w  obj.X(A0), D0                                    ; $0008
                 sub.w   obj.X(A1), D0                                    ; $0008
@@ -31802,7 +31801,7 @@ loc_1AF24:
                 andi.w  #$000F, D0
                 bne.s   loc_1AF56
 loc_1AF3A:
-                lea     (Player_One).w, A2                           ; $FFFFB000
+                lea     (player1).w, A2                           ; $FFFFB000
                 bclr    #$00, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_1AF7A
                 bsr.s   loc_1AF86
@@ -31814,7 +31813,7 @@ loc_1AF56:
                 addi.w  #$0008, D0
                 andi.w  #$000F, D0
                 bne.s   loc_1AF7A
-                lea     (Player_Two).w, A2                           ; $FFFFB040
+                lea     (player2).w, A2                           ; $FFFFB040
                 bclr    #$01, obj.ColStatus(A0)                           ; $0021
                 beq.s   loc_1AF7A
                 bsr.s   loc_1AF86
@@ -32004,7 +32003,7 @@ loc_1B184:
                 beq.s   loc_1B1A8
                 lea     loc_1B376(PC), A2
 loc_1B1A8:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     Jmp_00_To_SolidObject_3_A1             ; loc_1B3E6
@@ -32013,7 +32012,7 @@ loc_1B1A8:
                 bsr.s   loc_1B1DA
 loc_1B1C0:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     Jmp_00_To_SolidObject_3_A1             ; loc_1B3E6
                 btst    #$04, obj.Status(A0)                             ; $0022
@@ -32204,7 +32203,7 @@ loc_1B440:
                 move.w  #$0010, D2
                 move.w  #$0010, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     Jmp_01_To_SolidObject_2_A1             ; loc_1B6CE
@@ -32213,7 +32212,7 @@ loc_1B440:
                 bsr     loc_1B546
 loc_1B46A:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     Jmp_01_To_SolidObject_2_A1             ; loc_1B6CE
                 btst    #$04, obj.Status(A0)                             ; $0022
@@ -32776,24 +32775,24 @@ loc_1BB5C:
                 subi.w  #$0010, D2
                 addi.w  #$0040, D3
                 moveq   #$00, D1
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   D4, D0
                 bcs.s   loc_1BB86
                 cmp.w   D5, D0
                 bcc.s   loc_1BB86
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 cmp.w   D2, D0
                 bcs.s   loc_1BB86
                 cmp.w   D3, D0
                 bcc.s   loc_1BB86
                 moveq   #$01, D1
 loc_1BB86:
-                move.w  (Player_Two_Position_X).w, D0                ; $FFFFB048
+                move.w  (player2XPos).w, D0                ; $FFFFB048
                 cmp.w   D4, D0
                 bcs.s   loc_1BBA0
                 cmp.w   D5, D0
                 bcc.s   loc_1BBA0
-                move.w  (Player_Two_Position_Y).w, D0                ; $FFFFB04C
+                move.w  (player2YPos).w, D0                ; $FFFFB04C
                 cmp.w   D2, D0
                 bcs.s   loc_1BBA0
                 cmp.w   D3, D0
@@ -32953,7 +32952,7 @@ loc_1BD4A:
                 move.w  D2, D3
                 addq.w  #$01, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     Jmp_02_To_SolidObject_2_A1             ; loc_1BEF6
@@ -32972,7 +32971,7 @@ loc_1BD8A:
                 bsr.s   loc_1BDE8
 loc_1BD92:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     Jmp_02_To_SolidObject_2_A1             ; loc_1BEF6
                 cmpi.b  #$01, D4
@@ -33107,10 +33106,10 @@ loc_1BF28:
                 move.b  #$05, obj.Priority(A0)                           ; $0018    
 ;------------------------------------------------------------------------------- 
 loc_1BF4C:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     Obj_Control_Var_00(A0), A4                       ; $002C
                 bsr.s   loc_1BF5E
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     Obj_Control_Var_0A(A0), A4                       ; $0036
 loc_1BF5E:
                 moveq   #$00, D0
@@ -33711,11 +33710,11 @@ loc_1C63A:
                 move.w  D0, Obj_Control_Var_0A(A0)                       ; $0036      
 ;-------------------------------------------------------------------------------  
 loc_1C67C:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 lea     Obj_Control_Var_0C(A0), A4                       ; $0038
                 moveq   #$03, D6
                 bsr.s   loc_1C6B2
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 lea     Obj_Control_Var_10(A0), A4                       ; $003C
                 moveq   #$04, D6
                 bsr.s   loc_1C6B2           
@@ -35297,9 +35296,9 @@ loc_1DA3A:
                 neg.w   Obj_Control_Var_0A(A0)                           ; $0036  
 ;------------------------------------------------------------------------------- 
 loc_1DA5A:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_1DA6A
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr.s   loc_1DA6A
                 bra     Jmp_04_To_MarkObjGone_3                ; loc_1DAA8
 loc_1DA6A:
@@ -35746,13 +35745,13 @@ loc_1DF3A:
                 move.b  D6, D0
                 andi.b  #$01, D0
                 beq.s   loc_1DF8A
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     Jmp_00_To_Touch_ChkHurt2               ; loc_1E04C
                 bclr    #$05, obj.Status(A0)                             ; $0022
 loc_1DF8A:
                 andi.b  #$02, D6
                 beq.s   loc_1DF9E
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     Jmp_00_To_Touch_ChkHurt2               ; loc_1E04C
                 bclr    #$06, obj.Status(A0)                             ; $0022
 loc_1DF9E:
@@ -35764,9 +35763,9 @@ loc_1DFA6:
                 dc.w    loc_1DFFA-loc_1DFA6                  
 ;-------------------------------------------------------------------------------
 loc_1DFAA:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr.s   loc_1DFB4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_1DFB4:
                 btst    #$01, obj.Status(A1)                             ; $0022
                 bne.s   loc_1DFF8
@@ -35875,12 +35874,12 @@ loc_1E0F6:
                 move.b  D0, D1
                 andi.b  #$08, D0
                 beq.s   loc_1E112
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bclr    #$03, obj.Status(A1)                             ; $0022
 loc_1E112:
                 andi.b  #$10, D1
                 beq.s   loc_1E122
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bclr    #$03, obj.Status(A1)                             ; $0022
 loc_1E122:
                 andi.b  #$E7, obj.Status(A0)                             ; $0022
@@ -36321,7 +36320,7 @@ loc_1E6DA:
                 move.w  #$0008, D2
                 move.w  #$0010, D3
                 move.w  obj.X(A0), D4                                    ; $0008
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 moveq   #$03, D6
                 movem.l D1-D4, -(A7)
                 bsr     Jmp_03_To_SolidObject_2_A1             ; loc_1E89C
@@ -36330,7 +36329,7 @@ loc_1E6DA:
                 bsr.s   loc_1E782
 loc_1E70A:
                 movem.l (A7)+, D1-D4
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 moveq   #$04, D6
                 bsr     Jmp_03_To_SolidObject_2_A1             ; loc_1E89C
                 btst    #$04, obj.Status(A0)                             ; $0022
@@ -36344,24 +36343,24 @@ loc_1E722:
                 move.w  obj.Y(A0), D2                                    ; $000C
                 move.w  D2, D3
                 addi.w  #$0030, D3
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmp.w   D4, D0
                 bcs.s   loc_1E758
                 cmp.w   D5, D0
                 bcc.s   loc_1E758
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 cmp.w   D2, D0
                 bcs.s   loc_1E758
                 cmp.w   D3, D0
                 bcc.s   loc_1E758
                 move.b  #$02, obj.Anim(A0)                         ; $001C
 loc_1E758:
-                move.w  (Player_Two_Position_X).w, D0                ; $FFFFB048
+                move.w  (player2XPos).w, D0                ; $FFFFB048
                 cmp.w   D4, D0
                 bcs.s   loc_1E776
                 cmp.w   D5, D0
                 bcc.s   loc_1E776
-                move.w  (Player_Two_Position_Y).w, D0                ; $FFFFB04C
+                move.w  (player2YPos).w, D0                ; $FFFFB04C
                 cmp.w   D2, D0
                 bcs.s   loc_1E776
                 cmp.w   D3, D0
@@ -36475,10 +36474,10 @@ loc_1E8B6:
 ;-------------------------------------------------------------------------------
 loc_1E8DE:
                 lea     Obj_Control_Var_04(A0), A2                       ; $0030
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.w  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
                 bsr.s   loc_1E8FC
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 addq.w  #$01, A2
                 move.w  ($FFFFF606).w, D0
                 bsr.s   loc_1E8FC
@@ -36629,10 +36628,10 @@ loc_1EAF0:
                 move.b  D0, obj.MapFrame(A0)                               ; $001A
 loc_1EAF4:
                 lea     Obj_Control_Var_04(A0), A2                       ; $0030
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 move.w  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
                 bsr.s   loc_1EB12
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 addq.w  #$01, A2
                 move.w  ($FFFFF606).w, D0
                 bsr.s   loc_1EB12
@@ -37067,7 +37066,7 @@ loc_1F172:
                 rts   
 ;-------------------------------------------------------------------------------   
 loc_1F174:
-                move.w  (Water_Level).w, D0                          ; $FFFFF646
+                move.w  (waterLevel).w, D0                          
                 sub.w   obj.Y(A0), D0                                    ; $000C
                 beq.s   loc_1F1B8
                 bcc.s   loc_1F19C
@@ -37438,9 +37437,9 @@ loc_1F5B2:
                 move.b  Obj_Control_Var_08(A0), obj.AnimTime(A0)  ; $001E, $0034
                 bra.s   loc_1F5F2
 loc_1F5D6:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     loc_1F61C
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     loc_1F61C
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_1F618
@@ -37517,9 +37516,9 @@ loc_1F6A0:
                 move.b  Obj_Control_Var_08(A0), obj.AnimTime(A0)  ; $001E, $0034
                 bra.s   loc_1F6E0
 loc_1F6C4:
-                lea     (Player_One).w, A1                           ; $FFFFB000
+                lea     (player1).w, A1                           ; $FFFFB000
                 bsr     loc_1F70A
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
                 bsr     loc_1F70A
                 subq.b  #$01, obj.AnimTime(A0)                           ; $001E
                 bpl.s   loc_1F706
@@ -37871,7 +37870,7 @@ loc_1FB0C:
                 subi.w  #$0001, Obj_Control_Var_00(A0)                   ; $002C
                 bpl.s   loc_1FB56
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 cmpi.w  #$0060, D0
                 bgt.s   loc_1FB58
                 cmpi.w  #$FFA0, D0
@@ -38088,7 +38087,7 @@ loc_1FF5A:
                 bra     Jmp_1A_To_MarkObjGone                  ; loc_200E4
 ;-------------------------------------------------------------------------------
 loc_1FF9C:
-                move.w  #$0390, (Water_Level).w                      ; $FFFFF646
+                move.w  #$0390, (waterLevel).w                      
                 lea     (Piranha_Animate_Data), A1             ; loc_2009A
                 bsr     Jmp_07_To_AnimateSprite                ; loc_200EA
                 move.w  Obj_Control_Var_12(A0), D0                       ; $003E
@@ -38097,7 +38096,7 @@ loc_1FF9C:
                 tst.l   Obj_Control_Var_0A(A0)                           ; $0036
                 bpl.s   loc_1FFF4
                 move.w  obj.Y(A0), D0                                    ; $000C
-                cmp.w   (Water_Level).w, D0                          ; $FFFFF646
+                cmp.w   (waterLevel).w, D0                          
                 bgt     Jmp_1A_To_MarkObjGone                  ; loc_200E4
                 move.b  #$03, obj.Anim(A0)                         ; $001C
                 bclr    #$06, obj.Status(A0)                             ; $0022
@@ -38111,7 +38110,7 @@ loc_1FF9C:
                 bra     Jmp_1A_To_MarkObjGone                  ; loc_200E4
 loc_1FFF4:
                 move.w  obj.Y(A0), D0                                    ; $000C
-                cmp.w   (Water_Level).w, D0                          ; $FFFFF646
+                cmp.w   (waterLevel).w, D0                          
                 bgt.s   loc_20008
                 move.b  #$01, obj.Anim(A0)                         ; $001C
                 bra     Jmp_1A_To_MarkObjGone                  ; loc_200E4
@@ -39227,7 +39226,7 @@ loc_20EA4:
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
                 move.b  #$00, obj.Anim(A0)                         ; $001C
                 move.w  #$00B5, obj.Control(A0)                            ; $002A
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bmi.s   loc_20EFA
                 bset    #$00, obj.Status(A0)                             ; $0022
@@ -39429,7 +39428,7 @@ loc_21226:
                 rts
 loc_2123E:
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bmi.s   loc_21258           
                 cmpi.w  #$0040, D0
                 bgt.s   loc_2126E
@@ -39819,7 +39818,7 @@ loc_21742:
                 move.w  #$0000, obj.YSpeed(A0)                          ; $0012
                 addq.b  #$02, obj.Routine(A0)                            ; $0024
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bpl.s   loc_217A0
                 bchg    #00, obj.Status(A0)                              ; $0022
 loc_217A0:
@@ -39843,7 +39842,7 @@ loc_217C4:
 ;-------------------------------------------------------------------------------
 loc_217CC:
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 cmpi.w  #$0080, D0
                 bgt.s   loc_217EA
                 cmpi.w  #$FF80, D0
@@ -40144,7 +40143,7 @@ loc_21B2C:
                 move.w  obj.Y(A0), obj.Y(A1)                      ; $000C, $000C
                 subi.w  #$0008, obj.Y(A1)                                ; $000C
                 move.w  #$0072, obj.Control(A1)                            ; $002A
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A1), D0                                    ; $0008
                 bmi.s   loc_21BD2
                 bset    #$00, obj.Status(A1)                             ; $0022
@@ -40189,7 +40188,7 @@ loc_21C28:
                 bra.s   loc_21C1A    
 ;-------------------------------------------------------------------------------  
 loc_21C2E:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bmi.s   loc_21C46
                 bset    #$00, obj.Status(A0)                             ; $0022
@@ -40303,7 +40302,7 @@ loc_21DC6:
 loc_21E7E:
                 lea     (Aquis_Animate_Data), A1               ; loc_22244
                 bsr     Jmp_0F_To_AnimateSprite                ; loc_22624
-                move.w  #$039C, (Water_Level).w                      ; $FFFFF646
+                move.w  #$039C, (waterLevel).w                      
                 moveq   #$00, D0
                 move.b  obj.Routine2(A0), D0                            ; $0025
                 move.w  loc_21EA4(PC, D0), D1
@@ -40390,7 +40389,7 @@ loc_21F96:
                 rts
 loc_21F98:
                 move.w  obj.Y(A0), D0                                    ; $000C
-                cmp.w   ($FFFFF646).w, D0
+                cmp.w   (waterLevel).w, D0
                 blt.s   loc_21FBE
                 move.b  #$02, obj.Routine2(A0)                          ; $0025
                 move.b  #$00, obj.Anim(A0)                         ; $001C
@@ -40402,8 +40401,8 @@ loc_21FBE:
 loc_21FC0:
                 tst.b   Obj_Control_Var_00(A0)                           ; $002C
                 beq.s   loc_22026
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
-                move.w  (Player_One_Position_Y).w, D1                ; $FFFFB00C
+                move.w  (player1XPos).w, D0                ; $FFFFB008
+                move.w  (player1YPos).w, D1                ; $FFFFB00C
                 sub.w   obj.Y(A0), D1                                    ; $000C
                 bpl.s   loc_22026
                 cmpi.w  #$FFD0, D1
@@ -40451,7 +40450,7 @@ loc_2204A:
                 move.w  obj.Y(A0), D0                                    ; $000C
                 tst.b   Obj_Control_Var_00(A0)                           ; $002C
                 bne.s   loc_22068
-                cmp.w   ($FFFFF646).w, D0
+                cmp.w   (waterLevel).w, D0
                 bgt.s   loc_22066
                 subq.b  #$02, obj.Routine2(A0)                          ; $0025
                 st      Obj_Control_Var_00(A0)                           ; $002C
@@ -40508,8 +40507,8 @@ loc_220F2:
                 beq.s   loc_22132
                 subi.w  #$0001, Obj_Control_Var_00(A0)                   ; $002C
                 beq     Jmp_1A_To_DeleteObject                 ; loc_22612
-                move.w  (Player_One_Position_X).w, obj.X(A0)         ; $FFFFB008; $0008
-                move.w  (Player_One_Position_Y).w, obj.Y(A0)         ; $FFFFB00C; $000C
+                move.w  (player1XPos).w, obj.X(A0)         ; $FFFFB008; $0008
+                move.w  (player1YPos).w, obj.Y(A0)         ; $FFFFB00C; $000C
                 addi.w  #$000C, obj.Y(A0)                                ; $000C
                 subi.b  #$01, obj.Control(A0)                              ; $002A
                 bne.s   loc_22134
@@ -40525,11 +40524,11 @@ loc_22134:
 loc_22142:
                 tst.b   obj.Routine2(A0)                                ; $0025
                 bne.s   loc_22180
-                move.b  (Player_One+obj.Routine).w, D0               ; $FFFFB024
+                move.b  (player1+obj.Routine).w, D0               ; $FFFFB024
                 cmpi.b  #$02, D0
                 bne.s   loc_22180
-                move.w  (Player_One_Position_X).w, obj.X(A0)         ; $FFFFB008; $0008
-                move.w  (Player_One_Position_Y).w, obj.Y(A0)         ; $FFFFB00C; $000C
+                move.w  (player1XPos).w, obj.X(A0)         ; $FFFFB008; $0008
+                move.w  (player1YPos).w, obj.Y(A0)         ; $FFFFB00C; $000C
                 ori.b   #$04, obj.Render(A0)                              ; $0001
                 move.b  #$01, obj.Priority(A0)                           ; $0018
                 move.b  #$05, obj.Anim(A0)                         ; $001C
@@ -40667,7 +40666,7 @@ loc_223E2:
 loc_22440:
                 lea     Aquis_Animate_Data(PC), A1             ; loc_22244
                 bsr     Jmp_0F_To_AnimateSprite                ; loc_22624
-                move.w  #$039C, (Water_Level).w                      ; $FFFFF646
+                move.w  #$039C, (waterLevel).w                      
                 moveq   #$00, D0
                 move.b  obj.Routine2(A0), D0                            ; $0025
                 move.w  loc_22460(PC, D0), D1
@@ -40716,7 +40715,7 @@ loc_224CA:
                 sf      Obj_Control_Var_01(A0)                           ; $002D
                 sf      Obj_Control_Var_00(A0)                           ; $002C
                 sf      Obj_Control_Var_0A(A0)                           ; $0036
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bpl.s   loc_224EA
                 btst    #$00, obj.Status(A0)                             ; $0022
@@ -40728,7 +40727,7 @@ loc_224EA:
 loc_224F2:
                 st      Obj_Control_Var_00(A0)                           ; $002C
 loc_224F6:
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 sub.w   obj.Y(A0), D0                                    ; $000C
                 cmpi.w  #$FFFC, D0
                 blt.s   loc_2251A
@@ -40911,7 +40910,7 @@ loc_2271C:
 loc_22738:
                 tst.b   Obj_Control_Var_09(A0)                           ; $0035
                 bne.s   loc_2277A
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 cmpi.w  #$0064, D0
                 bgt.s   loc_2277A
@@ -41115,7 +41114,7 @@ loc_229B8:
                 rts
 loc_229DC:
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bmi.s   loc_22A10
                 cmpi.w  #$0060, D0
                 bgt.s   loc_22A00
@@ -41727,7 +41726,7 @@ loc_2337A:
 loc_233AE:
                 cmpi.w  #$FFC0, Obj_Control_Var_02(A0)                   ; $002E
                 bge     loc_23454
-                move.w  (Player_One_Position_X).w, D1                ; $FFFFB008
+                move.w  (player1XPos).w, D1                ; $FFFFB008
                 subi.w  #$0008, D1
                 btst    #$00, obj.Render(A0)                              ; $0001
                 beq.s   loc_233DC
@@ -42114,7 +42113,7 @@ loc_23950:
 loc_2395E:
 		cmpi.b  #$08, obj.Routine2(A0)                          ; $0025
 		bge.s   loc_23976
-		move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+		move.w  (player1XPos).w, D0                ; $FFFFB008
 		sub.w   obj.X(A0), D0                                    ; $0008
 		bgt.s   loc_23978
 		bclr    #$00, obj.Status(A0)                             ; $0022
@@ -42336,7 +42335,7 @@ loc_23BE0:
 		bra     loc_23A46
 ;-------------------------------------------------------------------------------
 loc_23BE8:
-		move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+		move.w  (player1XPos).w, D0                ; $FFFFB008
 		addi.w  #$004C, D0
 		cmp.w   Obj_Control_Var_04(A0), D0                       ; $0030
 		bgt.s   loc_23C16
@@ -42748,7 +42747,7 @@ loc_240E6:
                 tst.b   Obj_Control_Var_06(A0)                           ; $0032
                 bne     loc_24132
                 move.w  obj.X(A0), D0                                    ; $0008
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 move.w  D0, D1
                 bpl.s   loc_240FC
                 neg.w   D0
@@ -43046,12 +43045,12 @@ loc_24526:
                 btst    #$00, obj.Status(A0)                             ; $0022
                 beq.s   loc_24546
                 addi.w  #$0034, D0
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bpl.s   loc_24552
                 rts
 loc_24546:
                 subi.w  #$0034, D0
-                sub.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                sub.w   (player1XPos).w, D0                ; $FFFFB008
                 bmi.s   loc_24552
                 rts
 loc_24552:
@@ -43216,7 +43215,7 @@ loc_2473C:
 ;-------------------------------------------------------------------------------
 loc_2474E:
                 bset    #$00, Obj_Control_Var_00(A1)                     ; $002C
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A1), D0                                    ; $0008
                 bmi.s   loc_2476E
                 bset    #$00, obj.Status(A1)                             ; $0022
@@ -44302,7 +44301,7 @@ loc_25A80:
                 move.w  #$FF20, (Boss_Move_Buffer+$0A).w             ; $FFFFF75A
                 move.b  #$00, Obj_Ani_Boss_Routine(A0)                   ; $0026
                 sf      Obj_Control_Var_0C(A0)                           ; $0038
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 subi.w  #$2FEC, D0
                 bmi.s   loc_25AAC
                 move.w  #$0580, (Boss_Move_Buffer+$04).w             ; $FFFFF754
@@ -44315,7 +44314,7 @@ loc_25AAC:
                 sf      Obj_Control_Var_00(A0)                           ; $002C
 loc_25ABC:
                 move.w  obj.X(A0), D0                                    ; $0008
-                cmp.w   (Player_One_Position_X).w, D0                ; $FFFFB008
+                cmp.w   (player1XPos).w, D0                ; $FFFFB008
                 bgt.s   loc_25ACE
                 bset    #$00, obj.Render(A0)                              ; $0001
                 bra.s   loc_25AD4
@@ -44719,7 +44718,7 @@ loc_25FEE:
 loc_25FF4:
                 cmpi.w  #$2A40, (Sonic_Level_Limits_Min_X).w         ; $FFFFEEC8
                 bne     loc_26126
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 cmpi.w  #$2A68, D0
                 blt     loc_26126
                 cmpi.w  #$2B48, D0
@@ -45540,7 +45539,7 @@ loc_26AAE:
                 cmpi.w  #$0560, (Boss_Move_Buffer+$04).w             ; $FFFFF754
                 bgt.s   loc_26AF6
                 move.w  #$0100, (Boss_Move_Buffer+$0A).w             ; $FFFFF75A
-                move.w  (Player_One_Position_X).w, D3                ; $FFFFB008
+                move.w  (player1XPos).w, D3                ; $FFFFB008
                 bsr     Jmp_03_To_PseudoRandomNumber           ; loc_271BE
                 andi.w  #$00FF, D0
                 ext.w   D0
@@ -45603,7 +45602,7 @@ loc_26B9A:
                 move.b  #$30, obj.Render(A1)                              ; $0001
                 move.w  #$0400, (Boss_Move_Buffer+$0A).w             ; $FFFFF75A
                 bclr    #$00, obj.Render(A0)                              ; $0001
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   ($FFFFF750).w, D0
                 bmi.s   loc_26BCA
                 bset    #$00, obj.Render(A0)                              ; $0001
@@ -46941,7 +46940,7 @@ loc_27D66:
                 add.w   D0, obj.X(A0)                                    ; $0008
                 bra     Jmp_1E_To_DisplaySprite                ; loc_27E8C
 loc_27D6E:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bpl.s   loc_27D80
                 bclr    #$00, obj.Render(A0)                              ; $0001
@@ -47096,7 +47095,7 @@ ObjSet_List:                                                   ; loc_27ED6
 Object_Check_Player_Position:                                  ; loc_27F1C
 		moveq   #$00, D0
 		moveq   #$00, D1
-		lea     (Player_One).w, A1                           ; $FFFFB000
+		lea     (player1).w, A1                           ; $FFFFB000
 		move.w  obj.X(A0), D2                                    ; $0008
 		sub.w   obj.X(A1), D2                                    ; $0008
 		bcc.s   loc_27F30
@@ -47931,14 +47930,14 @@ loc_287D6:
                 rts 
 ;-------------------------------------------------------------------------------
 loc_287D8:
-                move.w  (Player_One_Position_X).w, D0                ; $FFFFB008
+                move.w  (player1XPos).w, D0                ; $FFFFB008
                 sub.w   obj.X(A0), D0                                    ; $0008
                 bcc.s   loc_287E4
                 neg.w   D0
 loc_287E4:
                 cmpi.w  #$00A0, D0
                 bcc.s   loc_28808
-                move.w  (Player_One_Position_Y).w, D0                ; $FFFFB00C
+                move.w  (player1YPos).w, D0                ; $FFFFB00C
                 sub.w   obj.Y(A0), D0                                    ; $000C
                 bcc.s   loc_287F6
                 neg.w   D0
@@ -49964,7 +49963,7 @@ Load_Spiny_Horizontal_Shot_Obj:                                ; loc_2A13C
                 move.w  obj.Y(A0), obj.Y(A1)                      ; $000C, $000C
                 move.w  #$FD00, obj.YSpeed(A1)                          ; $0012
                 move.w  #$0100, D1
-                lea     (Player_One).w, A2                           ; $FFFFB000
+                lea     (player1).w, A2                           ; $FFFFB000
                 move.w  obj.X(A0), D0                                    ; $0008
                 cmp.w   obj.X(A2), D0                                    ; $0008
                 bcs.s   loc_2A17A
@@ -50863,7 +50862,7 @@ loc_2B10E:
                 moveq   #$3E, D0
                 moveq   #$28, D1
                 moveq   #$40, D2
-                lea     (Player_Two).w, A1                           ; $FFFFB040
+                lea     (player2).w, A1                           ; $FFFFB040
 loc_2B118:
                 cmp.b   (A1), D1
                 beq.s   loc_2B12E
@@ -51734,7 +51733,7 @@ SS_5_Animate:                                                  ; loc_2BBBE
 		bne.s   loc_2BBF6
 		clr.l   (A0)
 		clr.l   $0004(A0)
-		move.b  #$04, (Player_One+obj.Routine).w             ; $FFFFB024
+		move.b  #$04, (player1+obj.Routine).w             ; $FFFFB024
 		move.w  #$00A8, D0
 		jsr     (Play_Sfx)                             ; loc_1512
 loc_2BBF6:
@@ -51812,8 +51811,8 @@ loc_2BC9C:
 loc_2BCA0:
 		lsl.w   #$02, D0
 		lea     SS_Player_Start_Position_Array(PC, D0), A1 ; loc_2BC4E
-		move.w  (A1)+, (Player_One_Position_X).w             ; $FFFFB008
-		move.w  (A1)+, (Player_One_Position_Y).w             ; $FFFFB00C
+		move.w  (A1)+, (player1XPos).w             ; $FFFFB008
+		move.w  (A1)+, (player1YPos).w             ; $FFFFB00C
 		move.l  Special_Stage_Layout_Index(PC, D0), A0 ; loc_2BC36
 		lea     (SS_Ram_Layout_Address), A1                  ; $FFFF4000
 		move.w  #$0000, D0
@@ -53630,11 +53629,11 @@ loc_2D4E0:
 		move.l  #$5C400003, VDPCTRL               ; $00C00004
 		move.w  (Camera_X).w, D1                             ; $FFFFEE00
 		swap.w  D1
-		move.w  (Player_One_Position_X).w, D1                ; $FFFFB008
+		move.w  (player1XPos).w, D1                ; $FFFFB008
 		bsr.s   loc_2D500
 		move.w  (Camera_Y).w, D1                             ; $FFFFEE04
 		swap.w  D1
-		move.w  (Player_One_Position_Y).w, D1                ; $FFFFB00C
+		move.w  (player1YPos).w, D1                ; $FFFFB00C
 loc_2D500:
 		moveq   #$07, D6
 		lea     (HUD_Art_Debug_Numbers), A1            ; loc_2DB7A
@@ -53937,7 +53936,7 @@ loc_2DE76:
 		addq.b  #$02, (Debug_Mode_Flag_Index).w              ; $FFFFFE08
 		move.w  (Sonic_Level_Limits_Min_Y).w, ($FFFFFEF0).w  ; $FFFFEECC
 		move.w  ($FFFFEEC6).w, ($FFFFFEF2).w
-		andi.w  #$07FF, (Player_One_Position_Y).w            ; $FFFFB00C
+		andi.w  #$07FF, (player1YPos).w            ; $FFFFB00C
 		andi.w  #$07FF, (Camera_Y).w                         ; $FFFFEE04
 		andi.w  #$07FF, (Camera_Y_x4).w                      ; $FFFFEE0C
 		move.b  #$00, obj.MapFrame(A0)                             ; $001A
@@ -54085,8 +54084,8 @@ loc_2E052:
 		move.b  D0, ($FFFFB01C).w
 		move.w  D0, obj.YSub(A0)                                ; $000A
 		move.w  D0, $000E(A0)
-		move.w  obj.X(A0), (Player_Two_Position_X).w         ; $FFFFB048; $0008
-		move.w  obj.Y(A0), (Player_Two_Position_Y).w         ; $FFFFB04C; $000C
+		move.w  obj.X(A0), (player2XPos).w         ; $FFFFB048; $0008
+		move.w  obj.Y(A0), (player2YPos).w         ; $FFFFB04C; $000C
 		move.w  ($FFFFFEF0).w, (Sonic_Level_Limits_Min_Y).w  ; $FFFFEECC
 		move.w  ($FFFFFEF2).w, ($FFFFEEC6).w
 		cmpi.b  #$10, (Game_Mode).w                          ; $FFFFF600

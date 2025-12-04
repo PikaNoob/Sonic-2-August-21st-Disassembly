@@ -10,12 +10,12 @@ Level_Map_Bg_Buffer            equ Level_Map_Buffer+$80
 Blocks_Mem_Address             equ M68K_RAM_Start+$9000
 
 Obj_Memory_Address             equ M68K_RAM_Start+$B000
-Player_One                     equ Obj_Memory_Address
-Player_One_Position_X          equ Player_One+obj.X
-Player_One_Position_Y          equ Player_One+obj.Y
-Player_Two                     equ Obj_Memory_Address+$40
-Player_Two_Position_X          equ Player_Two+obj.X
-Player_Two_Position_Y          equ Player_Two+obj.Y
+player1			equ Obj_Memory_Address
+player1XPos		equ player1+obj.X
+player1YPos		equ player1+obj.Y
+player2			equ Obj_Memory_Address+$40
+player2XPos		equ player2+obj.X
+player2YPos		equ player2+obj.Y
 Title_Card_RAM_Obj_Data        equ Obj_Memory_Address+$80
 HUD_RAM_Obj_Data               equ Obj_Memory_Address+$0380
 Level_Results_RAM_Obj_Data     equ Obj_Memory_Address+$05C0
@@ -69,7 +69,9 @@ Horizontal_Interrupt_Count     equ M68K_RAM_Start+$F624
 Scanlines_Count                equ M68K_RAM_Start+$F625
 VBlank_Index                   equ M68K_RAM_Start+$F62A
 Pause_Status                   equ M68K_RAM_Start+$F63A
-Water_Level                    equ M68K_RAM_Start+$F646
+dmaCmdLow                      equ M68K_RAM_Start+$F640
+hIntFlag                       equ M68K_RAM_Start+$F644
+waterLevel                     equ M68K_RAM_Start+$F646
 Water_Level_Change             equ M68K_RAM_Start+$F648
 Water_Level_New                equ M68K_RAM_Start+$F64A
 PLC_Buffer                     equ M68K_RAM_Start+$F680
@@ -77,9 +79,9 @@ Refresh_Level_Layout           equ M68K_RAM_Start+$F720
 Water_Level_Flag               equ M68K_RAM_Start+$F730
 Boss_Animate_Buffer            equ M68K_RAM_Start+$F740
 Boss_Move_Buffer               equ M68K_RAM_Start+$F750
-Sonic_Max_Speed                equ M68K_RAM_Start+$F760
-Sonic_Acceleration             equ M68K_RAM_Start+$F762
-Sonic_Deceleration             equ M68K_RAM_Start+$F764
+sonicMaxSpeed                equ M68K_RAM_Start+$F760
+sonicAccel             equ M68K_RAM_Start+$F762
+sonicDecel             equ M68K_RAM_Start+$F764
 Current_Colision_Pointer       equ M68K_RAM_Start+$F796
 Boss_Defeated_Flag             equ M68K_RAM_Start+$F7A7
 Boss_Flag                      equ M68K_RAM_Start+$F7AA
@@ -115,9 +117,9 @@ Saved_Level_Flag               equ M68K_RAM_Start+$FE30
 Emerald_Count                  equ M68K_RAM_Start+$FE57
 Emerald_Collected_Flag_List    equ M68K_RAM_Start+$FE58
 Object_Frame_Buffer            equ M68K_RAM_Start+$FEA0
-Tails_Max_Speed                equ M68K_RAM_Start+$FEC0
-Tails_Acceleration             equ M68K_RAM_Start+$FEC2
-Tails_Deceleration             equ M68K_RAM_Start+$FEC4
+tailsMaxSpeed                equ M68K_RAM_Start+$FEC0
+tailsAccel             equ M68K_RAM_Start+$FEC2
+tailsDecel             equ M68K_RAM_Start+$FEC4
 Level_select_flag              equ M68K_RAM_Start+$FFD0
 Two_Player_Flag                equ M68K_RAM_Start+$FFD8
 Sound_Buffer_Id                equ M68K_RAM_Start+$FFE0
