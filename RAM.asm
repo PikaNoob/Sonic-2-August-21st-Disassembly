@@ -63,6 +63,13 @@ Tails_Level_Limits_Min_X       equ M68K_RAM_Start+$EEF8
 Tails_Level_Limits_Max_X       equ M68K_RAM_Start+$EEFA
 Tails_Level_Limits_Max_Y       equ M68K_RAM_Start+$EEFE
 Game_Mode                      equ M68K_RAM_Start+$F600
+p1CtrlLogical = $FFFFF602
+p1CtrlHoldLogical = $FFFFF602
+p1CtrlTapLogical = $FFFFF603
+p1CtrlHold = $FFFFF604
+p1CtrlTap = $FFFFF605
+p2CtrlHold = $FFFFF606
+p2CtrlTap = $FFFFF607
 Control_Ports_Buffer_Data      equ M68K_RAM_Start+$F604
 Timer_Count_Down               equ M68K_RAM_Start+$F614 
 Horizontal_Interrupt_Count     equ M68K_RAM_Start+$F624
