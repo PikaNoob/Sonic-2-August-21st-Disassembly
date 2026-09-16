@@ -1,11 +1,11 @@
 ; Constants
 
-gm_SEGALogo                    equ 0
-gm_TitleScreen                 equ 4
-gm_DemoMode                    equ 8
-gm_PlayMode                    equ $C
-gm_SpecialStage                equ $10 
-gm_Continue                    equ $14
+GMID_SEGA		equ 0
+GMID_Title		equ 4
+GMID_Demo		equ 8
+GMID_Level		equ $C
+GMID_Special		equ $10 
+GMID_Continue		equ $14
 
 	rsreset
 obj.ID		rs.b	1
